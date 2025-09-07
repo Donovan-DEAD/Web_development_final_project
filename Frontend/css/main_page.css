@@ -1,0 +1,176 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  color: #333;
+  background-color: #fff;
+  line-height: 1.6;
+}
+
+
+
+/* Titulo */
+.main {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.main h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.main .highlight {
+  color: #16a34a;
+}
+
+.main p {
+  color: #555;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Arrastra tu foto aqui O.o */
+.analysis-box {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.analysis-box h2 {
+  margin-bottom: 0.5rem;
+}
+
+.upload-area {
+  border: 2px dashed #16a34a;
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 1rem 0;
+  color: #666;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.upload-area:hover {
+  background: #ecfdf5;
+}
+
+/* cajas de todo lo que necesitas en un solo lugar ninini */
+.features {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.features h2 {
+  margin-bottom: 0.5rem;
+}
+
+.features p {
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: #f9fafb;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Comienza a usar el asistente de ia, no se como vamos a poner a la ia ahi pero xdlol */
+.cta {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #f9fafb;
+  margin-top: 2rem;
+}
+
+.cta h2 {
+  margin-bottom: 0.5rem;
+}
+
+.cta p {
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+/* Mantente actualizado a.k.a. Newsletter */
+.newsletter {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.newsletter h2 {
+  margin-bottom: 0.5rem;
+}
+
+.newsletter p {
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.newsletter form {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.newsletter input {
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  min-width: 250px;
+}
+
+.newsletter button {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.newsletter button:hover {
+  background: #15803d;
+}
+
+/*Style, coso para poner algunas partes verdes*/
+
+.style{
+  background-color: #86efac;
+}
+
+/* Responsividad, esto si lo hice con chat, me dijo que faltaba y no se que chota es xdlol */
+@media (max-width: 768px) {
+
+  .newsletter form {
+    flex-direction: column;
+  }
+
+  .newsletter input {
+    min-width: 100%;
+  }
+}

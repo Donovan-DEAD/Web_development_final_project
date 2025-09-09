@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Respuesta de IA</title>
+
+        <link rel="stylesheet" href="./styles/navbar.css">
+        <link rel="stylesheet" href="./styles/ia_response.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wdth@0,75..100;1,75..100&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <header class="header">
+            <nav class="navbar">
+                <a href="./indext.html" class="navbar__logo__anchor">
+                    <img class="navbar__logo__img" src="./images/favicon.svg" alt="Logo">
+                </a>
+
+                <input type="checkbox" id="menu-toggle" class="navbar__menu-toggle">
+                <label for="menu-toggle" class="navbar__menu-icon">
+                    <img src="./images/menu_three_bars.svg" class="navbar__menu-open-icon" alt="Open menu">
+                    <img src="./images/menu_cross.svg" class="navbar__menu-close-icon" alt="Close menu">
+                </label>
+
+                <div class="navbar__menu">
+                    <hr class="navbar__mobile-separator">
+                    <ul class="navbar__pages__list">
+                        <li><a href="./indext.html">Inicio</a></li>
+                        <li><a href="./ia_assistance.html">Asistente IA</a></li>
+                        <li><a href="./blogpost-template.html">Blog</a></li>
+                        <li><a href="#">Newsletter</a></li>
+                    </ul>
+                    
+                    <hr class="navbar__mobile-separator">
+
+                    <div class="navbar__utils__container">
+                        <div class="navbar__language-selector">
+                            <img src="./images/world_icon_language.svg" alt="Language">
+                            <span>Español</span>
+                        </div>
+                        <button type="button" class="navbar__utils__login__button">Iniciar sesión</button>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="ia__response__main">
+            <div class="ia__response__header">
+                <h1 class="ai__response__header__title">Asesoría IA Agrícola</h1>
+                <p  class="ai__response__header__description">Sube una imagen de tu cultivo y obtén recomendaciones personalizadas</p>
+            </div>
+
+            <div class="ai__response__recomendations__container">
+                <h1 class="ai__response__recomendations__title">
+                    <img class="ai__response__recomendations__icon" src="./images/approve_icon.svg" alt="">
+                    Analisis Completado
+                </h1>
+
+                <div class="ai__response__recomendations__img__container approve" style="display: none;">
+                    <img  class="ai__response__recomendations__img"  src="./images/approve_icon.svg" alt="">
+                    <p class="ai__response__recomendations__img__description">Todo esta en orden con los cultivos   </p>
+                </div>
+
+                <div class="ai__response__recomendations__img__container danger">
+                    <img  class="ai__response__recomendations__img"  src="./images/danger_icon.svg" alt="">
+                    <p class="ai__response__recomendations__img__description">Tu cultivo podria estar en peligro</p>
+                </div>
+
+                <div class="ai__response__recomendations__img__container idea" style="display: none;">
+                    <img  class="ai__response__recomendations__img"  src="./images/bulb_icon.svg" alt="">
+                    <p class="ai__response__recomendations__img__description"></p>
+                </div>
+
+                <h1 class="ai__response__recomendations__diagnose__title">Diagnostico</h1>
+                <p class="ai__response__recomendations__diagnose__description">Basaddo en el analisis de la imagen, tu cultivo muestra de signos de estres hidrico leve. Las hojas presentan un color ligeramente amarillento en los bordes, lo que indica que la planta necesita ajustes en el riego.</p>
+                <h1 class="ai__response__recomendations__recomendations__title">Recomendaciones principales</h1>
+                <ol class="ai__response__recomendations__recomendations__list">
+                    <li class="ai__response__recomendations__recomendations__list__item">Implementar sistema de riego por goteo</li>
+                    <li class="ai__response__recomendations__recomendations__list__item">Aplicar mulch organico para retener humedad</li>
+                    <li class="ai__response__recomendations__recomendations__list__item">Monitorear la humedad del suelo semanalmente</li>
+                </ol>
+
+            </div>
+
+            <div class="ai__response__techniques__container">
+                <h1 class="ai__response__techniques__title">
+                    <img class="ai__response__techniques__icon" src="./images/approve_icon.svg" alt="">
+                    Técnicas Recomendadas
+                </h1>
+
+                <select class="ai__response__techniques__dropdown">
+                    <option value="control-biologico">Control Biológico</option>
+                    <option value="control-cultural">Control Cultural</option>
+                    <option value="control-quimico">Control Químico</option>
+                    <option value="control-fisico">Control Físico</option>
+                </select>
+
+                <div class="ai__response__techniques__card">
+                    <img class="ai__response__techniques__card__image" src="https://imgs.search.brave.com/Uu8MohpWol1dISkBpUpDv59wGFNiEQIad1C6uQb7bVc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTA4/MjAxODgxL2VzL2Zv/dG8vbWFyaXF1aXRh/LWVzY2FsYWRhLWVu/LWxhLWZsb3ItYW1h/cmlsbGEuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPU51TWot/ZXUzcW5CeGExM1hW/c20yYzk3MXl4RVU1/d1hTM1FfbkNjclNv/REU9" alt="Técnica recomendada">
+                    <div class="ai__response__techniques__card__info">
+                        <h2 class="ai__response__techniques__card__title">Control Biológico</h2>
+                        <p class="ai__response__techniques__card__description">Uso de organismos vivos como depredadores naturales para controlar plagas sin químicos dañinos.</p>
+                        <a href="#" class="ai__response__techniques__card__button">Ver guía completa</a>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="ia__response__new-analysis__button">Realizar nuevo análisis</button>
+        </main>
+
+    </body>
+</html>

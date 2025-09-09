@@ -1,4 +1,3 @@
-/* Estilos base */
 body {
     font-family: 'Roboto', 'Open Sans', sans-serif;
     line-height: 1.6;
@@ -64,7 +63,7 @@ body {
 }
 
 
-.textContainer div[miniContainers] {
+.miniContainers {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
@@ -72,12 +71,12 @@ body {
     margin-top: 20px;
 }
 
-.textContainer div[miniContainers] p {
+.miniContainers p {
     flex: 2;
     min-width: 250px;
 }
 
-.textContainer div[miniContainers] img.small {
+.miniContainers img.small {
     flex: 1;
     min-width: 200px;
     max-width: 280px;

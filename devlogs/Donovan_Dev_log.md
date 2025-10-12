@@ -29,6 +29,11 @@ AI : Gemini CLI
 Prompt : "Restructure the project in order to a correct deploy in github pages, also correct the routes if necessary."
 Edits : The structure was corrected and changed.
 
+AI : Gemini CLI
+Prompt: "Help me to migrate from html to ejs, create the basic directory structure and transform from html to ejs, convert the navbar to a partial, don´t modify the content, create the basic server.js to put the views there."
+
+AI : Gemini CLI
+Prompt: Using the models.json file as a base, I want you to create the mongoose models for my database. I want you to create the models for me in separate files so I can export them and I also want the models that they are related as block_types with block_content, leave them in the same file, relate them to a discriminant and also prepare them for me to export it and be able to use it in the endpoints.
 
 Personal Reflection 
 I think the most important thing to do with this project is to have a good planification in order to do the right effort to accomplish your goals.

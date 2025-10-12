@@ -2,8 +2,12 @@ const dotenv = require('dotenv')
 const express = require('express');
 const app = express();
 const path = require('path');
+const apiRouter = require('./routes/api');
 
 dotenv.config()
+
+// API router
+app.use('/api', apiRouter);
 
 // Set the view engine to ejs
 app.set('view engine', 'ejs');

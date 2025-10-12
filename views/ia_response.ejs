@@ -13,39 +13,7 @@
     </head>
 
     <body>
-        <header class="header">
-            <nav class="navbar">
-                <a href="/" class="navbar__logo__anchor">
-                    <img class="navbar__logo__img" src="images/favicon.svg" alt="Logo">
-                </a>
-
-                <input type="checkbox" id="menu-toggle" class="navbar__menu-toggle">
-                <label for="menu-toggle" class="navbar__menu-icon">
-                    <img src="images/menu_three_bars.svg" class="navbar__menu-open-icon" alt="Open menu">
-                    <img src="images/menu_cross.svg" class="navbar__menu-close-icon" alt="Close menu">
-                </label>
-
-                <div class="navbar__menu">
-                    <hr class="navbar__mobile-separator">
-                    <ul class="navbar__pages__list">
-                        <li><a href="/">Inicio</a></li>
-                        <li><a href="ia_assistance.html">Asistente IA</a></li>
-                        <li><a href="blogpost-template.html">Blog</a></li>
-                        <li><a href="#">Newsletter</a></li>
-                    </ul>
-                    
-                    <hr class="navbar__mobile-separator">
-
-                    <div class="navbar__utils__container">
-                        <div class="navbar__language-selector">
-                            <img src="images/world_icon_language.svg" alt="Language">
-                            <span>Español</span>
-                        </div>
-                        <button type="button" class="navbar__utils__login__button">Iniciar sesión</button>
-                    </div>
-                </div>
-            </nav>
-        </header>
+        <%- include('partials/navbar') %>
 
         <main class="ia__response__main">
             <div class="ia__response__header">

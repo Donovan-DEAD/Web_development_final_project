@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/styles/navbar.css">
+    <link rel="stylesheet" href="/styles/login.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="login">
+        <div class="login__container">
+            <h1 class="login__title">Iniciar Sesión</h1>
+            <form class="login__form">
+                <input class="login__form__input" type="email" placeholder="Correo Electrónico" required>
+                <input class="login__form__input" type="password" placeholder="Contraseña" required>
+                <button class="login__form__button" type="submit">Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

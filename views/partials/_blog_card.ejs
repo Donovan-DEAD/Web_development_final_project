@@ -1,0 +1,8 @@
+<div class="card">
+    <img src="<%= post.image %>" alt="Blog post image" class="card__image">
+    <div class="card__content">
+        <h3 class="card__title"><%= post.title %></h3>
+        <p class="card__description"><%= post.description %></p>
+        <a href="/blogpost?id=<%= post._id %>" class="card__button">Leer más</a>
+    </div>
+</div>

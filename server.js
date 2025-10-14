@@ -36,6 +36,16 @@ app.get('/ia-response', (req, res) => {
     res.render('ia_response');
 });
 
+// Define a route for the login page
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
+// Define a route for the blog search page
+app.get('/blog-search', (req, res) => {
+    res.render('blog_search');
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

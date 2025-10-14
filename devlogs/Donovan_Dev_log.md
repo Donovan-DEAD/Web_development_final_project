@@ -35,5 +35,8 @@ Prompt: "Help me to migrate from html to ejs, create the basic directory structu
 AI : Gemini CLI
 Prompt: Using the models.json file as a base, I want you to create the mongoose models for my database. I want you to create the models for me in separate files so I can export them and I also want the models that they are related as block_types with block_content, leave them in the same file, relate them to a discriminant and also prepare them for me to export it and be able to use it in the endpoints.
 
+AI : Gemini CLI
+Prompt: Using express-session middleware add context to the redirection in endpoints when authentication failed and create a partial with a toast in bootstrap so when there is an error the user can notice it, pass the information of redirectionInfo to the ejs so the partial of the toast can acces to the message an can display it.
+
 Personal Reflection 
 I think the most important thing to do with this project is to have a good planification in order to do the right effort to accomplish your goals.

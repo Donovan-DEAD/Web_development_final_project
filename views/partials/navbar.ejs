@@ -26,7 +26,19 @@
                     <img src="images/world_icon_language.svg" alt="Language">
                     <span>Español</span>
                 </div>
-                <a href="/login" class="navbar__utils__login__button">Iniciar sesión</a>
+                <% if (username) { %>
+                    <div class="navbar__user-info">
+                        <span class="navbar__username"><%= username %></span>
+                        <a href="/api/logout" class="navbar__utils__logout__button">Logout</a>
+                    </div>
+                <% } else { %>
+                    <% if (current_page !== 'login') { %>
+                        <a href="/login" class="navbar__utils__login__button">Iniciar sesión</a>
+                    <% } %>
+                    <% if (current_page !== 'register') { %>
+                        <a href="/register" class="navbar__utils__login__button">Registrarse</a>
+                    <% } %>
+                <% } %>
             </div>
         </div>
     </nav>

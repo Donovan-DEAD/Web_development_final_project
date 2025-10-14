@@ -2,4 +2,4 @@
 /.env
 /models.json
 /*.yml
-/data
+/public/data/*

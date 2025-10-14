@@ -12,16 +12,17 @@
 }
 
 .login {
-    height: 90vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
     & .login__container {
-        max-width: 400px;
+        max-width: 500px;
+        width: 50%;
         margin: 5rem auto;
-        padding: 2rem;
+        padding: 3rem;
         background: var(--color-grey-bg);
         border: 1px solid var(--color-grey-border);
         border-radius: 8px;

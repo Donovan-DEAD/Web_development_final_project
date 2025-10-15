@@ -10,74 +10,98 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wdth@0,75..100;1,75..100&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     </head>
 
     <body>
         <%- include('partials/navbar') %>
 
         <main class="ia__response__main">
-            <div class="ia__response__header">
-                <h1 class="ai__response__header__title">Asesoría IA Agrícola</h1>
-                <p  class="ai__response__header__description">Sube una imagen de tu cultivo y obtén recomendaciones personalizadas</p>
-            </div>
-
-            <div class="ai__response__recomendations__container">
-                <h1 class="ai__response__recomendations__title">
-                    <img class="ai__response__recomendations__icon" src="images/approve_icon.svg" alt="">
-                    Analisis Completado
-                </h1>
-
-                <div class="ai__response__recomendations__img__container approve" style="display: none;">
-                    <img  class="ai__response__recomendations__img"  src="images/approve_icon.svg" alt="">
-                    <p class="ai__response__recomendations__img__description">Todo esta en orden con los cultivos   </p>
+            <% if (error) { %>
+                <div class="error-container">
+                    <h1><%= error %></h1>
+                    <% if (showButton) { %>
+                        <a href="/ia-assistance" class="ia__response__new-analysis__button">Volver a intentar</a>
+                    <% } %>
                 </div>
-
-                <div class="ai__response__recomendations__img__container danger">
-                    <img  class="ai__response__recomendations__img"  src="images/danger_icon.svg" alt="">
-                    <p class="ai__response__recomendations__img__description">Tu cultivo podria estar en peligro</p>
+            <% } else if (data) { %>
+                <div class="ia__response__header">
+                    <h1 class="ai__response__header__title">Asesoría IA Agrícola</h1>
+                    <p  class="ai__response__header__description">Sube una imagen de tu cultivo y obtén recomendaciones personalizadas</p>
                 </div>
-
-                <div class="ai__response__recomendations__img__container idea" style="display: none;">
-                    <img  class="ai__response__recomendations__img"  src="images/bulb_icon.svg" alt="">
-                    <p class="ai__response__recomendations__img__description"></p>
+    
+                <div class="ai__response__recomendations__container">
+                    <h1 class="ai__response__recomendations__title">
+                        <img class="ai__response__recomendations__icon" src="images/<%= data.nivel_de_peligro === 'aprovado' ? 'approve_icon.svg' : (data.nivel_de_peligro === 'mejorable' ? 'bulb_icon.svg' : 'danger_icon.svg') %>" alt="">
+                        Analisis Completado
+                    </h1>
+    
+                    <div class="ai__response__recomendations__img__container <%= data.nivel_de_peligro %>">
+                        <img  class="ai__response__recomendations__img"  src="images/<%= data.nivel_de_peligro === 'aprovado' ? 'approve_icon.svg' : (data.nivel_de_peligro === 'mejorable' ? 'bulb_icon.svg' : 'danger_icon.svg') %>" alt="">
+                        <p class="ai__response__recomendations__img__description">
+                            <% if (data.nivel_de_peligro === 'aprovado') { %>
+                                Todo esta en orden con los cultivos
+                            <% } else if (data.nivel_de_peligro === 'mejorable') { %>
+                                Hay aspectos a mejorar en tu cultivo
+                            <% } else { %>
+                                Tu cultivo podria estar en peligro
+                            <% } %>
+                        </p>
+                    </div>
+    
+                    <h1 class="ai__response__recomendations__diagnose__title">Diagnostico</h1>
+                    <p class="ai__response__recomendations__diagnose__description"><%= data.diagnostico %></p>
+                    <h1 class="ai__response__recomendations__recomendations__title">Recomendaciones principales</h1>
+                    <ol class="ai__response__recomendations__recomendations__list">
+                        <% data.recomendations.forEach(rec => { %>
+                            <li class="ai__response__recomendations__recomendations__list__item"><%= rec %></li>
+                        <% }); %>
+                    </ol>
+    
                 </div>
-
-                <h1 class="ai__response__recomendations__diagnose__title">Diagnostico</h1>
-                <p class="ai__response__recomendations__diagnose__description">Basaddo en el analisis de la imagen, tu cultivo muestra de signos de estres hidrico leve. Las hojas presentan un color ligeramente amarillento en los bordes, lo que indica que la planta necesita ajustes en el riego.</p>
-                <h1 class="ai__response__recomendations__recomendations__title">Recomendaciones principales</h1>
-                <ol class="ai__response__recomendations__recomendations__list">
-                    <li class="ai__response__recomendations__recomendations__list__item">Implementar sistema de riego por goteo</li>
-                    <li class="ai__response__recomendations__recomendations__list__item">Aplicar mulch organico para retener humedad</li>
-                    <li class="ai__response__recomendations__recomendations__list__item">Monitorear la humedad del suelo semanalmente</li>
-                </ol>
-
-            </div>
-
-            <div class="ai__response__techniques__container">
-                <h1 class="ai__response__techniques__title">
-                    <img class="ai__response__techniques__icon" src="images/approve_icon.svg" alt="">
-                    Técnicas Recomendadas
-                </h1>
-
-                <select class="ai__response__techniques__dropdown">
-                    <option value="control-biologico">Control Biológico</option>
-                    <option value="control-cultural">Control Cultural</option>
-                    <option value="control-quimico">Control Químico</option>
-                    <option value="control-fisico">Control Físico</option>
-                </select>
-
-                <div class="ai__response__techniques__card">
-                    <img class="ai__response__techniques__card__image" src="https://imgs.search.brave.com/Uu8MohpWol1dISkBpUpDv59wGFNiEQIad1C6uQb7bVc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTA4/MjAxODgxL2VzL2Zv/dG8vbWFyaXF1aXRh/LWVzY2FsYWRhLWVu/LWxhLWZsb3ItYW1h/cmlsbGEuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPU51TWot/ZXUzcW5CeGExM1hW/c20yYzk3MXl4RVU1/d1hTM1FfbkNjclNv/REU9" alt="Técnica recomendada">
-                    <div class="ai__response__techniques__card__info">
-                        <h2 class="ai__response__techniques__card__title">Control Biológico</h2>
-                        <p class="ai__response__techniques__card__description">Uso de organismos vivos como depredadores naturales para controlar plagas sin químicos dañinos.</p>
-                        <a href="#" class="ai__response__techniques__card__button">Ver guía completa</a>
+    
+                <div class="ai__response__techniques__container">
+                    <h1 class="ai__response__techniques__title">
+                        <img class="ai__response__techniques__icon" src="images/approve_icon.svg" alt="">
+                        Técnicas Recomendadas
+                    </h1>
+    
+                    <select class="ai__response__techniques__dropdown">
+                        <% data.tecnicas_a_usar.forEach(tech => { %>
+                            <option value="<%= tech.toLowerCase().replace(/ /g, '-') %>"><%= tech %></option>
+                        <% }); %>
+                    </select>
+    
+                    <div class="ai__response__techniques__card">
+                        <img class="ai__response__techniques__card__image" src="https://imgs.search.brave.com/Uu8MohpWol1dISkBpUpDv59wGFNiEQIad1C6uQb7bVc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTA4/MjAxODgxL2VzL2Zv/dG8vbWFyaXF1aXRh/LWVzY2FsYWRhLWVu/LWxhLWZsb3ItYW1h/cmlsbGEuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPU51TWot/ZXUzcW5CeGExM1hW/c20yYzk3MXl4RVU1/d1hTM1FfbkNjclNv/REU9" alt="Técnica recomendada">
+                        <div class="ai__response__techniques__card__info">
+                            <h2 class="ai__response__techniques__card__title"><%= data.tecnicas_a_usar[0] %></h2>
+                            <p class="ai__response__techniques__card__description">Uso de organismos vivos como depredadores naturales para controlar plagas sin químicos dañinos.</p>
+                            <a href="#" class="ai__response__techniques__card__button">Ver guía completa</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <button type="button" class="ia__response__new-analysis__button">Realizar nuevo análisis</button>
+    
+                <a href="/ia-assistance" class="ia__response__new-analysis__button">Realizar nuevo análisis</a>
+            <% } else { %>
+                <div class="error-container">
+                    <h1>No hay datos para mostrar</h1>
+                    <a href="/ia-assistance" class="ia__response__new-analysis__button">Realizar un análisis</a>
+                </div>
+            <% } %>
         </main>
 
+        <% if (toastMessage) { %>
+            <%- include('partials/_toast', { message: toastMessage }) %>
+        <% } %>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('.toast').toast('show');
+            });
+        </script>
     </body>
 </html>

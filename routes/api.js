@@ -45,5 +45,8 @@ module.exports = function(passport) {
         });
     });
 
+    const aiRouter = require('./ai_router');
+    router.use('/ia', aiRouter);
+
     return router;
 };

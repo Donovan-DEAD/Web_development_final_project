@@ -35,20 +35,31 @@ const MakeConsultToGemini = async(prompt, image64, mimeType)=>{
             responseSchema: {
             type: "object",
             properties: {
-                nivel_de_peligro: { type: "string", enum: ["aprovado", "mejorable", "peligro"] },
+                nivel_de_peligro: { type: "string", enum: ["aprobado", "mejorable", "peligro"] },
                 diagnostico: { type: "string" },
                 recomendations: { type: "array", items: { type: "string" }, minItems: 1, maxItems: 3 },
-                tecnicas_a_usar: { type: "array", items: { type: "string" }, minItems: 1, maxItems: 4 },
+                tecnicas_a_usar: {
+                    type: "array",
+                    minItems: 1,
+                    maxItems: 4,
+                    items: {
+                        type: "object",
+                        properties: {
+                        name: { type: "string" },
+                        description: { type: "string" }
+                        },
+                        required: ["name", "description"]
+                    }
+                },
                 correct_image: { type: "boolean" },
                 correct_context: { type: "boolean" }
-            },
-            required: ["nivel_de_peligro", "diagnostico", "recomendations", "tecnicas_a_usar", "correct_image", "correct_context"]
+                },
+                required: ["nivel_de_peligro", "diagnostico", "recomendations", "tecnicas_a_usar", "correct_image", "correct_context"]
             },
             temperature: 0.5
         }
         });
-
-        console.log(response.candidates[0].content.parts[0].text)
+        
         return JSON.parse(response.candidates[0].content.parts[0].text)
 
     } catch(error){

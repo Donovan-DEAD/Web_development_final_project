@@ -113,7 +113,7 @@ body {
     font-weight: 400;
     gap: 10px;
 
-    &.approve {
+    &.aprobado {
       border-radius: 15px;
       border-color: #04911e;
       border-style: solid;

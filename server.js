@@ -37,7 +37,7 @@ async function startServer() {
 
     // API router
     app.use('/api', apiRouter);
-    app.use('/ia', aiRouter);
+    app.use('/api/ia', aiRouter);
 
     // Set the view engine to ejs
     app.set('view engine', 'ejs');
@@ -63,7 +63,9 @@ async function startServer() {
 
     // Define a route for the IA response page
     app.get('/ia-response', (req, res) => {
-        res.render('ia_response', { username: req.user ? req.user.name.split(" ")[0] : null, current_page: '' });
+        const apiResponse = req.session.apiResponse;
+        req.session.apiResponse = null;
+        res.render('ia_response', { ...apiResponse, username: req.user ? req.user.name.split(" ")[0] : null, current_page: '' });
     });
 
     // Define a route for the login page

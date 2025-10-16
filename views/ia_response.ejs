@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Respuesta de IA</title>
 
-        <link rel="stylesheet" href="styles/navbar.css">
-        <link rel="stylesheet" href="styles/ia_response.css">
+        <link rel="stylesheet" href="/styles/navbar.css">
+        <link rel="stylesheet" href="/styles/ia_response.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wdth@0,75..100;1,75..100&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -32,14 +32,14 @@
     
                 <div class="ai__response__recomendations__container">
                     <h1 class="ai__response__recomendations__title">
-                        <img class="ai__response__recomendations__icon" src="images/<%= data.nivel_de_peligro === 'aprovado' ? 'approve_icon.svg' : (data.nivel_de_peligro === 'mejorable' ? 'bulb_icon.svg' : 'danger_icon.svg') %>" alt="">
+                        <img class="ai__response__recomendations__icon" src="/images/<%= data.nivel_de_peligro === 'aprobado' ? 'approve_icon.svg' : (data.nivel_de_peligro === 'mejorable' ? 'bulb_icon.svg' : 'danger_icon.svg') %>" alt="">
                         Analisis Completado
                     </h1>
     
                     <div class="ai__response__recomendations__img__container <%= data.nivel_de_peligro %>">
-                        <img  class="ai__response__recomendations__img"  src="images/<%= data.nivel_de_peligro === 'aprovado' ? 'approve_icon.svg' : (data.nivel_de_peligro === 'mejorable' ? 'bulb_icon.svg' : 'danger_icon.svg') %>" alt="">
+                        <img  class="ai__response__recomendations__img"  src="/images/<%= data.nivel_de_peligro === 'aprobado' ? 'approve_icon.svg' : (data.nivel_de_peligro === 'mejorable' ? 'bulb_icon.svg' : 'danger_icon.svg') %>" alt="">
                         <p class="ai__response__recomendations__img__description">
-                            <% if (data.nivel_de_peligro === 'aprovado') { %>
+                            <% if (data.nivel_de_peligro === 'aprobado') { %>
                                 Todo esta en orden con los cultivos
                             <% } else if (data.nivel_de_peligro === 'mejorable') { %>
                                 Hay aspectos a mejorar en tu cultivo
@@ -62,21 +62,21 @@
     
                 <div class="ai__response__techniques__container">
                     <h1 class="ai__response__techniques__title">
-                        <img class="ai__response__techniques__icon" src="images/approve_icon.svg" alt="">
+                        <img class="ai__response__techniques__icon" src="/images/approve_icon.svg" alt="">
                         Técnicas Recomendadas
                     </h1>
     
                     <select class="ai__response__techniques__dropdown">
-                        <% data.tecnicas_a_usar.forEach(tech => { %>
-                            <option value="<%= tech.toLowerCase().replace(/ /g, '-') %>"><%= tech %></option>
+                        <% data.tecnicas_a_usar.forEach((tech, index) => { %>
+                            <option value="<%= index %>"><%= tech.name %></option>
                         <% }); %>
                     </select>
     
                     <div class="ai__response__techniques__card">
                         <img class="ai__response__techniques__card__image" src="https://imgs.search.brave.com/Uu8MohpWol1dISkBpUpDv59wGFNiEQIad1C6uQb7bVc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTA4/MjAxODgxL2VzL2Zv/dG8vbWFyaXF1aXRh/LWVzY2FsYWRhLWVu/LWxhLWZsb3ItYW1h/cmlsbGEuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPU51TWot/ZXUzcW5CeGExM1hW/c20yYzk3MXl4RVU1/d1hTM1FfbkNjclNv/REU9" alt="Técnica recomendada">
                         <div class="ai__response__techniques__card__info">
-                            <h2 class="ai__response__techniques__card__title"><%= data.tecnicas_a_usar[0] %></h2>
-                            <p class="ai__response__techniques__card__description">Uso de organismos vivos como depredadores naturales para controlar plagas sin químicos dañinos.</p>
+                            <h2 class="ai__response__techniques__card__title"><%= data.tecnicas_a_usar[0].name %></h2>
+                            <p class="ai__response__techniques__card__description"><%= data.tecnicas_a_usar[0].description %></p>
                             <a href="#" class="ai__response__techniques__card__button">Ver guía completa</a>
                         </div>
                     </div>
@@ -101,6 +101,16 @@
         <script>
             $(document).ready(function(){
                 $('.toast').toast('show');
+
+                const tecnicas = <%- JSON.stringify(data.tecnicas_a_usar) %>;
+
+                $('.ai__response__techniques__dropdown').change(function() {
+                    const selectedIndex = $(this).val();
+                    const selectedCard = tecnicas[selectedIndex];
+
+                    $('.ai__response__techniques__card__title').text(selectedCard.name);
+                    $('.ai__response__techniques__card__description').text(selectedCard.description);
+                });
             });
         </script>
     </body>

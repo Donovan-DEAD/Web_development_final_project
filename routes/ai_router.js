@@ -22,47 +22,43 @@ router.post('/', async (req, res) => {
 
     uploadMiddleware(req, res, async(err) => {
         if (err instanceof multer.MulterError) {
-            // A Multer error occurred when uploading.
             if (err.code === 'LIMIT_FILE_SIZE') {
-                return res.status(400).json({ message: 'Image exceeds the 10MB size limit.' });
+                req.session.apiResponse = { error: 'Image exceeds the 10MB size limit.', showButton: true };
+            } else {
+                req.session.apiResponse = { error: err.message, showButton: true };
             }
-            return res.status(400).json({ message: err.message });
+            return res.redirect('/ia-response');
         } else if (err) {
-            // An unknown error occurred when uploading.
-            return res.status(400).json({ message: err.message });
+            req.session.apiResponse = { error: err.message, showButton: true };
+            return res.redirect('/ia-response');
         }
 
-        // Everything went fine.
         const { context } = req.body;
         const image = req.file;
 
-        if (!image || !context) {
-            return res.status(400).render('ia_response', { 
-                error: "Favor de utilizar esta herramienta correctamente mandando información que tenga que ver con el tema por favor.",
-                showButton: true
-            });
+        let image64 = '';
+        let mimeType = '';
+
+        if (image) {
+            image64 = image.buffer.toString('base64');
+            mimeType = image.mimetype;
+        } else if (!context) {
+            req.session.apiResponse = { error: "Favor de utilizar esta herramienta correctamente mandando información que tenga que ver con el tema por favor.", showButton: true };
+            return res.redirect('/ia-response');
         }
 
-        const image64 = image.buffer.toString('base64');
-        const mimeType = image.mimetype;
-
         const geminiResponse = await MakeConsultToGemini(context, image64, mimeType);
-        console.log(geminiResponse)
         
         if (!geminiResponse) {
-            return res.status(500).render('ia_response', {
-                error: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo más tarde.",
-                showButton: true
-            });
+            req.session.apiResponse = { error: "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo más tarde.", showButton: true };
+            return res.redirect('/ia-response');
         }
 
         const { correct_image, correct_context } = geminiResponse;
 
         if (!correct_image && !correct_context) {
-            return res.render('ia_response', {
-                error: "Favor de utilizar esta herramienta correctamente mandando información que tenga que ver con el tema por favor.",
-                showButton: true
-            });
+            req.session.apiResponse = { error: "Favor de utilizar esta herramienta correctamente mandando información que tenga que ver con el tema por favor.", showButton: true };
+            return res.redirect('/ia-response');
         }
 
         let toastMessage = null;
@@ -72,14 +68,14 @@ router.post('/', async (req, res) => {
             toastMessage = "El contexto proporcionado no parece estar relacionado con la agricultura.";
         }
 
-        res.render("ia_response", {
+        req.session.apiResponse = {
             data: geminiResponse,
             toastMessage: toastMessage,
             error: null,
-            showButton: false,
-            username : req.user ? req.user.name.split(" ")[0] : null,
-            current_page: ''
-        });
+            showButton: false
+        };
+
+        res.redirect('/ia-response');
     });
 });
 

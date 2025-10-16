@@ -39,37 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    aiForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        console.log("Pressed.")
-
-        if (imageUpload.files.length === 0) {
-            showToast('Please select an image.');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('image', imageUpload.files[0]);
-        formData.append('context', context.value);
-
-        try {
-            // var button = document.getElementsByClassName("ai__assistance__form__container__right__button")[0]
-            // console.log(button)
-            // button.setAttribute("disabled", true)
-            const response = await fetch('/api/ia/', {
-                method: 'POST',
-                body: formData
-            });
-            
-            // button.setAttribute("disabled", false)
-
-            console.log(response)
-            if (!response.ok) {
-                const errorData = await response.json();
-                showToast(errorData.message || 'Error sending data');
-            }
-        } catch (error) {
-            showToast('Error: ' + error.message);
-        }
+    aiForm.addEventListener('submit', (e) => {
+        const submitButton = aiForm.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.classList.add('disabled');
+        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Esperando por respuesta...';
     });
 });

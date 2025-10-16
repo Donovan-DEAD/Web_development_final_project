@@ -238,6 +238,12 @@
           width: 20px;
         }
       }
+
+      & .ai__assistance__form__container__right__button.disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
     }
   }
 }

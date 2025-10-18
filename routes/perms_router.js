@@ -19,8 +19,8 @@ module.exports = function(passport) {
 
         if(pagination == undefined || pagination < 1) {
             let users = null
-            if(field == undefined || query == undefined) users = await User.find().select("-perms -__v").limit(50);
-            else users = await User.find({[field]: {$regex: query, $options: 'i'}}).select("-perms -__v").limit(50);
+            if(field == undefined || query == undefined) users = await User.find().select("-__v").limit(50);
+            else users = await User.find({[field]: {$regex: query, $options: 'i'}}).select("-__v").limit(50);
         
             req.session.redirectInfo = {
                 users : users,
@@ -33,8 +33,8 @@ module.exports = function(passport) {
 
             let users = null
 
-            if(field == undefined || query == undefined) users = await User.find().select("-perms -__v").skip((pagination-1)*50).limit(50);
-            else users = await User.find({[field]: {$regex: query, $options: 'i'}}).select("-perms -__v").skip((pagination-1)*50).limit(50);
+            if(field == undefined || query == undefined) users = await User.find().select("-__v").skip((pagination-1)*50).limit(50);
+            else users = await User.find({[field]: {$regex: query, $options: 'i'}}).select("-__v").skip((pagination-1)*50).limit(50);
         
             req.session.redirectInfo = {
                 users : users,

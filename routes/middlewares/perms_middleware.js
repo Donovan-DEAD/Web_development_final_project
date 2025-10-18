@@ -2,7 +2,7 @@ const User = require("../models/user")
 
 const authenticated = (req, res, next)=>{
     if(!req.isAuthenticated()) res.redirect("/login")
-    next()
+    else next();
 }
 
 const hasAdminPerms = async (req, res, next) => {

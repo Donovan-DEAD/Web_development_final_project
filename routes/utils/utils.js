@@ -15,7 +15,6 @@ const InitializeDbConnection = async () => {
 
 const VerifyRootUser = async () => {
     // const user = await User.findById(new mongoose.Types.ObjectId(process.env.ROOT_ID));
-
     await User.findByIdAndDelete(new mongoose.Types.ObjectId(process.env.ROOT_ID));
 
     const user = await User.findById(new mongoose.Types.ObjectId(process.env.ROOT_ID));

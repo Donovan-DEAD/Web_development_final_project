@@ -10,6 +10,7 @@ const User = require('./routes/models/user');
 
 const { InitializeGeminiClient } = require('./routes/utils/geminiApi');
 const user = require('./routes/models/user');
+const { authenticated, hasAdminPerms } = require('./routes/middlewares/perms_middleware');
 
 dotenv.config();
 
@@ -89,11 +90,22 @@ async function startServer() {
     });
 
 
-    app.get('/manage_perms', (req, res) => {
+    app.get('/manage_perms',authenticated, hasAdminPerms, (req, res) => {
         const users = req.session.redirectInfo.users;
         const total_pages = req.session.redirectInfo.total_pages;
         const pagination_page = req.session.redirectInfo.pagination_page;
-        console.log(req.user)
+        
+        const permsMap = {
+            [process.env.ADMIN_PERM_STR]: 'admin',
+            [process.env.USER_PERM_STR]: 'user',
+            [process.env.EDITOR_PERM_STR]: 'editor'
+        };
+        
+        users.forEach(u => {
+            u.permsLabel = permsMap[u.perms] || 'desconocido';
+            u.perms = u.permsLabel;
+        });
+
         res.render('manage_perms', {
             user : req.user?req.user:null ,
             username: req.user ? req.user.name.split(" ")[0] : null,

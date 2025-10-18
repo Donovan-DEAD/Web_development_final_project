@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styles/navbar.css">
 </head>
 <body>
-    <%- include('partials/navbar', { username: user ? user.nombre : null, current_page: 'manage_perms', user: user }) %>
+    <%- include('partials/navbar', { username: username, current_page: 'manage_perms', user: user }) %>
 
     <div class="container mt-5">
         <h1>Gestionar Permisos de Usuario</h1>

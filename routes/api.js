@@ -26,7 +26,7 @@ module.exports = function(passport) {
     });
 
     router.post('/register', (req, res) => {
-        const newUser = new User({ name: req.body.name, username: req.body.username, perms: process.env.USER_PERM_STR });
+        const newUser = new User({ name: req.body.name, username: req.body.username, perms: process.env.USER_PERM_STR, email: req.body.username});
         User.register(newUser, req.body.password, (err, user) => {
             if (err) {
                 req.session.redirectInfo = 'Email already registered.';

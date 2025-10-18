@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/styles/toast.css">
 </head>
 <body>
-    <%- include('partials/navbar', { current_page: 'register' }) %>
+    <%- include('partials/navbar', { username: username, current_page: 'register' }) %>
     <div class="register">
         <div class="register__container">  
             <% if (message) { %>

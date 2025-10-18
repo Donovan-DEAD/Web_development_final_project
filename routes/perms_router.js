@@ -1,6 +1,6 @@
-import { hasAdminPerms, authenticated } from './middlewares/perms_middleware';
-import { ReturnEquivalentStringPerm, ReturnPerms } from './utils/utils';
 
+const { ReturnPerms } = require('./utils/utils');
+const { authenticated, hasAdminPerms } = require('./middlewares/perms_middleware');
 const express = require('express');
 const router = express.Router();
 const User = require('./models/user');
@@ -39,7 +39,7 @@ module.exports = function(passport) {
             req.session.redirectInfo = {
                 users : users,
                 total_pages : Math.ceil(total/50),
-                current_page : pagination
+                pagination_page : pagination
             }
         }
 

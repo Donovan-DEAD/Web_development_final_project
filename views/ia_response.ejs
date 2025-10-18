@@ -14,7 +14,7 @@
     </head>
 
     <body>
-        <%- include('partials/navbar') %>
+        <%- include('partials/navbar', { username: username, current_page: 'ia_response' }) %>
 
         <main class="ia__response__main">
             <% if (error) { %>

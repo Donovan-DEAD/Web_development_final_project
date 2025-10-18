@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/styles/blog_search.css">
 </head>
 <body>
-    <%- include('partials/navbar') %>
+    <%- include('partials/navbar', { username: username, current_page: 'blog_search' }) %>
 
     <div class="blog-search__container">
         <h1 class="blog-search__title">Buscar Blogs</h1>

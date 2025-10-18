@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { MakeConsultToGemini } = require('./geminiApi');
+const { MakeConsultToGemini } = require('./utils/geminiApi');
 
 // Configure multer
 const storage = multer.memoryStorage();

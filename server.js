@@ -2,13 +2,13 @@ const dotenv = require('dotenv');
 const express = require('express');
 const app = express();
 const path = require('path');
-const { InitializeDbConnection } = require('./routes/utils');
+const { InitializeDbConnection } = require('./routes/utils/utils');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./routes/models/user');
 
-const { InitializeGeminiClient } = require('./routes/geminiApi');
+const { InitializeGeminiClient } = require('./routes/utils/geminiApi');
 
 dotenv.config();
 
@@ -37,7 +37,6 @@ async function startServer() {
 
     // API router
     app.use('/api', apiRouter);
-    app.use('/api/ia', aiRouter);
 
     // Set the view engine to ejs
     app.set('view engine', 'ejs');

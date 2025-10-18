@@ -48,5 +48,8 @@ module.exports = function(passport) {
     const aiRouter = require('./ai_router');
     router.use('/ia', aiRouter);
 
+    const permsRouter = require('./perms_router')(passport);
+    router.use('/perms', permsRouter);
+
     return router;
 };

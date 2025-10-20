@@ -11,43 +11,23 @@
     <%- include('partials/navbar', { username: username, current_page: 'blog_search' }) %>
 
     <div class="blog-search__container">
-        <h1 class="blog-search__title">Buscar Blogs</h1>
-        <input type="text" class="blog-search__search-bar" placeholder="Buscar por título o descripción...">
+        <form id="blog-search-form" action="/blog-search-results" method="GET">
+            <h1 class="blog-search__title">Buscar Blogs</h1>
+            <input type="text" class="blog-search__search-bar" placeholder="Buscar por título o descripción..." id="searchTerm" name="searchTerm">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
     </div>
 
-    <% 
-        const sampleData = [
-            {
-                _id: '1',
-                title: 'Riego con Drones',
-                description: 'Una breve descripción sobre cómo los drones están revolucionando el riego en la agricultura.',
-                image: '/images/riego-con-drones.jpg'
-            },
-            {
-                _id: '2',
-                title: 'Riego de Cultivo',
-                description: 'Técnicas y mejores prácticas para el riego eficiente de cultivos a gran escala.',
-                image: '/images/riego-de-cultivo.jpg'
-            },
-            {
-                _id: '3',
-                title: 'Tecnología en el Agro',
-                description: 'Explorando las últimas innovaciones tecnológicas que están transformando la agricultura moderna.',
-                image: '/images/bulb_icon.svg'
-            },
-            {
-                _id: '4',
-                title: 'Sostenibilidad Agrícola',
-                description: 'Cómo las prácticas agrícolas sostenibles pueden beneficiar tanto al medio ambiente como a los agricultores.',
-                image: '/images/camera_icon.svg'
-            }
-        ];
-    %>
-
     <div class="blog-search__grid">
-        <% sampleData.forEach(post => { %>
+        <% data.forEach(post => { %>
             <%- include('partials/_blog_card', { post: post }) %>
         <% }); %>
+        <% if (data.length === 0) { %>
+            <p>No encontramos el blogpost que estaba buscando</p>
+        <%}%>
+        <% if (data.length < 3) { %>
+            <a href="/blog-search" class="navbar__utils__login__button">Blogs</a>
+        <%}%>
     </div>
 </body>
 </html>

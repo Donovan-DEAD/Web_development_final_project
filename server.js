@@ -79,18 +79,14 @@ async function startServer() {
     //Get method for the search 
     app.get('/blog-search-results', (req, res) => {
         const searchTerm = req.query.searchTerm.trim().toLowerCase();
-        console.log(searchTerm);
-        let searchResult = [];
-        
-        console.log(searchTerm);
 
+        let searchResult = [];
+    
         sampleData.forEach((value) =>{
             if (value.title.toLowerCase().includes(searchTerm)){
                 searchResult.push(value);
             }
         });
-
-        console.log(searchResult)
 
         if (!searchResult){
             return res.render('blog_search', { user : req.user?req.user:null ,username: req.user ? req.user.name.split(" ")[0] : null, current_page: '', data: null});

@@ -110,15 +110,14 @@ async function startServer() {
 
     // Define a route for the IA response page
     app.get('/ia-response', (req, res) => {
-        const apiResponse = req.session.apiResponse || {
-            error: "Pide primero una asesoria.",
-            toastMessage: null,
-            showButton: true,
-            data : {}
-        };
+        const apiResponse = req.session.apiResponse;
         
         if (typeof apiResponse.toastMessage === 'undefined') {
             apiResponse.toastMessage = null;
+        }
+
+        if(typeof(apiResponse.data) === 'undefined') {
+            apiResponse.data = {};
         }
 
         console.log(apiResponse);

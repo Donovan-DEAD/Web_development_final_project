@@ -69,7 +69,12 @@ router.post('/', async (req, res) => {
         }
 
         req.session.apiResponse = {
-            data: geminiResponse,
+            data: geminiResponse || {
+                error : "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo más tarde.",
+                showButton: true,
+                toastMessage: null,
+                data : {}
+            },
             toastMessage: toastMessage,
             error: null,
             showButton: false

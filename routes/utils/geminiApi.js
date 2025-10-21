@@ -13,7 +13,7 @@ const InitializeGeminiClient = async ()=>{
         } else {
             console.error("Failed to initialize Gemini Client: Client object is null or undefined.");
         }
-        Model_For_Request = process.env.Model_For_Request;
+        Model_For_Request = process.env.MODEL_FOR_REQUEST;
     } catch (error) {
         console.error("Error during Gemini Client initialization:", error);
     }

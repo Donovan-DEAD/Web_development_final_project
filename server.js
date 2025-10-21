@@ -39,7 +39,6 @@ async function startServer() {
     app.use(express.json());
 
     const apiRouter = require('./routes/api')(passport);
-    const aiRouter = require('./routes/ai_router');
     const blogRouter = require('./routes/blog_router');
 
     // API router

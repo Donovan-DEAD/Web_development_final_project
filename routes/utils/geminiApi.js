@@ -4,16 +4,19 @@ var Client_For_GENAI = null;
 var Model_For_Request = null;
 
 const InitializeGeminiClient = async ()=>{
+    console.log(process.env.API_KEY_GEMINI)
     Client_For_GENAI = new GoogleGenAI({apiKey: process.env.API_KEY_GEMINI})
+    console.log(Client_For_GENAI)
     Model_For_Request = process.env.Model_For_Request;
 }
 
 const MakeConsultToGemini = async(prompt, image64, mimeType)=>{
     try{
+        console.log(typeof(prompt), typeof(image64), typeof(mimeType))
         if (!prompt || typeof prompt !== 'string') throw new Error('Prompt inválido');
         if (!image64 || typeof image64 !== 'string') throw new Error('Imagen base64 inválida');
         if (!mimeType || typeof mimeType !== 'string') throw new Error('MimeType inválido');
-        
+
         const response = await Client_For_GENAI.models.generateContent({
         model: Model_For_Request,
         contents: [
@@ -63,7 +66,7 @@ const MakeConsultToGemini = async(prompt, image64, mimeType)=>{
             temperature: 0.5
         }
         });
-        
+        console.log(response);
         return JSON.parse(response.candidates[0].content.parts[0].text)
 
     } catch(error){

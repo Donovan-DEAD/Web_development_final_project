@@ -109,9 +109,19 @@ async function startServer() {
 
     // Define a route for the IA response page
     app.get('/ia-response', (req, res) => {
-        const apiResponse = req.session.apiResponse;
+        const apiResponse = req.session.apiResponse || {};
         req.session.apiResponse = null;
-        res.render('ia_response', { ...apiResponse, user : req.user?req.user:null , username: req.user ? req.user.name.split(" ")[0] : null, current_page: '' });
+
+        if (typeof apiResponse.toastMessage === 'undefined') {
+            apiResponse.toastMessage = null;
+        }
+
+        res.render('ia_response', {
+            ...apiResponse,
+            user: req.user || null,
+            username: req.user ? req.user.name.split(" ")[0] : null,
+            current_page: ''
+        });
     });
 
     // Define a route for the login page

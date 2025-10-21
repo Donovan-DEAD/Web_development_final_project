@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const blockContentSchema = new mongoose.Schema({
+    blog_id: mongoose.Schema.Types.Int32,
     author_id: mongoose.Schema.Types.String,
     blog_blocks: [mongoose.Schema.Types.Mixed]
 });

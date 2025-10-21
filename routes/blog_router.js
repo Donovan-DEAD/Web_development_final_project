@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { BlockContent } = require('./models/blog_content');
+const mongoose = require('mongoose');
 
 // Route to display a specific blog post
 router.get('/:blogId', async (req, res) => {
     try {
         const blogId = req.params.blogId;
-        const blogContent = await BlockContent.findOne({ blog_id: blogId });
+        const blogContent = await BlockContent.findById({ _id: new mongoose.Types.ObjectId(blogId) });
 
         if (!blogContent) {
             return res.status(404).render('404', {

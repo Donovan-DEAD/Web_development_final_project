@@ -10,6 +10,7 @@ const User = require('./routes/models/user');
 
 const { InitializeGeminiClient } = require('./routes/utils/geminiApi');
 const user = require('./routes/models/user');
+const blog_id_and_desc = require('./routes/models/blod_ids_and_desc')
 const { authenticated, hasAdminPerms } = require('./routes/middlewares/perms_middleware');
 const { hasEditorPerms } = require('./routes/middlewares/blogs_middleware');
 
@@ -82,22 +83,17 @@ async function startServer() {
     ];
 
     //Get method for the search 
-    app.get('/blog-search-results', (req, res) => {
+    app.get('/blog-search-results', async(req, res) => {
+        if(!req.query.searchTerm) res.redirect('/blog-search')
+        
         const searchTerm = req.query.searchTerm.trim().toLowerCase();
+        const data = await blog_id_and_desc.find({title : { $regex : searchTerm, $options : 'i'}}).limit(15);
 
-        let searchResult = [];
-    
-        sampleData.forEach((value) =>{
-            if (value.title.toLowerCase().includes(searchTerm)){
-                searchResult.push(value);
-            }
-        });
-
-        if (!searchResult){
-            return res.render('blog_search', { user : req.user?req.user:null ,username: req.user ? req.user.name.split(" ")[0] : null, current_page: '', data: null});
+        if (!data || data.length === 0){
+            return res.render('blog_search', { user : req.user?req.user:null ,username: req.user ? req.user.name.split(" ")[0] : null, current_page: '', data: []});
         }
 
-        res.render('blog_search', { user : req.user?req.user:null ,username: req.user ? req.user.name.split(" ")[0] : null, current_page: '', data: searchResult});
+        res.render('blog_search', { user : req.user?req.user:null ,username: req.user ? req.user.name.split(" ")[0] : null, current_page: '', data: data});
     });
 
     // Define a route for the main page
@@ -105,10 +101,6 @@ async function startServer() {
         res.render('index', { user: req.user?req.user:null, username: req.user ? req.user.name.split(" ")[0] : null, current_page: '' });
     });
 
-    // Define a route for the blogpost page
-    // app.get('/blogpost', (req, res) => {
-    //     res.render('blogpost-template', { user : req.user?req.user:null , username: req.user ? req.user.name.split(" ")[0] : null, current_page: '' });
-    // });
 
     // Define a route for the IA assistance page
     app.get('/ia-assistance', (req, res) => {
@@ -137,8 +129,9 @@ async function startServer() {
     });
 
     // Define a route for the blog search page
-    app.get('/blog-search', (req, res) => {
-        res.render('blog_search', { user : req.user?req.user:null ,username: req.user ? req.user.name.split(" ")[0] : null, current_page: '', data: sampleData});
+    app.get('/blog-search', async(req, res) => {
+        const data = await blog_id_and_desc.find().limit(15);
+        res.render('blog_search', { user : req.user?req.user:null ,username: req.user ? req.user.name.split(" ")[0] : null, current_page: '', data: data});
     });
 
     app.get('/create-blog', authenticated, hasEditorPerms, (req, res) => {

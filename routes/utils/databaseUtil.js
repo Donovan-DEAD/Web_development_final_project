@@ -1,9 +1,28 @@
+/**
+ * @file databaseUtil.js
+ * @description This file contains the utility functions for the database.
+ * @module routes/utils/databaseUtil
+ * 
+ * @requires mongoose
+ * @requires ../models/blog_content
+ * @requires ../models/user
+ * @requires ../models/blod_ids_and_desc
+ * 
+ * @exports populateDB
+ */
+
+// Import the necessary modules
 const mongoose = require('mongoose');
 const {BlockContent} = require('../models/blog_content');
 const user = require('../models/user');
 const {Blog_ids_and_desc} = require('../models/blod_ids_and_desc'); 
 
 
+/**
+ * @name populateDB
+ * @description This function populates the database with a sample post.
+ * @returns {void}
+ */
 exports.populateDB = async () => {
     const existingPost = await BlockContent.findOne({ blog_id: 1 });
     if (existingPost) {

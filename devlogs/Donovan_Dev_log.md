@@ -45,5 +45,9 @@ Prompt: Help me creating the boilerplate for a new view using bootstrap, it is g
 AI : Gemini CLI
 Prompt: Using the information in the .env file, help me to create the client for the supabase client, with the upload and delete function for the images that are going to be uploaded in the blog, also i want to connect those functions to the endpoints i left in the blog.js file so it can handle it.
 
+AI : Gemini CLI
+Prompt: Help me to document all the files in the routes folder in order to understand how it works and does it needs to work.
+
+
 Personal Reflection 
 I think the most important thing to do with this project is to have a good planification in order to do the right effort to accomplish your goals.

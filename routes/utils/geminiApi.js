@@ -63,7 +63,6 @@ const MakeConsultToGemini = async(prompt, image64, mimeType)=>{
             temperature: 0.5
         }
         });
-        console.log("Full response from Gemini API:", JSON.stringify(response, null, 2));
         if (response && response.candidates && response.candidates.length > 0) {
             console.log("Response status: OK");
             return JSON.parse(response.candidates[0].content.parts[0].text);

@@ -1,3 +1,20 @@
+/**
+ * @file blogs.js
+ * @description This file contains the routes for creating, updating, and deleting blogs.
+ * @module routes/blogs
+ * 
+ * @requires ./utils/utils
+ * @requires ./middlewares/blogs_middleware
+ * @requires express
+ * @requires ./models/blod_ids_and_desc
+ * @requires ./models/blog_content
+ * @requires ./utils/utils
+ * @requires multer
+ * 
+ * @exports module.exports
+ */
+
+// Import the necessary modules
 const { ReturnPerms } = require('./utils/utils');
 const { authenticated, hasEditorPerms } = require('./middlewares/blogs_middleware');
 const express = require('express');
@@ -10,8 +27,22 @@ const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+/**
+ * @function module.exports
+ * @description This function returns the router for the blogs.
+ * @param {object} passport - The passport object.
+ * @returns {object} The router for the blogs.
+ */
 module.exports = function(passport) {
 
+    /**
+     * @name POST /blog
+     * @description This route creates a new blog.
+     * @param {object} req - The request object.
+     * @param {object} res - The response object.
+     * @returns {void}
+     * @redirects /blog-search
+     */
     router.post("/blog",authenticated, hasEditorPerms, async(req, res) =>{
         if(!req.body){
             res.sendStatus(400)
@@ -42,6 +73,13 @@ module.exports = function(passport) {
         res.redirect("/blog-search")
     })
 
+    /**
+     * @name PUT /blog
+     * @description This route updates a blog.
+     * @param {object} req - The request object.
+     * @param {object} res - The response object.
+     * @returns {void}
+     */
     router.put("/blog",authenticated, hasEditorPerms, async(req, res) =>{
         if(!req.body){
             res.sendStatus(400)
@@ -58,6 +96,13 @@ module.exports = function(passport) {
         res.sendStatus(200)
     })
 
+    /**
+     * @name DELETE /blog
+     * @description This route deletes a blog.
+     * @param {object} req - The request object.
+     * @param {object} res - The response object.
+     * @returns {void}
+     */
     router.delete("/blog",authenticated, hasEditorPerms, async(req, res) =>{
         if(!req.body){
             res.sendStatus(400)
@@ -76,6 +121,13 @@ module.exports = function(passport) {
         res.sendStatus(200)
     })
 
+    /**
+     * @name POST /blog/images
+     * @description This route uploads an image to Supabase.
+     * @param {object} req - The request object.
+     * @param {object} res - The response object.
+     * @returns {void}
+     */
     router.post("/blog/images", authenticated, hasEditorPerms, upload.single('image'), async(req, res)=>{
         if(!req.file){
             res.sendStatus(400)
@@ -89,6 +141,13 @@ module.exports = function(passport) {
         }
     })
 
+    /**
+     * @name DELETE /blog/images
+     * @description This route deletes an image from Supabase.
+     * @param {object} req - The request object.
+     * @param {object} res - The response object.
+     * @returns {void}
+     */
     router.delete("/blog/images", authenticated, hasEditorPerms, async(req, res) => {
         const { imageUrl } = req.body;
         if (!imageUrl) {

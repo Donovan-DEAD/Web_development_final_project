@@ -1,9 +1,30 @@
+/**
+ * @file blog_router.js
+ * @description This file contains the routes for displaying a specific blog post.
+ * @module routes/blog_router
+ * 
+ * @requires express
+ * @requires ./models/blog_content
+ * @requires mongoose
+ * 
+ * @exports router
+ */
+
+// Import the necessary modules
 const express = require('express');
 const router = express.Router();
 const { BlockContent } = require('./models/blog_content');
 const mongoose = require('mongoose');
 
-// Route to display a specific blog post
+/**
+ * @name GET /:blogId
+ * @description This route displays a specific blog post.
+ * @param {object} req - The request object.
+ * @param {object} res - The response object.
+ * @returns {void}
+ * @render blogpost-template
+ * @render 404
+ */
 router.get('/:blogId', async (req, res) => {
     try {
         const blogId = req.params.blogId;

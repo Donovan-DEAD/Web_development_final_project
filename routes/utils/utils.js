@@ -48,8 +48,32 @@ const ReturnPerms = (perm)=>{
     }
 }
 
+const { createClient } = require('@supabase/supabase-js');
+const { randomUUID } = require('crypto');
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+
+const uploadImageToSupabase = async (file) => {
+    const fileName = `${randomUUID()}-${file.originalname}`;
+    const { data, error } = await supabase.storage
+        .from('images')
+        .upload(fileName, file.buffer, {
+            cacheControl: '3600',
+            upsert: false,
+            contentType: file.mimetype,
+        });
+
+    if (error) {
+        throw new Error('Error uploading image to Supabase');
+    }
+
+    const { data: { publicUrl } } = supabase.storage.from('images').getPublicUrl(fileName);
+    return publicUrl;
+};
+
 module.exports = {
     InitializeDbConnection,
     ReturnPerms,
-    VerifyRootUser
+    VerifyRootUser,
+    uploadImageToSupabase
 };

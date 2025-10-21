@@ -54,34 +54,6 @@ async function startServer() {
     // Serve static files from the 'public' directory
     app.use(express.static(path.join(__dirname, 'public')));
 
-    //SampleData for the database (that will be in the final version)
-    const sampleData = [
-            {
-                _id: '1',
-                title: 'Riego con Drones',
-                description: 'Una breve descripción sobre cómo los drones están revolucionando el riego en la agricultura.',
-                image: '/images/riego-con-drones.jpg'
-            },
-            {
-                _id: '2',
-                title: 'Riego de Cultivo',
-                description: 'Técnicas y mejores prácticas para el riego eficiente de cultivos a gran escala.',
-                image: '/images/riego-de-cultivo.jpg'
-            },
-            {
-                _id: '3',
-                title: 'Tecnología en el Agro',
-                description: 'Explorando las últimas innovaciones tecnológicas que están transformando la agricultura moderna.',
-                image: '/images/bulb_icon.svg'
-            },
-            {
-                _id: '4',
-                title: 'Sostenibilidad Agrícola',
-                description: 'Cómo las prácticas agrícolas sostenibles pueden beneficiar tanto al medio ambiente como a los agricultores.',
-                image: '/images/camera_icon.svg'
-            }
-    ];
-
     //Get method for the search 
     app.get('/blog-search-results', async(req, res) => {
         if(!req.query.searchTerm) res.redirect('/blog-search')

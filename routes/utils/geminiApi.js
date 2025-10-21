@@ -4,25 +4,12 @@ var Client_For_GENAI = null;
 var Model_For_Request = null;
 
 const InitializeGeminiClient = async ()=>{
-    console.log("Attempting to initialize Gemini Client...");
-    console.log("API_KEY_GEMINI:", process.env.API_KEY_GEMINI)
-    try {
-        Client_For_GENAI = new GoogleGenAI({apiKey: process.env.API_KEY_GEMINI});
-        if (Client_For_GENAI) {
-            console.log("Gemini Client initialized successfully.");
-        } else {
-            console.error("Failed to initialize Gemini Client: Client object is null or undefined.");
-        }
-        Model_For_Request = process.env.Model_For_Request;
-    } catch (error) {
-        console.error("Error during Gemini Client initialization:", error);
-    }
+    Client_For_GENAI = new GoogleGenAI({apiKey: process.env.API_KEY_GEMINI});
+    Model_For_Request = process.env.MODEL_FOR_REQUEST;
 }
 
 const MakeConsultToGemini = async(prompt, image64, mimeType)=>{
-    console.log("Initiating consultation with Gemini API...");
     try{
-        console.log("Received data types -> prompt:", typeof(prompt), ", image64:", typeof(image64), ", mimeType:", typeof(mimeType));
         if (!prompt || typeof prompt !== 'string') throw new Error('Prompt inválido');
         if (!image64 || typeof image64 !== 'string') throw new Error('Imagen base64 inválida');
         if (!mimeType || typeof mimeType !== 'string') throw new Error('MimeType inválido');

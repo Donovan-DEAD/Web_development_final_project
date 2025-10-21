@@ -54,5 +54,8 @@ module.exports = function(passport) {
     const blogRouter = require('./blogs')(passport)
     router.use('/blogs', blogRouter)
 
+    const blogRouter = require('./blog_router');
+    router.use('/blog', blogRouter);
+
     return router;
 };

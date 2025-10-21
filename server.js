@@ -38,9 +38,13 @@ async function startServer() {
 
     const apiRouter = require('./routes/api')(passport);
     const aiRouter = require('./routes/ai_router');
+    const blogRouter = require('./routes/blog_router');
 
     // API router
     app.use('/api', apiRouter);
+    
+    // Blog router
+    app.use('/blog', blogRouter);
 
     // Set the view engine to ejs
     app.set('view engine', 'ejs');
@@ -49,15 +53,62 @@ async function startServer() {
     // Serve static files from the 'public' directory
     app.use(express.static(path.join(__dirname, 'public')));
 
+    //SampleData for the database (that will be in the final version)
+    const sampleData = [
+            {
+                _id: '1',
+                title: 'Riego con Drones',
+                description: 'Una breve descripción sobre cómo los drones están revolucionando el riego en la agricultura.',
+                image: '/images/riego-con-drones.jpg'
+            },
+            {
+                _id: '2',
+                title: 'Riego de Cultivo',
+                description: 'Técnicas y mejores prácticas para el riego eficiente de cultivos a gran escala.',
+                image: '/images/riego-de-cultivo.jpg'
+            },
+            {
+                _id: '3',
+                title: 'Tecnología en el Agro',
+                description: 'Explorando las últimas innovaciones tecnológicas que están transformando la agricultura moderna.',
+                image: '/images/bulb_icon.svg'
+            },
+            {
+                _id: '4',
+                title: 'Sostenibilidad Agrícola',
+                description: 'Cómo las prácticas agrícolas sostenibles pueden beneficiar tanto al medio ambiente como a los agricultores.',
+                image: '/images/camera_icon.svg'
+            }
+    ];
+
+    //Get method for the search 
+    app.get('/blog-search-results', (req, res) => {
+        const searchTerm = req.query.searchTerm.trim().toLowerCase();
+
+        let searchResult = [];
+    
+        sampleData.forEach((value) =>{
+            if (value.title.toLowerCase().includes(searchTerm)){
+                searchResult.push(value);
+            }
+        });
+
+        if (!searchResult){
+            return res.render('blog_search', { user : req.user?req.user:null ,username: req.user ? req.user.name.split(" ")[0] : null, current_page: '', data: null});
+        }
+
+        res.render('blog_search', { user : req.user?req.user:null ,username: req.user ? req.user.name.split(" ")[0] : null, current_page: '', data: searchResult});
+    });
+
     // Define a route for the main page
     app.get('/', (req, res) => {
         res.render('index', { user: req.user?req.user:null, username: req.user ? req.user.name.split(" ")[0] : null, current_page: '' });
     });
 
     // Define a route for the blogpost page
-    app.get('/blogpost', (req, res) => {
-        res.render('blogpost-template', { user : req.user?req.user:null , username: req.user ? req.user.name.split(" ")[0] : null, current_page: '' });
-    });
+    // app.get('/blogpost', (req, res) => {
+    //     res.render('blogpost-template', { user : req.user?req.user:null , username: req.user ? req.user.name.split(" ")[0] : null, current_page: '' });
+    // });
 
     // Define a route for the IA assistance page
     app.get('/ia-assistance', (req, res) => {
@@ -87,7 +138,7 @@ async function startServer() {
 
     // Define a route for the blog search page
     app.get('/blog-search', (req, res) => {
-        res.render('blog_search', { user : req.user?req.user:null ,username: req.user ? req.user.name.split(" ")[0] : null, current_page: '' });
+        res.render('blog_search', { user : req.user?req.user:null ,username: req.user ? req.user.name.split(" ")[0] : null, current_page: '', data: sampleData});
     });
 
     app.get('/create-blog', authenticated, hasEditorPerms, (req, res) => {

@@ -1,11 +1,13 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require('../models/user');
+const databaseUtil = require('./databaseUtil');
 
 
 const InitializeDbConnection = async () => {
     try {
         await mongoose.connect(process.env.DATABASE_URL);
+        await databaseUtil.populateDB();
         console.log('DB connected');
     } catch (error) {
         console.log(error);

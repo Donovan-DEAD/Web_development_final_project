@@ -13,6 +13,7 @@ const user = require('./routes/models/user');
 const blog_id_and_desc = require('./routes/models/blod_ids_and_desc')
 const { authenticated, hasAdminPerms } = require('./routes/middlewares/perms_middleware');
 const { hasEditorPerms } = require('./routes/middlewares/blogs_middleware');
+const { error } = require('console');
 
 dotenv.config();
 
@@ -109,12 +110,18 @@ async function startServer() {
 
     // Define a route for the IA response page
     app.get('/ia-response', (req, res) => {
-        const apiResponse = req.session.apiResponse || {};
-        req.session.apiResponse = null;
-
+        const apiResponse = req.session.apiResponse || {
+            error: "Pide primero una asesoria.",
+            toastMessage: null,
+            showButton: true,
+            data : {}
+        };
+        
         if (typeof apiResponse.toastMessage === 'undefined') {
             apiResponse.toastMessage = null;
         }
+
+        console.log(apiResponse);
 
         res.render('ia_response', {
             ...apiResponse,

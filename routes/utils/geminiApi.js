@@ -10,6 +10,10 @@ const InitializeGeminiClient = async ()=>{
 
 const MakeConsultToGemini = async(prompt, image64, mimeType)=>{
     try{
+        if (!prompt || typeof prompt !== 'string') throw new Error('Prompt inválido');
+        if (!image64 || typeof image64 !== 'string') throw new Error('Imagen base64 inválida');
+        if (!mimeType || typeof mimeType !== 'string') throw new Error('MimeType inválido');
+        
         const response = await Client_For_GENAI.models.generateContent({
         model: Model_For_Request,
         contents: [

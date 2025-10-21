@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Como hacer mejores cultivos</title>
+        <title><%= post.blog_blocks[0] ? post.blog_blocks[0].blog_title : 'Blog Post' %></title>
         <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
         <link rel="stylesheet" href="styles/blogpost.css">
         <link rel="stylesheet" href="styles/navbar.css">
@@ -50,6 +50,16 @@
                 </p>
                 <img class="small" src="images/riego-con-drones.jpg" alt="Riego de cultivos con drones"/>
             </div>
+        </div>
+
+        <div class="blog-content">
+            <% if (locals.blog) { %>
+                <% blog.blog_blocks.forEach(block => { %>
+                    <%- include('partials/_' + block.type, { block: block }) %>
+                <% }); %>
+            <% } else { %>
+                <p>Blog post content not available.</p>
+            <% } %>
         </div>
 
         <div class="referencias">

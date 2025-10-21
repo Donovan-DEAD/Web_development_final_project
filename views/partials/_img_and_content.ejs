@@ -1,0 +1,11 @@
+<div class="img-and-content <%= block.orientation %>">
+    <div class="image-container">
+        <img src="<%= block.img_url %>" alt="<%= block.img_footer %>">
+        <p class="img-footer"><%= block.img_footer %></p>
+    </div>
+    <div class="text-container">
+        <% block.blog_paragraphs.forEach(paragraph => { %>
+            <p><%= paragraph %></p>
+        <% }); %>
+    </div>
+</div>

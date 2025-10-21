@@ -51,5 +51,8 @@ module.exports = function(passport) {
     const permsRouter = require('./perms_router')(passport);
     router.use('/perms', permsRouter);
 
+    const blogRouter = require('./blog_router');
+    router.use('/blog', blogRouter);
+
     return router;
 };

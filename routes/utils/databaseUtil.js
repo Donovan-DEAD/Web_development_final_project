@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
-const BlockContent = require('../models/blog_content');
+const {BlockContent} = require('../models/blog_content');
 const user = require('../models/user');
-const blod_ids_and_desc = require('../models/blod_ids_and_desc'); 
+const {Blog_ids_and_desc} = require('../models/blod_ids_and_desc'); 
 
 
 exports.populateDB = async () => {
-    const existingPost = await BlockContent.findOne({ blog_id: 'my-first-post' });
+    const existingPost = await BlockContent.findOne({ blog_id: 1 });
     if (existingPost) {
         console.log('Sample post already exists');
         return;
     }
 
     const samplePost = new BlockContent({
-        blog_id: 'my-first-post',
+        blog_id: 1,
         blog_blocks: [
             {
                 type: 'header', // This 'type' field is what we'll use

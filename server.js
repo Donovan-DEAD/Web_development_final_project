@@ -37,9 +37,13 @@ async function startServer() {
 
     const apiRouter = require('./routes/api')(passport);
     const aiRouter = require('./routes/ai_router');
+    const blogRouter = require('./routes/blog_router');
 
     // API router
     app.use('/api', apiRouter);
+    
+    // Blog router
+    app.use('/blog', blogRouter);
 
     // Set the view engine to ejs
     app.set('view engine', 'ejs');
@@ -101,9 +105,9 @@ async function startServer() {
     });
 
     // Define a route for the blogpost page
-    app.get('/blogpost', (req, res) => {
-        res.render('blogpost-template', { user : req.user?req.user:null , username: req.user ? req.user.name.split(" ")[0] : null, current_page: '' });
-    });
+    // app.get('/blogpost', (req, res) => {
+    //     res.render('blogpost-template', { user : req.user?req.user:null , username: req.user ? req.user.name.split(" ")[0] : null, current_page: '' });
+    // });
 
     // Define a route for the IA assistance page
     app.get('/ia-assistance', (req, res) => {

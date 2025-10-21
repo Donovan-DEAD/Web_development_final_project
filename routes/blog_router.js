@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const BlockContent = require('./models/blog_content');
+const { BlockContent } = require('./models/blog_content');
 
 // Route to display a specific blog post
 router.get('/:blogId', async (req, res) => {

@@ -11,6 +11,7 @@ const User = require('./routes/models/user');
 const { InitializeGeminiClient } = require('./routes/utils/geminiApi');
 const user = require('./routes/models/user');
 const { authenticated, hasAdminPerms } = require('./routes/middlewares/perms_middleware');
+const { hasEditorPerms } = require('./routes/middlewares/blogs_middleware');
 
 dotenv.config();
 
@@ -87,6 +88,10 @@ async function startServer() {
     // Define a route for the blog search page
     app.get('/blog-search', (req, res) => {
         res.render('blog_search', { user : req.user?req.user:null ,username: req.user ? req.user.name.split(" ")[0] : null, current_page: '' });
+    });
+
+    app.get('/create-blog', authenticated, hasEditorPerms, (req, res) => {
+        res.render('create_blog', { user : req.user?req.user:null ,username: req.user ? req.user.name.split(" ")[0] : null, current_page: 'create_blog' });
     });
 
 

@@ -5,7 +5,7 @@ const router = express.Router();
 const blog_ids_and_desc = require('./models/blod_ids_and_desc');
 const {  BlockContent } = require('./models/blog_content');
 
-const { uploadImageToSupabase } = require('./utils/utils');
+const { uploadImageToSupabase, deleteImageFromSupabase } = require('./utils/utils');
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -85,6 +85,21 @@ module.exports = function(passport) {
             const publicUrl = await uploadImageToSupabase(req.file);
             res.status(200).json({ imageUrl: publicUrl });
         } catch (error) {
+            res.sendStatus(500);
+        }
+    })
+
+    router.delete("/blog/images", authenticated, hasEditorPerms, async(req, res) => {
+        const { imageUrl } = req.body;
+        if (!imageUrl) {
+            return res.sendStatus(400);
+        }
+
+        try {
+            await deleteImageFromSupabase(imageUrl);
+            res.sendStatus(200);
+        } catch (error) {
+            console.error('Error deleting image:', error);
             res.sendStatus(500);
         }
     })

@@ -9,7 +9,7 @@ const hasEditorPerms = async (req, res, next) => {
     const user = await User.findById(req.user._id)
     if(!user) res.redirect("/")
 
-    if(user.perms == process.env.EDITOR_PERM_STR) next()
+    if(user.perms == process.env.EDITOR_PERM_STR || user.perms == process.env.ADMIN_PERM_STR) next()
     else res.redirect("/")
 }
 

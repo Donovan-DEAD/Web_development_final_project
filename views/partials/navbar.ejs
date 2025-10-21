@@ -19,16 +19,19 @@
                 <% if (user && user.permsLabel === 'admin') { %>
                     <li><a href="/api/perms/users">Gestionar Permisos</a></li>
                 <% } %>
+                <% if (user && (user.permsLabel === 'admin' || user.permsLabel === 'editor')) { %>
+                    <li><a href="/create-blog">Crear Blog</a></li>
+                <% } %>
                 <!-- <li><a href="#">Newsletter</a></li> -->
             </ul>
             
             <hr class="navbar__mobile-separator">
 
             <div class="navbar__utils__container">
-                <div class="navbar__language-selector">
+                <!-- <div class="navbar__language-selector">
                     <img src="images/world_icon_language.svg" alt="Language">
                     <span>Español</span>
-                </div>
+                </div> -->
                 <% if (username) { %>
                     <div class="navbar__user-info">
                         <span class="navbar__username"><%= username %></span>

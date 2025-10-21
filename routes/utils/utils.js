@@ -53,10 +53,11 @@ const { randomUUID } = require('crypto');
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
-const uploadImageToSupabase = async (file) => {
-    const fileName = `${randomUUID()}-${file.originalname}`;
+const uploadImageToSupabase = async (file) => {const sanitize = (str) =>
+    str.normalize('NFC').replace(/[^\w.-]/g, '_')
+    const fileName = `${randomUUID()}-${sanitize(file.originalname)}`
     const { data, error } = await supabase.storage
-        .from('images')
+        .from('Images_for_blogs')
         .upload(fileName, file.buffer, {
             cacheControl: '3600',
             upsert: false,
@@ -64,16 +65,41 @@ const uploadImageToSupabase = async (file) => {
         });
 
     if (error) {
+        console.log(error)
         throw new Error('Error uploading image to Supabase');
     }
 
-    const { data: { publicUrl } } = supabase.storage.from('images').getPublicUrl(fileName);
+    const { data: { publicUrl } } = supabase.storage.from('Images_for_blogs').getPublicUrl(fileName);
     return publicUrl;
+};
+
+const deleteImageFromSupabase = async (imageUrl) => {
+    try {
+        const url = new URL(imageUrl);
+        const pathSegments = url.pathname.split('/');
+        // The file name is typically the last segment after 'public/images/'
+        const fileName = pathSegments[pathSegments.length - 1];
+
+        if (!fileName) {
+            throw new Error('Invalid image URL: Could not extract file name.');
+        }
+
+        const { error } = await supabase.storage.from('images').remove([fileName]);
+
+        if (error) {
+            throw new Error(`Error deleting image from Supabase: ${error.message}`);
+        }
+        return { success: true };
+    } catch (error) {
+        console.error('Error in deleteImageFromSupabase:', error.message);
+        throw error;
+    }
 };
 
 module.exports = {
     InitializeDbConnection,
     ReturnPerms,
     VerifyRootUser,
-    uploadImageToSupabase
+    uploadImageToSupabase,
+    deleteImageFromSupabase
 };

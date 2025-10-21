@@ -38,5 +38,12 @@ Prompt: Using the models.json file as a base, I want you to create the mongoose 
 AI : Gemini CLI
 Prompt: Using express-session middleware add context to the redirection in endpoints when authentication failed and create a partial with a toast in bootstrap so when there is an error the user can notice it, pass the information of redirectionInfo to the ejs so the partial of the toast can acces to the message an can display it.
 
+
+AI : Gemini CLI
+Prompt: Help me creating the boilerplate for a new view using bootstrap, it is going to be called create-blog, and it must obtain the information defined in the blod_ids_and_desc and blog_content models.
+
+AI : Gemini CLI
+Prompt: Using the information in the .env file, help me to create the client for the supabase client, with the upload and delete function for the images that are going to be uploaded in the blog, also i want to connect those functions to the endpoints i left in the blog.js file so it can handle it.
+
 Personal Reflection 
 I think the most important thing to do with this project is to have a good planification in order to do the right effort to accomplish your goals.

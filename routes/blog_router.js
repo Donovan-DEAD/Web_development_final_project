@@ -9,7 +9,11 @@ router.get('/:blogId', async (req, res) => {
         const blogContent = await BlockContent.findOne({ blog_id: blogId });
 
         if (!blogContent) {
-            return res.status(404).send('Blog post not found');
+            return res.status(404).render('404', {
+                user: req.user || null,
+                username: req.user ? req.user.name.split(" ")[0] : null,
+                current_page: ''
+            });
         }
 
         res.render('blogpost-template', {

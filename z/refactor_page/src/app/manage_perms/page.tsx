@@ -1,0 +1,223 @@
+"use client";
+
+import React, { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Navbar from "@/components/Navbar";
+import UserPermsRow from "@/components/UserPermsRow";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Pagination from '@mui/material/Pagination';
+import Box from '@mui/material/Box';
+import { Typography, TextField, Button as MuiButton } from '@mui/material';
+import Toast from '@/components/Toast'; // Assuming Toast component is generic enough
+
+interface User {
+  _id: string;
+  email: string;
+  name: string;
+  perms: string; // The raw permission string from DB
+  permsLabel: string; // The human-readable label
+}
+
+export default function ManagePermsPage() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchField, setSearchField] = useState('email'); // 'email' or 'name'
+  const [loading, setLoading] = useState(true);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Placeholder for current authenticated user info (for Navbar)
+  // In a real app, this would come from a client-side context/session
+  const username = "Admin User"; 
+  const user = { permsLabel: 'admin' }; // Assuming admin for this page
+
+  const fetchUsers = async (page: number, field?: string, query?: string) => {
+    setLoading(true);
+    setToastMessage(null);
+    try {
+      let url = `/api/users?page=${page}`;
+      if (field && query) {
+        url += `&field=${field}&query=${query}`;
+      }
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Failed to fetch users.');
+      }
+      const data = await response.json();
+      setUsers(data.users);
+      setTotalPages(data.totalPages);
+      setCurrentPage(data.currentPage);
+    } catch (error: any) {
+      console.error('Error fetching users:', error);
+      setToastMessage(error.message || 'Error al cargar usuarios.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const pageParam = parseInt(searchParams.get('page') || '1', 10);
+    const fieldParam = searchParams.get('field') || undefined;
+    const queryParam = searchParams.get('query') || undefined;
+    setCurrentPage(pageParam);
+    setSearchField(fieldParam || 'email');
+    setSearchTerm(queryParam || '');
+    fetchUsers(pageParam, fieldParam, queryParam);
+  }, [searchParams]);
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', value.toString());
+    router.push(`?${params.toString()}`);
+  };
+
+  const handleSearch = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', '1'); // Reset to first page on new search
+    if (searchTerm) {
+      params.set('field', searchField);
+      params.set('query', searchTerm);
+    } else {
+      params.delete('field');
+      params.delete('query');
+    }
+    router.push(`?${params.toString()}`);
+  };
+
+  const handlePermissionChange = async (userId: string, newPermLabel: string) => {
+    setToastMessage(null);
+    try {
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: userId, perm: newPermLabel }),
+      });
+
+      if (response.ok) {
+        setToastMessage('Permiso actualizado con éxito.');
+        fetchUsers(currentPage, searchField, searchTerm); // Refresh data
+      } else {
+        const errorData = await response.json();
+        setToastMessage(errorData.message || 'Error al actualizar el permiso.');
+      }
+    } catch (error) {
+      console.error('Error updating permission:', error);
+      setToastMessage('Error de red al actualizar permiso.');
+    }
+  };
+
+  const handleDeleteUser = async (userId: string) => {
+    setToastMessage(null);
+    if (!confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/users', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: userId }),
+      });
+
+      if (response.ok) {
+        setToastMessage('Usuario eliminado con éxito.');
+        fetchUsers(currentPage, searchField, searchTerm); // Refresh data
+      } else {
+        const errorData = await response.json();
+        setToastMessage(errorData.message || 'Error al eliminar el usuario.');
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      setToastMessage('Error de red al eliminar usuario.');
+    }
+  };
+
+  return (
+    <>
+      <Navbar username={username} currentPage="manage_perms" user={user} />
+      {toastMessage && <Toast message={toastMessage} severity="error" />}
+
+      <div className="container mt-5">
+        <Typography variant="h4" component="h1" gutterBottom>Gestionar Permisos de Usuario</Typography>
+        <hr />
+
+        <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
+          <TextField
+            label="Buscar"
+            variant="outlined"
+            size="small"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyPress={(e) => { if (e.key === 'Enter') handleSearch(); }}
+          />
+          <Select
+            value={searchField}
+            onChange={(e) => setSearchField(e.target.value)}
+            displayEmpty
+            inputProps={{ 'aria-label': 'Select search field' }}
+            size="small"
+          >
+            <MenuItem value="email">Email</MenuItem>
+            <MenuItem value="name">Nombre</MenuItem>
+          </Select>
+          <MuiButton variant="contained" onClick={handleSearch}>Buscar</MuiButton>
+        </Box>
+
+        <TableContainer component={Paper}>
+          <Table className="table table-striped table-hover">
+            <TableHead className="thead-dark">
+              <TableRow>
+                <TableCell>Email</TableCell>
+                <TableCell>Nombre</TableCell>
+                <TableCell>Permiso</TableCell>
+                <TableCell>Acción</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody id="user-table-body">
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">Cargando usuarios...</TableCell>
+                </TableRow>
+              ) : (
+                users.length > 0 ? (
+                  users.map((u) => (
+                    <UserPermsRow
+                      key={u._id}
+                      user={u}
+                      onPermissionChange={handlePermissionChange}
+                      onDeleteUser={handleDeleteUser}
+                    />
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={4} align="center">No se encontraron usuarios.</TableCell>
+                  </TableRow>
+                )
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        {totalPages > 1 && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={handlePageChange}
+              color="primary"
+            />
+          </Box>
+        )}
+      </div>
+    </>
+  );
+}

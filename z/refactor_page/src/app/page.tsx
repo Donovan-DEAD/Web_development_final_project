@@ -1,0 +1,92 @@
+// This is a Server Component, responsible for fetching data and rendering the page.
+// It will pass props to its Client Components.
+
+import Navbar from "@/components/Navbar"; // Assuming Navbar.tsx is in src/components
+import Image from "next/image";
+import favicon from "../../public/images/favicon.svg";
+
+export default function HomePage() {
+  // Placeholder for user data. In a real app, you would fetch this from an API or session.
+  const username = null; // Or fetch from context/session
+  const user = null; // Or fetch from context/session
+
+  return (
+    <>
+      <Navbar username={username} currentPage="index" user={user} />
+
+      <section className="main">
+        <h1>
+          Tu cultivo, <span className="highlight">
+            <br />nuestra IA
+          </span>
+        </h1>
+        <p>
+          Transforma tu experiencia agrícola con análisis inteligente de cultivos, contenido
+          especializado y una comunidad de agricultores innovadores.
+        </p>
+      </section>
+
+      <section className="analysis-box">
+        <h2>Prueba el Análisis IA</h2>
+        <p>Sube una foto y obtén un diagnóstico</p>
+        <div className="upload-area">
+          <p>
+            📤 Arrastra tu imagen aquí <br /> o haz clic para seleccionar archivo
+          </p>
+        </div>
+        <a href="/ia-assistance">
+          <button className="btn-primary">Comenzar Análisis</button>
+        </a>
+      </section>
+
+      <div className="style">
+        <section className="features">
+          <h2>Todo lo que necesitas en un solo lugar</h2>
+          <p>
+            Herramientas gratuitas diseñadas para ayudar a agricultores de todos los niveles
+          </p>
+          <div className="cards">
+            <div className="card">
+              <h3>Análisis Visual</h3>
+              <p>
+                Sube fotos de tus cultivos y recibe análisis detallados sobre salud, plagas y
+                recomendaciones
+              </p>
+            </div>
+            <div className="card">
+              <h3>Blog Educativo</h3>
+              <p>
+                Artículos actualizados sobre técnicas agrícolas, tendencias y mejores prácticas
+              </p>
+            </div>
+            {/* <div className="card">
+            <h3>Newsletter</h3>
+            <p>Recibe consejos semanales y las últimas novedades del mundo agrícola</p>
+          </div> */}
+          </div>
+        </section>
+      </div>
+
+      <section className="cta">
+        <h2>Comienza a usar tu el asistente de IA hoy</h2>
+        <p>
+          Completamente gratis. Sin registros complicados. Solo sube tu foto y explica tu
+          situación.
+        </p>
+        <a href="/ia-assistance">
+          <button className="btn-primary">Comenzar Análisis</button>
+        </a>
+      </section>
+      <div className="style">
+        {/* <footer className="newsletter">
+          <h2>Mantente actualizado</h2>
+          <p>Suscríbete a nuestro newsletter mensual para recibir consejos agrícolas y novedades.</p>
+          <form>
+            <input type="email" placeholder="tu@email.com">
+            <button type="submit">Suscribirse</button>
+          </form>
+        </footer> */}
+      </div>
+    </>
+  );
+}

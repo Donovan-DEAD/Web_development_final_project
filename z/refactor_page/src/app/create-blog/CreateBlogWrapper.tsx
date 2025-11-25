@@ -261,8 +261,8 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
 
                   {block.type === 'Header' && <EditableHeaderBlock ref={block.ref as React.RefObject<EditableHeaderBlockRef>} />}
                   {block.type === 'PureContent' && <EditablePureContentBlock ref={block.ref as React.RefObject<EditablePureContentBlockRef>} />}
-                  {block.type === 'PureImage' && <EditablePureImageBlock ref={block.ref as React.RefObject<EditablePureImageBlockRef>} />}
-                  {block.type === 'ImgAndContent' && <EditableImgAndContentBlock ref={block.ref as React.RefObject<EditableImgAndContentBlockRef>} />}
+                  {block.type === 'PureImage' && <EditablePureImageBlock ref={block.ref as React.RefObject<EditablePureImageBlockRef>} uploadImage={uploadImage} setToastMessage={setToastMessage} />}
+                  {block.type === 'ImgAndContent' && <EditableImgAndContentBlock ref={block.ref as React.RefObject<EditableImgAndContentBlockRef>} uploadImage={uploadImage} setToastMessage={setToastMessage} />}
                   {block.type === 'References' && <EditableReferencesBlock ref={block.ref as React.RefObject<EditableReferencesBlockRef>} />}
                 </div>
               ))}

@@ -1,12 +1,29 @@
-// This is a Server Component, responsible for fetching data and rendering the page.
-// It will pass props to its Client Components.
+"use client";
 
+import React, { useState, useEffect } from 'react';
+import ClientNavbar from "@/components/ClientNavbar";
 import Image from "next/image";
 import favicon from "../../public/images/favicon.svg";
 
 export default function HomePage() {
+  const [user, setUser] = useState(null);
+  const [username, setUsername] = useState(null);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const response = await fetch('/api/auth/session');
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.user);
+        setUsername(data.user?.name || null);
+      }
+    };
+    fetchSession();
+  }, []);
+
   return (
     <>
+      <ClientNavbar username={username} currentPage="home" user={user} />
       <section className="main">
         <h1>
           Tu cultivo, <span className="highlight">

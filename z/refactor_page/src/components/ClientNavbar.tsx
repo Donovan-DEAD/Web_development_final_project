@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import AppBar from '@mui/material/AppBar';
@@ -41,8 +41,19 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user
     router.push('/');
   };
 
-  const isAdmin = user && user.permsLabel === 'admin';
-  const isEditorOrAdmin = user && (user.permsLabel === 'admin' || user.permsLabel === 'editor');
+  console.log(user)
+  const [isAdmin, setIsAdmin] = useState(user && user.permsLabel === 'admin')
+  const [isEditorOrAdmin, setIsEditor] = useState(user && (user.permsLabel === 'admin' || user.permsLabel === 'editor'))
+
+  useEffect(() => {
+    if (user) {
+      setIsAdmin(user.permsLabel === 'admin');
+      setIsEditor(user.permsLabel === 'admin' || user.permsLabel === 'editor');
+    } else {
+      setIsAdmin(false);
+      setIsEditor(false);
+    }
+  }, [user]);
 
   return (
     <AppBar position="static" className="header">

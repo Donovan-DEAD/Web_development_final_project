@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import Navbar from "@/components/Navbar";
+import ClientNavbar from '@/components/ClientNavbar';
 import BlogCard from "@/components/BlogCard";
 import Link from 'next/link';
 

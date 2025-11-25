@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import ClientNavbar from "@/components/ClientNavbar";
 import Toast from "@/components/Toast";
 
 interface RegisterPageProps {
@@ -14,6 +15,20 @@ export default function RegisterPage({}: RegisterPageProps) {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState<string | null>(null);
   const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [navbarUsername, setNavbarUsername] = useState(null);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const response = await fetch('/api/auth/session');
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.user);
+        setNavbarUsername(data.user?.name || null);
+      }
+    };
+    fetchSession();
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -31,7 +46,7 @@ export default function RegisterPage({}: RegisterPageProps) {
 
     if (response.ok) {
       // Registration successful, redirect to home page as in original EJS
-      router.push('/');
+      window.location.href = '/';
     } else {
       // Registration failed, display error message
       setMessage(data.message || 'Registration failed.');
@@ -40,6 +55,7 @@ export default function RegisterPage({}: RegisterPageProps) {
 
   return (
     <>
+      <ClientNavbar username={navbarUsername} currentPage="register" user={user} />
       {message && <Toast message={message} severity="error" />}
 
       <div className="register">

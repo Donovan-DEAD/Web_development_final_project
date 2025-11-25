@@ -9,6 +9,7 @@ import {
   PBKDF2_DIGEST,
   SALT_BYTES
 } from '@/lib/constants'; // Import hashing constants
+import { promisify } from 'util';
 
 // Node.js 'crypto' for server-side operations
 let nodeCrypto: typeof import('crypto');
@@ -19,13 +20,14 @@ if (typeof process !== 'undefined' && process.versions && process.versions.node)
 }
 
 // Promisify the crypto functions
-const pbkdf2 = nodeCrypto.pbkdf2.bind(nodeCrypto);
-const randomBytes = nodeCrypto.randomBytes.bind(nodeCrypto);
+// const pbkdf2 = nodeCrypto.pbkdf2.bind(nodeCrypto);
+const pbkdf2Async = promisify(nodeCrypto.pbkdf2);
+// const randomBytes = nodeCrypto.randomBytes.bind(nodeCrypto);
+const randomBytes = promisify(nodeCrypto.randomBytes);
 
 export async function POST(request: NextRequest) {
   try {
     const { name, email, password, username } = await request.json();
-    console.log('Registration request received:', { name, email, password, username });
 
     if (!name || !email || !password || !username) {
       return NextResponse.json({ message: 'Name, username, email, and password are required.' }, { status: 400 });
@@ -43,7 +45,7 @@ export async function POST(request: NextRequest) {
 
     // 1. Hash the password
     const salt = (await randomBytes(SALT_BYTES)).toString('hex');
-    const hash = (await pbkdf2(password, salt, PBKDF2_ITERATIONS, PBKDF2_KEY_LENGTH, PBKDF2_DIGEST)).toString('hex');
+    const hash = (await pbkdf2Async(password, salt, PBKDF2_ITERATIONS, PBKDF2_KEY_LENGTH, PBKDF2_DIGEST)).toString('hex');
 
     // 2. Create and save the new user
     const newUser = new User({
@@ -63,7 +65,12 @@ export async function POST(request: NextRequest) {
     const token = await encryptAndSign(newUser._id.toString());
 
     // 4. Set the cookie
-    cookies().set('user', token, {
+    const response = NextResponse.json(
+      { message: 'Login successful'},
+      { status: 200 }
+    );
+
+    response.cookies.set('user', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       path: '/',
@@ -71,16 +78,7 @@ export async function POST(request: NextRequest) {
       maxAge: 60 * 60 * 24 * 7, // 1 week
     });
     
-    // 5. Return a success response
-    const userResponse = {
-      _id: newUser._id,
-      name: newUser.name,
-      email: newUser.email,
-      username: newUser.username,
-      perms: newUser.perms,
-    }
-
-    return NextResponse.json({ message: 'Registration successful', user: userResponse }, { status: 201 });
+    return response;
 
   } catch (error) {
     console.error('Registration error:', error);

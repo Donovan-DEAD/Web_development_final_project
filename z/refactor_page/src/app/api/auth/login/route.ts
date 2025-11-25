@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import connectToDatabase from '@/lib/db';
 import User from '@/lib/models/user';
 import { encryptAndSign } from '@/lib/auth';
@@ -31,10 +30,7 @@ async function verifyPassword(password: string, salt: string, hashHex: string): 
   ); // Buffer
 
   const hashBuffer = Buffer.from(hashHex, 'hex');
-
-  console.log(derivedKey.length, hashBuffer.length)
-  console.log(derivedKey, hashBuffer)
-
+  
   // timingSafeEqual requiere longitudes iguales
   if (derivedKey.length !== hashBuffer.length) return false;
 
@@ -51,7 +47,7 @@ export async function POST(request: NextRequest) {
     await connectToDatabase();
 
     // passport-local-mongoose uses 'username' for the email field in this setup
-    const user = await User.findOne({ email: email }).select('+hash +salt');
+    const user = await User.findOne({ email: email });
 
     if (!user || !user.salt || !user.hash) {
       // User not found or user record is missing password fields

@@ -1,0 +1,128 @@
+/* [project]/OneDrive/Escritorio/Escuela/Semester_3/Web_development_final_project/z/refactor_page/src/app/styles/blog_search.css [app-client] (css) */
+:root {
+  --color-primary: #5afaae;
+  --color-secondary: #5afae4;
+  --color-accent1: #5bfb79;
+  --color-accent2: #79fa5a;
+  --color-light-green: #adfabb;
+  --color-lime-green: #bcfa5a;
+  --color-white: #fff;
+  --color-dark-text: #333;
+  --color-grey-bg: #f9fafb;
+  --color-grey-border: #e5e7eb;
+}
+
+.blog-search__container {
+  text-align: center;
+  margin: 2rem auto;
+}
+
+.blog-search__container .blog-search__title {
+  color: var(--color-dark-text);
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.blog-search__container .blog-search__search-bar {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  width: 50%;
+  padding: .8rem;
+}
+
+.blog-search__grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  display: grid;
+}
+
+.card {
+  border: 1px solid var(--color-grey-border);
+  background: var(--color-grey-bg);
+  border-radius: 8px;
+  transition: transform .2s;
+  box-shadow: 0 0 4px gray;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card .card__image {
+  border-radius: 8px 8px 0 0;
+  width: 100%;
+}
+
+.card .card__content {
+  padding: 1rem;
+}
+
+.card .card__content .card__title {
+  margin-bottom: .5rem;
+  font-size: 1.25rem;
+}
+
+.card .card__content .card__description {
+  color: #555;
+}
+
+.card .card__content .card__button {
+  color: var(--color-white);
+  background: #16a34a;
+  border-radius: 6px;
+  margin-top: 1rem;
+  padding: .5rem 1rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.card .card__content .card__button:hover {
+  background: #15803d;
+}
+
+.btn-search {
+  color: var(--color-white);
+  cursor: pointer;
+  vertical-align: top;
+  background-color: #16a34a;
+  border: none;
+  border-radius: 6px;
+  padding: .8rem 1rem;
+  transition: background-color .2s;
+}
+
+.btn-search:hover {
+  background-color: #15803d;
+}
+
+.blog-search__grid .navbar__utils__login__button {
+  color: var(--color-white);
+  cursor: pointer;
+  background-color: #16a34a;
+  border: none;
+  border-radius: 6px;
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-top: 1rem;
+  padding: .8rem 1rem;
+  text-decoration: none;
+  transition: background-color .2s;
+  display: inline-block;
+}
+
+.blog-search__grid .navbar__utils__login__button:hover {
+  color: var(--color-white);
+  background-color: #15803d;
+  text-decoration: none;
+}
+
+.blog-search__grid > p {
+  text-align: center;
+  color: #555;
+  grid-column: 1 / -1;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+/*# sourceMappingURL=e95d5_final_project_z_refactor_page_src_app_styles_blog_search_css_bad6b30c._.single.css.map*/

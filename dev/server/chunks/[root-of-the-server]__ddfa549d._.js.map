@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/donov/OneDrive/Escritorio/Escuela/Semester_3/Web_development_final_project/z/refactor_page/src/app/api/auth/logout/route.ts"],"sourcesContent":["import { NextResponse } from 'next/server';\nimport { cookies } from 'next/headers';\n\nconst USER_COOKIE_NAME = 'user';\n\nexport async function POST() {\n  // To log out, we simply delete the cookie.\n      \n  const response = NextResponse.json(\n    { message: 'Logout successful'},\n    { status: 200 }\n  );\n\n  response.cookies.delete(USER_COOKIE_NAME);\n\n  return response;\n}\n"],"names":[],"mappings":";;;;AAAA;;AAGA,MAAM,mBAAmB;AAElB,eAAe;IACpB,2CAA2C;IAE3C,MAAM,WAAW,0PAAY,CAAC,IAAI,CAChC;QAAE,SAAS;IAAmB,GAC9B;QAAE,QAAQ;IAAI;IAGhB,SAAS,OAAO,CAAC,MAAM,CAAC;IAExB,OAAO;AACT"}}]
+}

@@ -1,0 +1,116 @@
+/* [project]/OneDrive/Escritorio/Escuela/Semester_3/Web_development_final_project/z/refactor_page/src/app/styles/blogpost.css [app-client] (css) */
+body {
+  color: #333;
+  background-color: #fff;
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+.header__blog {
+  text-align: center;
+  max-width: 800px;
+  margin: 7.5% auto 20px;
+  padding: 0 20px;
+}
+
+.header h1 {
+  color: #222;
+  margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.header h3 {
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.auth_date {
+  color: #777;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: .9rem;
+  display: flex;
+}
+
+.auth_date img.icon {
+  background-color: #ccc;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.textContainer {
+  color: #444;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+  font-size: 1rem;
+}
+
+.textContainer img.big {
+  border-radius: 6px;
+  width: 100%;
+  height: auto;
+  margin: 20px 0 10px;
+}
+
+.miniContainers {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 20px;
+  display: flex;
+}
+
+.miniContainers p {
+  flex: 2;
+  min-width: 250px;
+}
+
+.miniContainers img.small {
+  border-radius: 6px;
+  flex: 1;
+  min-width: 200px;
+  max-width: 280px;
+}
+
+.referencias {
+  max-width: 800px;
+  margin: 0 auto 60px;
+  padding: 0 20px;
+}
+
+.referencias h2 {
+  color: #222;
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.referencias ol {
+  color: #555;
+  padding-left: 20px;
+}
+
+.referencias li {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .textContainer div[miniContainers] {
+    flex-direction: column;
+  }
+
+  .textContainer div[miniContainers] img.small {
+    max-width: 100%;
+  }
+}
+
+/*# sourceMappingURL=d4e20_development_final_project_z_refactor_page_src_app_styles_blogpost_css_bad6b30c._.single.css.map*/

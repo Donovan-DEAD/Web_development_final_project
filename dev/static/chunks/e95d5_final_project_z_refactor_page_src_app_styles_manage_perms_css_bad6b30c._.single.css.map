@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/OneDrive/Escritorio/Escuela/Semester_3/Web_development_final_project/z/refactor_page/src/app/styles/manage_perms.css"],"sourcesContent":["body {\n    background-color: #f8f9fa;\n}\n\nh1 {\n    color: #343a40;\n}\n\n.container {\n    background-color: #ffffff;\n    padding: 2rem;\n    border-radius: 0.5rem;\n    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);\n}"],"names":[],"mappings":"AAAA;;;;AAIA;;;;AAIA"}}]
+}

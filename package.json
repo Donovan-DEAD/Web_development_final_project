@@ -1,35 +1,31 @@
 {
-  "name": "web_development_final_project",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "refactor_page",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Donovan-DEAD/Web_development_final_project.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/Donovan-DEAD/Web_development_final_project/issues"
-  },
-  "homepage": "https://github.com/Donovan-DEAD/Web_development_final_project#readme",
   "dependencies": {
-    "@google/genai": "^1.24.0",
-    "@supabase/supabase-js": "^2.76.0",
-    "dotenv": "^17.2.3",
-    "ejs": "^3.1.10",
-    "express": "^5.1.0",
-    "express-rate-limit": "^8.1.0",
-    "express-session": "^1.18.2",
-    "mongoose": "^8.19.2",
-    "multer": "^2.0.2",
-    "passport": "^0.7.0",
-    "passport-local-mongoose": "^8.0.0",
-    "tslib": "^2.8.1"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@google/generative-ai": "^0.11.3",
+    "@mui/icons-material": "^7.3.5",
+    "@mui/material": "^7.3.5",
+    "@supabase/supabase-js": "^2.43.4",
+    "next": "16.0.3",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "babel-plugin-react-compiler": "1.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.3",
+    "typescript": "^5"
   }
 }

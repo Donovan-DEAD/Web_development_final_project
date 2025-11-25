@@ -1,0 +1,10 @@
+var R=require("../../../../chunks/[turbopack]_runtime.js")("server/app/api/blogs/images/route.js")
+R.c("server/chunks/9c62f_next_d2a4238a._.js")
+R.c("server/chunks/9c62f_@supabase_realtime-js_dist_module_265e03ec._.js")
+R.c("server/chunks/9c62f_@supabase_storage-js_dist_module_6c84a066._.js")
+R.c("server/chunks/9c62f_@supabase_auth-js_dist_module_f7508c23._.js")
+R.c("server/chunks/9c62f_22545777._.js")
+R.c("server/chunks/[root-of-the-server]__b69da302._.js")
+R.c("server/chunks/66617_refactor_page__next-internal_server_app_api_blogs_images_route_actions_3b1d0402.js")
+R.m("[project]/OneDrive/Escritorio/Escuela/Semester_3/Web_development_final_project/z/refactor_page/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/OneDrive/Escritorio/Escuela/Semester_3/Web_development_final_project/z/refactor_page/src/app/api/blogs/images/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
+module.exports=R.m("[project]/OneDrive/Escritorio/Escuela/Semester_3/Web_development_final_project/z/refactor_page/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/OneDrive/Escritorio/Escuela/Semester_3/Web_development_final_project/z/refactor_page/src/app/api/blogs/images/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

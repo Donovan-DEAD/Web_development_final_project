@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 16, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/OneDrive/Escritorio/Escuela/Semester_3/Web_development_final_project/z/refactor_page/middleware.ts"],"sourcesContent":["export const config = {\n  matcher: ['/api/:path*', '/((?!_next/static|_next/image|favicon.ico).*)'],\n};"],"names":[],"mappings":";;;;AAAO,MAAM,SAAS;IACpB,SAAS;QAAC;QAAe;KAAgD;AAC3E"}}]
+}

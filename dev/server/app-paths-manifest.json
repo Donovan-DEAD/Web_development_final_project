@@ -1,0 +1,9 @@
+{
+  "/api/auth/session/route": "app/api/auth/session/route.js",
+  "/api/blogs/images/route": "app/api/blogs/images/route.js",
+  "/api/users/route": "app/api/users/route.js",
+  "/create-blog/page": "app/create-blog/page.js",
+  "/login/page": "app/login/page.js",
+  "/manage_perms/page": "app/manage_perms/page.js",
+  "/page": "app/page.js"
+}

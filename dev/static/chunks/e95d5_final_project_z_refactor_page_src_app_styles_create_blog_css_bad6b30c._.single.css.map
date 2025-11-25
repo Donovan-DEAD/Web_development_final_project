@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/OneDrive/Escritorio/Escuela/Semester_3/Web_development_final_project/z/refactor_page/src/app/styles/create_blog.css"],"sourcesContent":[".content-block h4, .reference-item h5 {\n    margin-bottom: 0;\n}\n\n.btn-close {\n    padding: 0.5rem;\n}\n"],"names":[],"mappings":"AAAA;;;;AAIA"}}]
+}

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/OneDrive/Escritorio/Escuela/Semester_3/Web_development_final_project/z/refactor_page/src/app/styles/toast.css"],"sourcesContent":[".toast-header.error {\n    background-color: #f8d7da;\n    color: #721c24;\n}\n\n.toast-body {\n    font-size: 1.1rem;\n}"],"names":[],"mappings":"AAAA;;;;;AAKA"}}]
+}

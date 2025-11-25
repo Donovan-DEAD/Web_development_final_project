@@ -1,12 +1,23 @@
-import { authenticateAndAuthorize } from '@/lib/permissions';
+import { redirect } from 'next/navigation';
+import { getCurrentUser } from '@/lib/server-auth';
 import CreateBlogWrapper from './CreateBlogWrapper';
 
 export default async function CreateBlogPage() {
-  const user = await authenticateAndAuthorize([
-    process.env.EDITOR_PERM_STR || 'editor_perm',
-    process.env.ADMIN_PERM_STR || 'admin_perm',
-  ], '/');
+  const user = await getCurrentUser();
 
-  // If authenticateAndAuthorize does not redirect, it means the user is authenticated and authorized
+  if (!user) {
+    redirect('/login');
+  }
+
+  const authorizedPerms = [
+    process.env.EDITOR_PERM_STR || 'EDITOR',
+    process.env.ADMIN_PERM_STR || 'ADMIN',
+  ];
+
+  if (!authorizedPerms.includes(user.perms)) {
+    redirect('/');
+  }
+
+  // If the user is authenticated and authorized, render the wrapper
   return <CreateBlogWrapper authenticatedUser={user} />;
 }

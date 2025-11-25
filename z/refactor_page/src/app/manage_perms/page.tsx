@@ -1,10 +1,27 @@
-import { authenticateAndAuthorize } from '@/lib/permissions';
+import { redirect } from 'next/navigation';
+import ClientNavbar from '@/components/ClientNavbar';
+import { getCurrentUser } from '@/lib/server-auth';
 import ManagePermsWrapper from './ManagePermsWrapper';
-import { headers } from 'next/headers';
 
 export default async function ManagePermsPage() {
-  const user = await authenticateAndAuthorize([process.env.ADMIN_PERM_STR || 'admin_perm'], '/login');
+  const user = await getCurrentUser();
 
-  // If authenticateAndAuthorize does not redirect, it means the user is authenticated and authorized
-  return <ManagePermsWrapper authenticatedUser={user} />;
+  if (!user) {
+    redirect('/login');
+  }
+
+  const adminPerm = process.env.ADMIN_PERM_STR || 'ADMIN';
+
+  if (user.perms !== adminPerm) {
+    redirect('/'); // Redirect to home if not an admin
+  }
+
+  // If the user is authenticated and authorized, render the wrapper
+  return (
+  <>
+    <ClientNavbar username={user.name} currentPage="manage_perms" user={user} />
+    <ManagePermsWrapper authenticatedUser={user} />
+  </>
+  )
+  ;
 }

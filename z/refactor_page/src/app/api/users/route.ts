@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
-import { getCurrentUser } from '@/lib/user';
+import { getCurrentUser } from '@/lib/server-auth';
 import User from '@/lib/models/user';
-import { getPermStringFromLabel } from '@/lib/permissions';
+
 import mongoose from 'mongoose';
+import { inversePermsMap } from '@/lib/user';
 
 const ADMIN_PERM = process.env.ADMIN_PERM_STR || 'admin_perm';
 const PAGE_SIZE = 50;
@@ -60,11 +61,8 @@ export async function POST(request: NextRequest) {
     if (!id || !perm || !mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ message: 'Invalid user ID or permission.' }, { status: 400 });
     }
-
-    const permString = getPermStringFromLabel(perm);
-    if (!permString) {
-      return NextResponse.json({ message: 'Invalid permission label.' }, { status: 400 });
-    }
+    
+    const permString = inversePermsMap()[perm];
 
     await connectToDatabase();
     const updatedUser = await User.findByIdAndUpdate(

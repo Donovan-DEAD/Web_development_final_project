@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { makeConsultToGemini } from '@/lib/gemini';
+import { getCurrentUser } from '@/lib/server-auth';
 
 export async function POST(request: NextRequest) {
+  const user = await getCurrentUser();
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
     const formData = await request.formData();
     const context = formData.get('context') as string | null;

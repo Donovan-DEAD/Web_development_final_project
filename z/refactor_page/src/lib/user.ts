@@ -33,3 +33,12 @@ export async function getCurrentUser(): Promise<IUser | null> {
     return null;
   }
 }
+
+export const inversePermsMap = ()=>{
+  const inverseMap: { [key: string]: string } = {
+    'admin': process.env.ADMIN_PERM_STR || 'admin_perm',
+    'user': process.env.USER_PERM_STR || 'user_perm',
+    'editor': process.env.EDITOR_PERM_STR || 'editor_perm',
+  };
+  return inverseMap;
+}

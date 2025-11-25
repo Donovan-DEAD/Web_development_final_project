@@ -35,6 +35,8 @@ interface DynamicContentBlock {
   ref: React.RefObject<ContentBlockRefType>;
 }
 
+import ClientNavbar from '@/components/ClientNavbar';
+
 interface CreateBlogWrapperProps {
   authenticatedUser: IUser;
 }
@@ -46,6 +48,10 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
   const [contentBlockRefs, setContentBlockRefs] = useState<DynamicContentBlock[]>([]); // State to manage dynamic block refs
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const cardImageInputRef = useRef<HTMLInputElement>(null);
+
+  const username = authenticatedUser.name;
+  const userPerms = { permsLabel: authenticatedUser.perms };
+  const currentPage = router.pathname ? router.pathname.split('/').pop() : '';
 
   // --- Image Upload Handlers ---
   const handleCardImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -172,6 +178,11 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
 
   return (
     <>
+      <ClientNavbar
+        username={username}
+        currentPage={currentPage}
+        user={userPerms}
+      />
       {toastMessage && <Toast message={toastMessage} severity="error" />}
 
       <main className="container mt-5">

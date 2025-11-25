@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCurrentUser } from '@/lib/user';
+import { getCurrentUser } from '@/lib/server-auth';
 import { uploadImageToSupabase, deleteImageFromSupabase } from '@/lib/supabase';
 
 const ADMIN_PERM = process.env.ADMIN_PERM_STR || 'admin_perm';

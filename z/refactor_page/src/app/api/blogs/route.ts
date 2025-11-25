@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
-import { getCurrentUser } from '@/lib/user';
+import { getCurrentUser } from '@/lib/server-auth';
 import BlogContent from '@/lib/models/blogContent';
 import BlogMeta from '@/lib/models/blogMeta';
 

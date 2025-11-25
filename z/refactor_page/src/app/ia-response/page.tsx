@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from "@/components/Navbar";
 import IAToast from "@/components/IAToast";
 import Image from 'next/image';
 import { Select, MenuItem, Typography, Box, Button as MuiButton } from '@mui/material';
@@ -24,8 +23,8 @@ interface GeminiResponseData {
   diagnostico: string;
   recomendations: string[];
   tecnicas_a_usar: Technique[];
-  correct_image: boolean;
-  correct_context: boolean;
+  is_image_agricultural_related: boolean;
+  is_context_agricultural_related: boolean;
 }
 
 export default function IaResponsePage() {
@@ -41,16 +40,18 @@ export default function IaResponsePage() {
   useEffect(() => {
     // Retrieve data from sessionStorage
     const storedData = sessionStorage.getItem('iaResponseData');
+    console.log('Stored Data:', storedData);
+
     if (storedData) {
       const data = JSON.parse(storedData);
       setIaResponseData(data);
 
       // Check for toast messages from the original EJS logic
-      if (!data.correct_image && !data.correct_context) {
+      if (!data.is_image_agricultural_related && !data.is_context_agricultural_related) {
         setToastMessage("Favor de utilizar esta herramienta correctamente mandando información que tenga que ver con el tema por favor.");
-      } else if (!data.correct_image) {
+      } else if (!data.is_image_agricultural_related) {
         setToastMessage("La imagen proporcionada no parece estar relacionada con la agricultura.");
-      } else if (!data.correct_context) {
+      } else if (!data.is_context_agricultural_related) {
         setToastMessage("El contexto proporcionado no parece estar relacionado con la agricultura.");
       }
     } else {
@@ -72,7 +73,6 @@ export default function IaResponsePage() {
 
   return (
     <>
-      <Navbar username={username} currentPage="ia_response" user={user} />
       {toastMessage && <IAToast message={toastMessage} severity="error" />}
 
       <main className="ia__response__main">
@@ -161,13 +161,13 @@ export default function IaResponsePage() {
                 {currentTechnique && (
                   <div className="ai__response__techniques__card">
                     {/* Placeholder image, consider dynamically loading from backend or a fixed asset */}
-                    <Image
+                    {/* <Image
                       className="ai__response__techniques__card__image"
                       src="https://imgs.search.brave.com/Uu8MohpWol1dISkBpUpDv59wGFNiEQIad1C6uQb7bVc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTA4/MjAxODgxL2VzL2Zv/dG8vbWFyaXF1aXRh/LWVzY2FsYWRhLWVu/LWxhLWZsb3ItYW1h/cmlsbGEuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPU51TWot/ZXUzcW5CeGExM1hW/c20yYzk3MXl4RVU1/d1hTM1FfbkNjclNv/REU9"
                       alt="Técnica recomendada"
                       width={150}
                       height={150}
-                    />
+                    /> */}
                     <div className="ai__response__techniques__card__info">
                       <h2 className="ai__response__techniques__card__title">{currentTechnique.name}</h2>
                       <p className="ai__response__techniques__card__description">{currentTechnique.description}</p>

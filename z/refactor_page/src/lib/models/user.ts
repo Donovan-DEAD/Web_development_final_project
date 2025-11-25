@@ -20,14 +20,21 @@ const userSchema: Schema<IUser> = new Schema({
   salt: { type: String },
 });
 
-// This replaces the permsMap and virtual property for a more direct approach in a modern setup.
-// The logic can be handled in the application layer when needed.
-// If you want to keep it, you can define a virtual property like this:
-const permsMap: { [key: string]: string } = {
-  [process.env.ADMIN_PERM_STR || 'admin_perm']: 'admin',
-  [process.env.USER_PERM_STR || 'user_perm']: 'user',
-  [process.env.EDITOR_PERM_STR || 'editor_perm']: 'editor'
+// Define permsMap to ensure it's initialized with correct values or fallbacks
+const getPermsMap = () => {
+  const map: { [key: string]: string } = {};
+  map[process.env.ADMIN_PERM_STR || 'admin_perm'] = 'admin';
+  map[process.env.USER_PERM_STR || 'user_perm'] = 'user';
+  map[process.env.EDITOR_PERM_STR || 'editor_perm'] = 'editor';
+  return map;
 };
+
+// Use a dynamic import or ensure process.env is ready if this is causing issues in some contexts
+// For a standard Next.js API route/server component, process.env should be available.
+const permsMap = getPermsMap();
+
+// Log the permsMap to verify its content during initialization
+console.log('User model permsMap initialized:', permsMap);
 
 userSchema.virtual('permsLabel').get(function (this: IUser) {
   return permsMap[this.perms] || 'desconocido';
@@ -43,3 +50,4 @@ userSchema.set('toJSON', { virtuals: true });
 const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 
 export default User;
+

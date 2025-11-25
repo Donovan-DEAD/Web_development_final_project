@@ -8,6 +8,9 @@ export async function middleware(request: NextRequest) {
   // Clone the request headers to be able to modify them
   const requestHeaders = new Headers(request.headers);
   
+  // Add the current path to the headers
+  requestHeaders.set('x-current-path', request.nextUrl.pathname);
+
   const tokenCookie = request.cookies.get(USER_COOKIE_NAME);
 
   if (tokenCookie) {

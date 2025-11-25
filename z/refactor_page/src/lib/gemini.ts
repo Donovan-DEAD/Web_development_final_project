@@ -50,15 +50,35 @@ Considera en tu respuesta que somos una entidad que busca, con información basa
 
     const result = await model!.generateContent({
         contents: [{ parts }],
-        // The config is now set during model initialization, but schema needs to be here.
-        // Let's redefine the full model config here for clarity.
         generationConfig: {
+            candidateCount: 1,
             responseMimeType: "application/json",
-            temperature: 0.5,
-        },
-        // It seems responseSchema is part of generationConfig in newer SDKs
-        // Let's try to get it working with a structured prompt instead if that fails.
-        // For now, assuming the original structure works. If not, this needs refactoring.
+            responseSchema: {
+            type: "object",
+            properties: {
+                nivel_de_peligro: { type: "string", enum: ["aprobado", "mejorable", "peligro"] },
+                diagnostico: { type: "string" },
+                recomendations: { type: "array", items: { type: "string" }, minItems: 1, maxItems: 3 },
+                tecnicas_a_usar: {
+                    type: "array",
+                    minItems: 1,
+                    maxItems: 4,
+                    items: {
+                        type: "object",
+                        properties: {
+                        name: { type: "string" },
+                        description: { type: "string" }
+                        },
+                        required: ["name", "description"]
+                    }
+                },
+                is_image_agricultural_related: { type: "boolean" },
+                is_context_agricultural_related: { type: "boolean" }
+                },
+                required: ["nivel_de_peligro", "diagnostico", "recomendations", "tecnicas_a_usar", "is_image_agricultural_related", "is_context_agricultural_related"]
+            },
+            temperature: 0.5
+        }
     });
 
     const response = result.response;

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import ServerNavbar from "@/components/ServerNavbar";
 import "./globals.css";
 import "./styles/blog_search.css";
 import "./styles/blogpost.css";
@@ -36,6 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <ServerNavbar />
         {children}
       </body>
     </html>

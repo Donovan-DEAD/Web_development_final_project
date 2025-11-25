@@ -4,11 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Navbar from "@/components/Navbar";
 import BlogCard from "@/components/BlogCard";
-import { BlogCardProps } from "@/components/BlogCard"; // Assuming you exported the interface
+import Link from 'next/link';
 
 export default function BlogSearchPage() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [blogPosts, setBlogPosts] = useState<BlogCardProps['post'][]>([]);
+  const [blogPosts, setBlogPosts] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -51,8 +51,6 @@ export default function BlogSearchPage() {
 
   return (
     <>
-      <Navbar username={username} currentPage="blog_search" user={user} />
-
       <div className="blog-search__container">
         <form id="blog-search-form" onSubmit={handleSearchSubmit}>
           <h1 className="blog-search__title">Buscar Blogs</h1>

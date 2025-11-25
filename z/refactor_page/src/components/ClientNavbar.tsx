@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -17,14 +18,15 @@ import MenuThreeBarsIcon from '../../public/images/menu_three_bars.svg';
 import MenuCrossIcon from '../../public/images/menu_cross.svg';
 import Favicon from '../../public/images/favicon.svg';
 
-interface NavbarProps {
+interface ClientNavbarProps {
   username: string | null;
   currentPage: string;
   user: { permsLabel: string } | null;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ username, currentPage, user }) => {
+const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user }) => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const router = useRouter();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -34,6 +36,11 @@ const Navbar: React.FC<NavbarProps> = ({ username, currentPage, user }) => {
     setAnchorElNav(null);
   };
 
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/');
+  };
+
   const isAdmin = user && user.permsLabel === 'admin';
   const isEditorOrAdmin = user && (user.permsLabel === 'admin' || user.permsLabel === 'editor');
 
@@ -41,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({ username, currentPage, user }) => {
     <AppBar position="static" className="header">
       <Toolbar component="nav" className="navbar">
         <Link href="/" passHref>
-          <Box component="a" className="navbar__logo__anchor">
+          <Box component="div" className="navbar__logo__anchor">
             <Image
               src={Favicon}
               alt="Logo"
@@ -120,7 +127,7 @@ const Navbar: React.FC<NavbarProps> = ({ username, currentPage, user }) => {
             {username ? (
               <Box className="navbar__user-info" sx={{ p: 2 }}>
                 <Typography className="navbar__username" variant="body1">{username}</Typography>
-                <a href="/api/logout" className="navbar__utils__logout__button">Logout</a>
+                <Button onClick={handleLogout} className="navbar__utils__logout__button">Logout</Button>
               </Box>
             ) : (
               <Box className="navbar__utils__container" sx={{ flexDirection: 'column', gap: 1, p: 2 }}>
@@ -156,7 +163,7 @@ const Navbar: React.FC<NavbarProps> = ({ username, currentPage, user }) => {
             {username ? (
               <Box className="navbar__user-info" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Typography className="navbar__username" variant="body1">{username}</Typography>
-                <a href="/api/logout" className="navbar__utils__logout__button">Logout</a>
+                <Button onClick={handleLogout} className="navbar__utils__logout__button">Logout</Button>
               </Box>
             ) : (
               <>
@@ -179,4 +186,4 @@ const Navbar: React.FC<NavbarProps> = ({ username, currentPage, user }) => {
   );
 };
 
-export default Navbar;
+export default ClientNavbar;

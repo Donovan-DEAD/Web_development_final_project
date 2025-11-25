@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from "@/components/Navbar";
 import Toast from "@/components/Toast";
 
 interface LoginPageProps {
@@ -15,10 +14,6 @@ export default function LoginPage({}: LoginPageProps) {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState<string | null>(null);
   const router = useRouter();
-
-  // Placeholder for user data. In a real app, you would fetch this from an API or session.
-  const username = null; // Or fetch from context/session
-  const user = null; // Or fetch from context/session
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -45,8 +40,6 @@ export default function LoginPage({}: LoginPageProps) {
 
   return (
     <>
-      <Navbar username={username} currentPage="login" user={user} />
-      
       {message && <Toast message={message} severity="error" />}
 
       <div className="login">

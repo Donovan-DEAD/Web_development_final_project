@@ -1,19 +1,12 @@
 // This is a Server Component, responsible for fetching data and rendering the page.
 // It will pass props to its Client Components.
 
-import Navbar from "@/components/Navbar"; // Assuming Navbar.tsx is in src/components
 import Image from "next/image";
 import favicon from "../../public/images/favicon.svg";
 
 export default function HomePage() {
-  // Placeholder for user data. In a real app, you would fetch this from an API or session.
-  const username = null; // Or fetch from context/session
-  const user = null; // Or fetch from context/session
-
   return (
     <>
-      <Navbar username={username} currentPage="index" user={user} />
-
       <section className="main">
         <h1>
           Tu cultivo, <span className="highlight">

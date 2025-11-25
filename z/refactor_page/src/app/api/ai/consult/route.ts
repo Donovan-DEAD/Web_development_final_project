@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     }
 
     const geminiResponse = await makeConsultToGemini(context || '', imageBase64, mimeType);
-
+    // console.log('Gemini response:', geminiResponse);
     if (!geminiResponse) {
       return NextResponse.json({ message: 'Error processing the request with the AI model.' }, { status: 500 });
     }

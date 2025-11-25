@@ -1,63 +1,110 @@
 
-import crypto from 'crypto';
 import connectToDatabase from './db';
 import User, { IUser } from './models/user';
 import mongoose from 'mongoose';
+import {
+  PBKDF2_ITERATIONS,
+  PBKDF2_KEY_LENGTH,
+  PBKDF2_DIGEST,
+  SALT_BYTES
+} from './constants'; // Import hashing constants
 
-const ALGORITHM = 'aes-256-gcm';
-const IV_LENGTH = 16;
-const AUTH_TAG_LENGTH = 16;
-
-// Ensure the secret key is defined and is the correct length (32 bytes / 64 hex characters)
-const secretKeyHex = process.env.AUTH_SECRET;
-if (!secretKeyHex || secretKeyHex.length !== 64) {
-  throw new Error('AUTH_SECRET environment variable is not set or is not a 32-byte hex string.');
+// Node.js 'crypto' for server-side operations (like password hashing)
+let nodeCrypto: typeof import('crypto') | undefined;
+if (typeof process !== 'undefined') {
+  nodeCrypto = require('crypto');
 }
-const secretKey = Buffer.from(secretKeyHex, 'hex');
+
+const ALGORITHM_AES_GCM = 'AES-GCM';
+const IV_LENGTH_BYTES = 16; // 128 bits for AES-GCM IV
+const AUTH_TAG_LENGTH_BITS = 128; // 128 bits for GCM auth tag
+
+// Ensure the secret key is defined
+const secretKeyHex = process.env.AUTH_SECRET;
+if (!secretKeyHex) {
+  throw new Error('AUTH_SECRET environment variable is not set.');
+}
+
+let encryptionKey: CryptoKey | undefined;
+
+async function getEncryptionKey(): Promise<CryptoKey> {
+  if (encryptionKey) {
+    return encryptionKey;
+  }
+  const keyBuffer = Buffer.from(secretKeyHex, 'hex');
+  encryptionKey = await (globalThis.crypto || nodeCrypto.webcrypto).subtle.importKey(
+    'raw',
+    keyBuffer,
+    ALGORITHM_AES_GCM,
+    false,
+    ['encrypt', 'decrypt']
+  );
+  return encryptionKey;
+}
 
 /**
- * Encrypts a payload (e.g., a user ID) and signs it.
+ * Encrypts a payload (e.g., a user ID) using Web Crypto API.
  * Uses AES-256-GCM to provide both confidentiality and authenticity.
  * @param payload The string data to encrypt.
  * @returns A string containing the iv, auth tag, and encrypted data, separated by colons.
  */
-export function encryptAndSign(payload: string): string {
-  const iv = crypto.randomBytes(IV_LENGTH);
-  const cipher = crypto.createCipheriv(ALGORITHM, secretKey, iv);
+export async function encryptAndSign(payload: string): Promise<string> {
+  const key = await getEncryptionKey();
+  const iv = (globalThis.crypto || nodeCrypto.webcrypto).getRandomValues(new Uint8Array(IV_LENGTH_BYTES));
+  const encodedPayload = new TextEncoder().encode(payload);
 
-  const encrypted = Buffer.concat([cipher.update(payload, 'utf8'), cipher.final()]);
-  const authTag = cipher.getAuthTag();
+  const encryptedBuffer = await (globalThis.crypto || nodeCrypto.webcrypto).subtle.encrypt(
+    {
+      name: ALGORITHM_AES_GCM,
+      iv: iv,
+      tagLength: AUTH_TAG_LENGTH_BITS,
+    },
+    key,
+    encodedPayload
+  );
 
-  // Combine IV, authTag, and encrypted data into a single string for storage
-  return `${iv.toString('hex')}:${authTag.toString('hex')}:${encrypted.toString('hex')}`;
+  const ciphertext = new Uint8Array(encryptedBuffer.slice(0, encryptedBuffer.byteLength - (AUTH_TAG_LENGTH_BITS / 8)));
+  const authTag = new Uint8Array(encryptedBuffer.slice(encryptedBuffer.byteLength - (AUTH_TAG_LENGTH_BITS / 8)));
+
+  return `${Buffer.from(iv).toString('hex')}:${Buffer.from(authTag).toString('hex')}:${Buffer.from(ciphertext).toString('hex')}`;
 }
 
 /**
- * Decrypts a token and verifies its integrity.
+ * Decrypts a token and verifies its integrity using Web Crypto API.
  * @param token The token string created by encryptAndSign.
  * @returns The original payload if decryption and verification are successful; otherwise, null.
  */
-export function decryptAndVerify(token: string): string | null {
+export async function decryptAndVerify(token: string): Promise<string | null> {
   try {
+    const key = await getEncryptionKey();
     const parts = token.split(':');
     if (parts.length !== 3) {
       // Invalid format
       return null;
     }
 
-    const [ivHex, authTagHex, encryptedHex] = parts;
+    const [ivHex, authTagHex, ciphertextHex] = parts;
     const iv = Buffer.from(ivHex, 'hex');
     const authTag = Buffer.from(authTagHex, 'hex');
-    const encrypted = Buffer.from(encryptedHex, 'hex');
+    const ciphertext = Buffer.from(ciphertextHex, 'hex');
 
-    const decipher = crypto.createDecipheriv(ALGORITHM, secretKey, iv);
-    decipher.setAuthTag(authTag);
+    // Combine ciphertext and authTag into a single buffer for decryption
+    const encryptedBuffer = new Uint8Array(ciphertext.byteLength + authTag.byteLength);
+    encryptedBuffer.set(ciphertext, 0);
+    encryptedBuffer.set(authTag, ciphertext.byteLength);
 
-    const decrypted = Buffer.concat([decipher.update(encrypted), decipher.final()]);
+    const decryptedBuffer = await (globalThis.crypto || nodeCrypto.webcrypto).subtle.decrypt(
+      {
+        name: ALGORITHM_AES_GCM,
+        iv: iv,
+        tagLength: AUTH_TAG_LENGTH_BITS,
+      },
+      key,
+      encryptedBuffer
+    );
 
-    return decrypted.toString('utf8');
+    return new TextDecoder().decode(decryptedBuffer);
   } catch (error) {
-    // This can happen if the key is wrong, the auth tag is invalid, or the data is corrupted.
     console.error('Decryption failed:', error);
     return null;
   }
@@ -65,8 +112,14 @@ export function decryptAndVerify(token: string): string | null {
 
 /**
  * Ensures the root user exists in the database. If not, it creates one.
+ * This function uses Node.js 'crypto' and should only be called in a Node.js environment.
  */
 export async function insertRootUser(): Promise<void> {
+    if (!nodeCrypto) {
+        console.error('Node.js crypto not available. Cannot run insertRootUser in this environment.');
+        return;
+    }
+
     await connectToDatabase();
 
     const ROOT_ID = process.env.ROOT_ID;
@@ -84,8 +137,8 @@ export async function insertRootUser(): Promise<void> {
         const rootUser = await User.findById(new mongoose.Types.ObjectId(ROOT_ID));
 
         if (!rootUser) {
-            const salt = crypto.randomBytes(16).toString('hex');
-            const hash = crypto.pbkdf2Sync(ROOT_PASSWORD, salt, 1000, 64, 'sha512').toString('hex');
+            const salt = nodeCrypto.randomBytes(SALT_BYTES).toString('hex');
+            const hash = nodeCrypto.pbkdf2Sync(ROOT_PASSWORD, salt, PBKDF2_ITERATIONS, PBKDF2_KEY_LENGTH, PBKDF2_DIGEST).toString('hex');
 
             const newUser: IUser = new User({
                 _id: new mongoose.Types.ObjectId(ROOT_ID),
@@ -106,3 +159,4 @@ export async function insertRootUser(): Promise<void> {
         console.error('Error ensuring root user:', error);
     }
 }
+

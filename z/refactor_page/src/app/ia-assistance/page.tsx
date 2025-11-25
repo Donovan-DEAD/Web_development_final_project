@@ -2,7 +2,6 @@
 
 import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import Navbar from "@/components/Navbar";
 import IAToast from "@/components/IAToast"; // Using the IAToast wrapper
 import Image from 'next/image';
 
@@ -62,6 +61,7 @@ export default function IaAssistancePage() {
       });
 
       const data = await response.json();
+      console.log('AI Consultation Response:', data);
 
       if (response.ok) {
         // Original EJS redirected to /ia-response and passed data via session.
@@ -80,7 +80,6 @@ export default function IaAssistancePage() {
 
   return (
     <>
-      <Navbar username={username} currentPage="ia_assistance" user={user} />
       {toastMessage && <IAToast message={toastMessage} severity="error" />}
 
       <main className="ai__assistance__main">

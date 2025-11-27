@@ -1,5 +1,5 @@
 :root {
-    --color-primary: #5AFAAE;
+    --color-primary: #04911e;
     --color-secondary: #5AFAE4;
     --color-accent1: #5BFB79;
     --color-accent2: #79FA5A;
@@ -7,8 +7,8 @@
     --color-lime-green: #BCFA5A;
     --color-white: #FFFFFF;
     --color-dark-text: #333333;
-    --color-grey-bg: #f9fafb;
-    --color-grey-border: #e5e7eb;
+    --color-grey-bg: #f5f5f5;
+    --color-grey-border: #e0e0e0;
 }
 
 .register {
@@ -17,23 +17,26 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
 }
 
 .register__container {
-    max-width: 500px;
-    width: 50%;
+    max-width: 450px;
+    width: 90%;
     margin: 5rem auto;
-    padding: 3rem;
-    background: var(--color-grey-bg);
+    padding: 3.5rem;
+    background: var(--color-white);
     border: 1px solid var(--color-grey-border);
-    border-radius: 8px;
+    border-radius: 12px;
     text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .register__title {
     font-size: 2rem;
     margin-bottom: 1.5rem;
     color: var(--color-dark-text);
+    font-weight: 600;
 }
 
 .register__form {
@@ -42,25 +45,43 @@
 }
 
 .register__form__input {
-        width: 100%;
-        padding: 0.8rem;
-        margin-bottom: 1rem;
-        border: 1px solid #ddd;
-        border-radius: 6px;
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--color-grey-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.register__form__input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(4, 145, 30, 0.1);
 }
 
 .register__form__button {
     width: 100%;
-    padding: 0.8rem;
-    background: #16a34a;
+    padding: 1rem;
+    background: var(--color-primary);
     color: var(--color-white);
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(4, 145, 30, 0.2);
+}
 
-    &:hover {
-        background: #15803d;
-    }
+.register__form__button:hover {
+    background: #32c34c;
+    box-shadow: 0 4px 16px rgba(4, 145, 30, 0.3);
+    transform: translateY(-2px);
+}
+
+.register__form__button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(4, 145, 30, 0.2);
 }

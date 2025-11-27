@@ -3,12 +3,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
 body {
-  color: #333;
-  background-color: #fff;
+  color: #333333;
+  background-color: #ffffff;
   line-height: 1.6;
 }
 
@@ -28,12 +28,13 @@ body {
 }
 
 .main-content-box {
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 16px;
   padding: 2.5rem;
   max-width: 600px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .main h1 {
@@ -56,31 +57,43 @@ body {
 
 /* Arrastra tu foto aqui O.o */
 .analysis-box {
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
   max-width: 500px;
   margin: 2rem auto;
-  padding: 2rem;
+  padding: 2.5rem;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.analysis-box:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .analysis-box h2 {
   margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333333;
 }
 
 .upload-area {
-  border: 2px dashed #16a34a;
-  border-radius: 8px;
-  padding: 2rem;
-  margin: 1rem 0;
-  color: #666;
+  border: 2px dashed #04911e;
+  border-radius: 12px;
+  padding: 2.5rem;
+  margin: 1.5rem 0;
+  color: #666666;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  background-color: #f5f5f5;
 }
 
 .upload-area:hover {
-  background: #ecfdf5;
+  background: #f0f8f5;
+  border-color: #32c34c;
+  color: #04911e;
 }
 
 /* cajas de todo lo que necesitas en un solo lugar ninini */
@@ -100,38 +113,59 @@ body {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .card {
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 1.5rem;
-  background: #f9fafb;
-  transition: transform 0.2s;
-  box-shadow: 0 0 4px gray;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2rem;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(4, 145, 30, 0.15);
+  border-color: #04911e;
+}
+
+.card h3 {
+  color: #04911e;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.card p {
+  color: #666666;
+  line-height: 1.7;
 }
 
 /* Comienza a usar el asistente de ia, no se como vamos a poner a la ia ahi pero xdlol */
 .cta {
   text-align: center;
-  padding: 3rem 2rem;
-  background: #f9fafb;
-  margin-top: 2rem;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+  margin-top: 3rem;
+  border-top: 1px solid #e0e0e0;
 }
 
 .cta h2 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333333;
 }
 
 .cta p {
-  color: #555;
-  margin-bottom: 1rem;
+  color: #666666;
+  margin-bottom: 1.5rem;
+  font-size: 1.05rem;
 }
 
 /* Mantente actualizado a.k.a. Newsletter */
@@ -164,37 +198,45 @@ body {
 }
 
 button {
-  background: #16a34a;
-  color: #fff;
+  background: #04911e;
+  color: #ffffff;
   border: none;
-  border-radius: 6px;
-  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
   cursor: pointer;
-  font-weight: bold;
-  transition: all 0.2s ease-in-out;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(4, 145, 30, 0.2);
 }
 
 button:hover {
-  background: #15803d;
+  background: #32c34c;
+  box-shadow: 0 4px 16px rgba(4, 145, 30, 0.3);
+  transform: translateY(-2px);
 }
 
-button:active{
-  background: #15803d;
-  scale: 0.95;
+button:active {
+  background: #04911e;
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(4, 145, 30, 0.2);
 }
 
 .newsletter button {
-  background: #16a34a;
-  color: #fff;
+  background: #04911e;
+  color: #ffffff;
   border: none;
-  border-radius: 6px;
-  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(4, 145, 30, 0.2);
 }
 
 .newsletter button:hover {
-  background: #15803d;
+  background: #32c34c;
+  box-shadow: 0 4px 16px rgba(4, 145, 30, 0.3);
+  transform: translateY(-2px);
 }
 
 /*Style, coso para poner algunas partes verdes*/

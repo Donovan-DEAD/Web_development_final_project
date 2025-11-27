@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; // Import useRouter
 import ClientNavbar from '@/components/ClientNavbar';
+import Footer from '@/components/Footer';
 import BlogSearchWrapper from './BlogSearchWrapper';
 
 export default function BlogSearchPage() {
@@ -51,6 +52,7 @@ export default function BlogSearchPage() {
         user={userPerms}
       />
       <BlogSearchWrapper />
+      <Footer />
     </>
   );
 }

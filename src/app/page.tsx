@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import ClientNavbar from "@/components/ClientNavbar";
+import Footer from "@/components/Footer";
 import Image from "next/image";
 import favicon from "../../public/images/favicon.svg";
 import fieldImage from "../../public/images/plantation_background.jpeg";
@@ -105,6 +106,7 @@ export default function HomePage() {
           </form>
         </footer> */}
       </div>
+      <Footer />
     </>
   );
 }

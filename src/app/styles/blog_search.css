@@ -1,5 +1,5 @@
 :root {
-    --color-primary: #5AFAAE;
+    --color-primary: #04911e;
     --color-secondary: #5AFAE4;
     --color-accent1: #5BFB79;
     --color-accent2: #79FA5A;
@@ -7,125 +7,152 @@
     --color-lime-green: #BCFA5A;
     --color-white: #FFFFFF;
     --color-dark-text: #333333;
-    --color-grey-bg: #f9fafb;
-    --color-grey-border: #e5e7eb;
+    --color-grey-bg: #f5f5f5;
+    --color-grey-border: #e0e0e0;
 }
 
 .blog-search__container {
-    margin: 2rem auto;
+    margin: 2.5rem auto;
     text-align: center;
+    max-width: 1200px;
+    padding: 0 1rem;
 
     & .blog-search__title {
         font-size: 2rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
         color: var(--color-dark-text);
+        font-weight: 600;
     }
 
     & .blog-search__search-bar {
-        width: 50%;
-        padding: 0.8rem;
-        border: 1px solid #ddd;
-        border-radius: 6px;
+        width: 100%;
+        max-width: 500px;
+        padding: 1rem;
+        border: 1px solid var(--color-grey-border);
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: 'Roboto', sans-serif;
+        transition: all 0.3s ease;
+    }
+
+    & .blog-search__search-bar:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(4, 145, 30, 0.1);
     }
 }
 
 .blog-search__grid{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    padding: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .card {
     border: 1px solid var(--color-grey-border);
-    border-radius: 8px;
-    background: var(--color-grey-bg);
-    transition: transform 0.2s;
-    box-shadow: 0 0 4px gray;
+    border-radius: 12px;
+    background: var(--color-white);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
 
     &:hover {
-        transform: translateY(-5px);
+        transform: translateY(-8px);
+        box-shadow: 0 8px 24px rgba(4, 145, 30, 0.15);
+        border-color: var(--color-primary);
     }
 
     & .card__image {
         width: 100%;
-        border-radius: 8px 8px 0 0;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 12px 12px 0 0;
     }
 
     & .card__content {
-        padding: 1rem;
+        padding: 1.5rem;
 
         & .card__title {
             font-size: 1.25rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-dark-text);
+            font-weight: 600;
         }
 
         & .card__description {
-            color: #555;
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
         }
 
         & .card__button {
             margin-top: 1rem;
             display: inline-block;
-            background: #16a34a;
+            background: var(--color-primary);
             color: var(--color-white);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(4, 145, 30, 0.2);
 
             &:hover {
-                background: #15803d;
+                background: #32c34c;
+                box-shadow: 0 4px 16px rgba(4, 145, 30, 0.3);
+                transform: translateY(-2px);
+                text-decoration: none;
             }
         }
     }
 }
 
 .btn-search {
-    background-color: #16a34a; /* Color verde (igual al botón 'Leer más') */
-    color: var(--color-white);   /* Texto blanco */
-    border: none;                /* Quita el borde por defecto */
-    border-radius: 6px;          /* Puntas redondeadas (igual a otros elementos) */
-    padding: 0.8rem 1rem;        /* Relleno para hacerlo rectangular (ajustado a la altura del input) */
-    cursor: pointer;             /* Cambia el cursor al pasar por encima */
-    transition: background-color 0.2s;
-    vertical-align: top;         /* Ayuda a alinearlo con la barra de búsqueda */
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    vertical-align: top;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(4, 145, 30, 0.2);
 }
 
 .btn-search:hover {
-    background-color: #15803d; /* Verde más oscuro al pasar el mouse (igual al botón 'Leer más') */
+    background-color: #32c34c;
+    box-shadow: 0 4px 16px rgba(4, 145, 30, 0.3);
+    transform: translateY(-2px);
 }
 /* Estilos para el botón "Blogs" (cuando hay pocos resultados) */
 .blog-search__grid .navbar__utils__login__button {
-    /* === Estilos copiados de .btn-search === */
-    background-color: #16a34a;
+    background-color: var(--color-primary);
     color: var(--color-white);
     border: none;
-    border-radius: 6px;
-    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
     cursor: pointer;
-    transition: background-color 0.2s;
-    
-    /* === Ajustes para que <a> se vea como botón === */
-    text-decoration: none; /* Quita el subrayado del enlace */
-    display: inline-block; /* Permite aplicar padding y centrado */
-
-    /* === Posicionamiento: Abajo y Centrado === */
-    
-    /* 1. Hace que este item ocupe todo el ancho de la grid */
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
     grid-column: 1 / -1;
-    
-    /* 2. Centra el botón horizontalmente */
     justify-self: center;
-
-    /* 3. Añade espacio superior para separarlo de las tarjetas */
-    margin-top: 1rem; 
+    margin-top: 1rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(4, 145, 30, 0.2);
 }
 
-/* Efecto hover (igual al .btn-search) */
+/* Efecto hover */
 .blog-search__grid .navbar__utils__login__button:hover {
-    background-color: #15803d;
+    background-color: #32c34c;
     color: var(--color-white);
     text-decoration: none;
+    box-shadow: 0 4px 16px rgba(4, 145, 30, 0.3);
+    transform: translateY(-2px);
 }
 
 /* Estilos para el mensaje de 'No encontramos...' */

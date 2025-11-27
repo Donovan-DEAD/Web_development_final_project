@@ -1,5 +1,5 @@
 :root {
-  --color-primary: #5afaae;
+  --color-primary: #04911e;
   --color-secondary: #5afae4;
   --color-accent1: #5bfb79;
   --color-accent2: #79fa5a;
@@ -7,7 +7,7 @@
   --color-lime-green: #bcfa5a;
   --color-white: #ffffff;
   --color-dark-text: #333333;
-  --color-grey-bg: #f7f7f7;
+  --color-grey-bg: #f9fafb;
   --color-grey-border: #e0e0e0;
 }
 
@@ -68,11 +68,11 @@ body {
   gap: 10px;
   padding: 40px;
 
-  border-radius: 10px;
+  border-radius: 12px;
   border-color: #04911e;
-  background-color: var(--color-grey-bg);
+  background-color: #ffffff;
   border: 1px solid var(--color-grey-border);
-  box-shadow: 0 0 6px #04911e;
+  box-shadow: 0 2px 8px rgba(4, 145, 30, 0.1);
 
   & img {
     width: 65px;

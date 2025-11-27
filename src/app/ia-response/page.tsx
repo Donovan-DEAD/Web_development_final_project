@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import IAToast from "@/components/IAToast";
+import Footer from '@/components/Footer';
 import Image from 'next/image';
 import { Select, MenuItem, Typography, Box, Button as MuiButton } from '@mui/material';
 
@@ -187,6 +188,7 @@ export default function IaResponsePage() {
           </>
         )}
       </main>
+      <Footer />
     </>
   );
 }

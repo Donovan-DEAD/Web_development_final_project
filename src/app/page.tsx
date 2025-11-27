@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import ClientNavbar from "@/components/ClientNavbar";
 import Image from "next/image";
 import favicon from "../../public/images/favicon.svg";
+import fieldImage from "../../public/images/plantation_background.jpeg";
 
 export default function HomePage() {
   const [user, setUser] = useState(null);
@@ -24,16 +25,23 @@ export default function HomePage() {
   return (
     <>
       <ClientNavbar username={username} currentPage="home" user={user} />
-      <section className="main">
-        <h1>
-          Tu cultivo, <span className="highlight">
-            <br />nuestra IA
-          </span>
-        </h1>
-        <p>
-          Transforma tu experiencia agrícola con análisis inteligente de cultivos, contenido
-          especializado y una comunidad de agricultores innovadores.
-        </p>
+      <section className="main" style={{
+        backgroundImage: `url(${fieldImage.src})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}>
+        <div className="main-content-box">
+          <h1>
+            Tu cultivo, <span className="highlight">
+              <br />nuestra IA
+            </span>
+          </h1>
+          <p>
+            Transforma tu experiencia agrícola con análisis inteligente de cultivos, contenido
+            especializado y una comunidad de agricultores innovadores.
+          </p>
+        </div>
       </section>
 
       <section className="analysis-box">

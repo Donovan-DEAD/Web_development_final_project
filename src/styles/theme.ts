@@ -48,6 +48,7 @@ const theme = createTheme({
         root: {
           backgroundColor: '#FFFFFF',
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          color: '#333333',
         },
       },
     },
@@ -60,6 +61,31 @@ const theme = createTheme({
           '&:hover': {
             backgroundColor: '#32c34c',
           },
+        },
+        outlined: {
+          color: '#04911e',
+          borderColor: '#04911e',
+          '&:hover': {
+            backgroundColor: '#E8F5E9',
+            borderColor: '#04911e',
+          },
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: '#E8F5E9',
+          },
+        },
+      },
+    },
+    MuiMenu: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#FFFFFF',
+          borderTop: '3px solid #04911e',
         },
       },
     },

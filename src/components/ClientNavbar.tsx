@@ -56,8 +56,8 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user
   }, [user]);
 
   return (
-    <AppBar position="static" className="header">
-      <Toolbar component="nav" className="navbar">
+    <AppBar position="static" className="header" sx={{ backgroundColor: '#FFFFFF', color: '#333333' }}>
+      <Toolbar component="nav" className="navbar" sx={{ display: 'flex', alignItems: 'center' }}>
         <Link href="/" passHref>
           <Box component="div" className="navbar__logo__anchor">
             <Image
@@ -78,7 +78,7 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user
             aria-controls="menu-appbar"
             aria-haspopup="true"
             onClick={handleOpenNavMenu}
-            color="inherit"
+            sx={{ color: '#333333' }}
             className="navbar__menu-icon"
           >
             {anchorElNav ? (
@@ -137,8 +137,8 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user
             <hr className="navbar__mobile-separator" />
             {username ? (
               <Box className="navbar__user-info" sx={{ p: 2 }}>
-                <Typography className="navbar__username" variant="body1">{username}</Typography>
-                <Button onClick={handleLogout} className="navbar__utils__logout__button">Logout</Button>
+                <Typography className="navbar__username" variant="body1" sx={{ color: '#333333' }}>{username}</Typography>
+                <Button onClick={handleLogout} className="navbar__utils__logout__button" sx={{ color: '#04911e', borderColor: '#04911e', '&:hover': { backgroundColor: '#E8F5E9' } }} variant="outlined">Logout</Button>
               </Box>
             ) : (
               <Box className="navbar__utils__container" sx={{ flexDirection: 'column', gap: 1, p: 2 }}>
@@ -159,22 +159,22 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user
 
         {/* Desktop menu */}
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end', alignItems: 'center' }}>
-          <Box component="ul" className="navbar__pages__list" sx={{ display: 'flex', gap: 3, position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
-            <li><Link href="/" passHref><Typography>Inicio</Typography></Link></li>
-            <li><Link href="/ia-assistance" passHref><Typography>Asistente IA</Typography></Link></li>
-            <li><Link href="/blog-search" passHref><Typography>Blogs</Typography></Link></li>
+          <Box component="ul" className="navbar__pages__list" sx={{ display: 'flex', gap: 3, position: 'absolute', left: '50%', transform: 'translateX(-50%)', listStyle: 'none', m: 0, p: 0 }}>
+            <li><Link href="/" passHref><Typography sx={{ color: '#333333', '&:hover': { color: '#04911e' }, cursor: 'pointer', transition: 'color 0.3s' }}>Inicio</Typography></Link></li>
+            <li><Link href="/ia-assistance" passHref><Typography sx={{ color: '#333333', '&:hover': { color: '#04911e' }, cursor: 'pointer', transition: 'color 0.3s' }}>Asistente IA</Typography></Link></li>
+            <li><Link href="/blog-search" passHref><Typography sx={{ color: '#333333', '&:hover': { color: '#04911e' }, cursor: 'pointer', transition: 'color 0.3s' }}>Blogs</Typography></Link></li>
             {isAdmin && (
-              <li><Link href="/manage_perms" passHref><Typography>Gestionar Permisos</Typography></Link></li>
+              <li><Link href="/manage_perms" passHref><Typography sx={{ color: '#333333', '&:hover': { color: '#04911e' }, cursor: 'pointer', transition: 'color 0.3s' }}>Gestionar Permisos</Typography></Link></li>
             )}
             {isEditorOrAdmin && (
-              <li><Link href="/create-blog" passHref><Typography>Crear Blog</Typography></Link></li>
+              <li><Link href="/create-blog" passHref><Typography sx={{ color: '#333333', '&:hover': { color: '#04911e' }, cursor: 'pointer', transition: 'color 0.3s' }}>Crear Blog</Typography></Link></li>
             )}
           </Box>
           <Box className="navbar__utils__container" sx={{ display: 'flex', gap: 2 }}>
             {username ? (
               <Box className="navbar__user-info" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Typography className="navbar__username" variant="body1">{username}</Typography>
-                <Button onClick={handleLogout} className="navbar__utils__logout__button">Logout</Button>
+                <Typography className="navbar__username" variant="body1" sx={{ color: '#333333' }}>{username}</Typography>
+                <Button onClick={handleLogout} className="navbar__utils__logout__button" sx={{ color: '#04911e', borderColor: '#04911e', '&:hover': { backgroundColor: '#E8F5E9' } }} variant="outlined">Logout</Button>
               </Box>
             ) : (
               <>

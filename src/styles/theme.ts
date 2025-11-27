@@ -46,10 +46,13 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#FFFFFF',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          color: '#333333',
+          backgroundColor: '#FFFFFF !important',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+          color: '#333333 !important',
         },
+      },
+      defaultProps: {
+        color: 'inherit',
       },
     },
     MuiButton: {

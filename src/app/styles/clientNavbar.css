@@ -1,0 +1,230 @@
+/* ============================================
+   NAVBAR COMPONENT STYLES
+   ============================================ */
+
+:root {
+  --primary-green: #04911e;
+  --hover-green: #32c34c;
+  --white: #ffffff;
+  --dark-text: #333333;
+  --light-bg: #E8F5E9;
+  --border-radius-sm: 1px;
+  --transition-duration: 0.3s;
+}
+
+/* AppBar / Header */
+.navbar-header {
+  background-color: var(--white);
+  color: var(--dark-text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Toolbar / Main Navigation Bar */
+.navbar-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Logo Section */
+.navbar-logo-anchor {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.navbar-logo-img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Mobile Hamburger Menu Icon */
+.navbar-mobile-menu-icon {
+  display: none;
+  margin-left: auto;
+}
+
+@media (max-width: 959px) {
+  .navbar-mobile-menu-icon {
+    display: flex;
+  }
+}
+
+.navbar-menu-icon-button {
+  color: var(--dark-text) !important;
+}
+
+.navbar-menu-icon {
+  font-size: 28px;
+}
+
+/* Mobile Sidebar Drawer */
+.navbar-drawer-paper {
+  background-color: var(--primary-green) !important;
+  color: var(--white) !important;
+  width: 280px;
+}
+
+/* Drawer Header */
+.navbar-drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--primary-green);
+}
+
+.navbar-drawer-header-title {
+  font-weight: 600;
+  color: var(--white);
+}
+
+.navbar-drawer-close-button {
+  color: var(--white) !important;
+}
+
+/* Drawer Divider */
+.navbar-drawer-divider {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Drawer Navigation Links */
+.navbar-drawer-links-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navbar-drawer-link {
+  color: var(--white);
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-duration) ease;
+}
+
+.navbar-drawer-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Drawer User Section */
+.navbar-drawer-user-section {
+  padding: 1rem;
+}
+
+.navbar-drawer-username {
+  color: var(--white);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.navbar-drawer-logout-button {
+  color: var(--white) !important;
+  border-color: var(--white) !important;
+  width: 100%;
+}
+
+.navbar-drawer-logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: var(--white) !important;
+}
+
+.navbar-drawer-auth-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navbar-drawer-login-button,
+.navbar-drawer-register-button {
+  background-color: var(--white) !important;
+  color: var(--primary-green) !important;
+  font-weight: 600;
+  width: 100%;
+}
+
+.navbar-drawer-login-button:hover,
+.navbar-drawer-register-button:hover {
+  background-color: var(--light-bg) !important;
+}
+
+/* Desktop Navigation Menu */
+.navbar-desktop-menu {
+  display: none;
+  gap: 1.5rem;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 960px) {
+  .navbar-desktop-menu {
+    display: flex;
+  }
+}
+
+.navbar-desktop-link {
+  color: var(--dark-text);
+  cursor: pointer;
+  transition: color var(--transition-duration);
+  font-weight: 500;
+}
+
+.navbar-desktop-link:hover {
+  color: var(--primary-green);
+}
+
+/* Desktop User Section */
+.navbar-desktop-user-section {
+  display: none;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (min-width: 960px) {
+  .navbar-desktop-user-section {
+    display: flex;
+  }
+}
+
+.navbar-desktop-username {
+  color: var(--dark-text);
+  font-weight: 500;
+}
+
+.navbar-desktop-logout-button {
+  color: var(--primary-green) !important;
+  border-color: var(--primary-green) !important;
+}
+
+.navbar-desktop-logout-button:hover {
+  background-color: var(--light-bg) !important;
+  border-color: var(--primary-green) !important;
+}
+
+.navbar-desktop-login-button,
+.navbar-desktop-register-button {
+  background-color: var(--primary-green) !important;
+}
+
+.navbar-desktop-login-button:hover,
+.navbar-desktop-register-button:hover {
+  background-color: var(--hover-green) !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 599px) {
+  .navbar-toolbar {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+

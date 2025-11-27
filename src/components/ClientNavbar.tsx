@@ -9,9 +9,12 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import Drawer from '@mui/material/Drawer';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import Divider from '@mui/material/Divider';
 import Image from 'next/image';
+import '../app/styles/clientNavbar.css';
 
 // Image imports
 import MenuThreeBarsIcon from '../../public/images/menu_three_bars.svg';
@@ -25,15 +28,15 @@ interface ClientNavbarProps {
 }
 
 const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user }) => {
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const router = useRouter();
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
+  const handleOpenDrawer = () => {
+    setOpenDrawer(true);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const handleCloseDrawer = () => {
+    setOpenDrawer(false);
   };
 
   const handleLogout = async () => {
@@ -41,156 +44,218 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user
     router.push('/');
   };
 
-  console.log(user)
-  const [isAdmin, setIsAdmin] = useState(user && user.permsLabel === 'admin')
-  const [isEditorOrAdmin, setIsEditor] = useState(user && (user.permsLabel === 'admin' || user.permsLabel === 'editor'))
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      setIsAdmin(user.permsLabel === 'admin');
-      setIsEditor(user.permsLabel === 'admin' || user.permsLabel === 'editor');
-    } else {
-      setIsAdmin(false);
-      setIsEditor(false);
-    }
-  }, [user]);
+    setMounted(true);
+  }, []);
+
+  const isAdmin = mounted && user && user.permsLabel === 'admin';
+  const isEditorOrAdmin = mounted && user && (user.permsLabel === 'admin' || user.permsLabel === 'editor');
 
   return (
-    <AppBar position="static" className="header" sx={{ backgroundColor: '#FFFFFF', color: '#333333' }}>
-      <Toolbar component="nav" className="navbar" sx={{ display: 'flex', alignItems: 'center' }}>
+    <AppBar position="static" className="navbar-header">
+      <Toolbar component="nav" className="navbar-toolbar">
+        {/* Logo */}
         <Link href="/" passHref>
-          <Box component="div" className="navbar__logo__anchor">
+          <Box component="div" className="navbar-logo-anchor">
             <Image
               src={Favicon}
               alt="Logo"
-              className="navbar__logo__img"
+              className="navbar-logo-img"
               width={40}
               height={40}
             />
           </Box>
         </Link>
 
-        {/* Mobile menu icon and menu */}
-        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: 'flex-end' }}>
+        {/* Mobile Hamburger Menu Icon */}
+        <Box className="navbar-mobile-menu-icon">
           <IconButton
             size="large"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleOpenNavMenu}
-            sx={{ color: '#333333' }}
-            className="navbar__menu-icon"
+            aria-label="Open navigation menu"
+            onClick={handleOpenDrawer}
+            className="navbar-menu-icon-button"
           >
-            {anchorElNav ? (
-              <Image src={MenuCrossIcon} alt="Close menu" width={30} height={30} />
-            ) : (
-              <Image src={MenuThreeBarsIcon} alt="Open menu" width={30} height={30} />
-            )}
+            <MenuIcon className="navbar-menu-icon" />
           </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorElNav}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
-            open={Boolean(anchorElNav)}
-            onClose={handleCloseNavMenu}
-            sx={{
-              display: { xs: 'block', md: 'none' },
-            }}
-          >
-            <MenuItem onClick={handleCloseNavMenu}>
-              <Link href="/" passHref>
-                <Typography textAlign="center">Inicio</Typography>
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={handleCloseNavMenu}>
-              <Link href="/ia-assistance" passHref>
-                <Typography textAlign="center">Asistente IA</Typography>
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={handleCloseNavMenu}>
-              <Link href="/blog-search" passHref>
-                <Typography textAlign="center">Blogs</Typography>
-              </Link>
-            </MenuItem>
-            {isAdmin && (
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Link href="/manage_perms" passHref> {/* Changed from /api/perms/users which is an API */}
-                  <Typography textAlign="center">Gestionar Permisos</Typography>
-                </Link>
-              </MenuItem>
-            )}
-            {isEditorOrAdmin && (
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Link href="/create-blog" passHref>
-                  <Typography textAlign="center">Crear Blog</Typography>
-                </Link>
-              </MenuItem>
-            )}
-            <hr className="navbar__mobile-separator" />
-            {username ? (
-              <Box className="navbar__user-info" sx={{ p: 2 }}>
-                <Typography className="navbar__username" variant="body1" sx={{ color: '#333333' }}>{username}</Typography>
-                <Button onClick={handleLogout} className="navbar__utils__logout__button" sx={{ color: '#04911e', borderColor: '#04911e', '&:hover': { backgroundColor: '#E8F5E9' } }} variant="outlined">Logout</Button>
-              </Box>
-            ) : (
-              <Box className="navbar__utils__container" sx={{ flexDirection: 'column', gap: 1, p: 2 }}>
-                {currentPage !== 'login' && (
-                  <Link href="/login" passHref>
-                    <Button className="navbar__utils__login__button" variant="contained">Iniciar sesión</Button>
-                  </Link>
-                )}
-                {currentPage !== 'register' && (
-                  <Link href="/register" passHref>
-                    <Button className="navbar__utils__login__button" variant="contained">Registrarse</Button>
-                  </Link>
-                )}
-              </Box>
-            )}
-          </Menu>
         </Box>
 
-        {/* Desktop menu */}
-        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end', alignItems: 'center' }}>
-          <Box component="ul" className="navbar__pages__list" sx={{ display: 'flex', gap: 3, position: 'absolute', left: '50%', transform: 'translateX(-50%)', listStyle: 'none', m: 0, p: 0 }}>
-            <li><Link href="/" passHref><Typography sx={{ color: '#333333', '&:hover': { color: '#04911e' }, cursor: 'pointer', transition: 'color 0.3s' }}>Inicio</Typography></Link></li>
-            <li><Link href="/ia-assistance" passHref><Typography sx={{ color: '#333333', '&:hover': { color: '#04911e' }, cursor: 'pointer', transition: 'color 0.3s' }}>Asistente IA</Typography></Link></li>
-            <li><Link href="/blog-search" passHref><Typography sx={{ color: '#333333', '&:hover': { color: '#04911e' }, cursor: 'pointer', transition: 'color 0.3s' }}>Blogs</Typography></Link></li>
+        {/* Mobile Sidebar Drawer */}
+        <Drawer
+          anchor="left"
+          open={openDrawer}
+          onClose={handleCloseDrawer}
+          classes={{ paper: 'navbar-drawer-paper' }}
+        >
+          <Box className="navbar-drawer-header">
+            <Typography variant="h6" className="navbar-drawer-header-title">
+              Menu
+            </Typography>
+            <IconButton
+              onClick={handleCloseDrawer}
+              className="navbar-drawer-close-button"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Box>
+
+          <Divider className="navbar-drawer-divider" />
+
+          <Box className="navbar-drawer-links-container">
+            {/* Navigation Links */}
+            <Link href="/" passHref onClick={handleCloseDrawer}>
+              <Typography className="navbar-drawer-link">
+                Inicio
+              </Typography>
+            </Link>
+            <Link href="/ia-assistance" passHref onClick={handleCloseDrawer}>
+              <Typography className="navbar-drawer-link">
+                Asistente IA
+              </Typography>
+            </Link>
+            <Link href="/blog-search" passHref onClick={handleCloseDrawer}>
+              <Typography className="navbar-drawer-link">
+                Blogs
+              </Typography>
+            </Link>
+            <Link href="/about" passHref onClick={handleCloseDrawer}>
+              <Typography className="navbar-drawer-link">
+                Quiénes somos
+              </Typography>
+            </Link>
             {isAdmin && (
-              <li><Link href="/manage_perms" passHref><Typography sx={{ color: '#333333', '&:hover': { color: '#04911e' }, cursor: 'pointer', transition: 'color 0.3s' }}>Gestionar Permisos</Typography></Link></li>
+              <Link href="/manage_perms" passHref onClick={handleCloseDrawer}>
+                <Typography className="navbar-drawer-link">
+                  Gestionar Permisos
+                </Typography>
+              </Link>
             )}
             {isEditorOrAdmin && (
-              <li><Link href="/create-blog" passHref><Typography sx={{ color: '#333333', '&:hover': { color: '#04911e' }, cursor: 'pointer', transition: 'color 0.3s' }}>Crear Blog</Typography></Link></li>
+              <Link href="/create-blog" passHref onClick={handleCloseDrawer}>
+                <Typography className="navbar-drawer-link">
+                  Crear Blog
+                </Typography>
+              </Link>
             )}
           </Box>
-          <Box className="navbar__utils__container" sx={{ display: 'flex', gap: 2 }}>
+
+          <Divider className="navbar-drawer-divider" />
+
+          {/* User Info Section */}
+          <Box className="navbar-drawer-user-section">
             {username ? (
-              <Box className="navbar__user-info" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Typography className="navbar__username" variant="body1" sx={{ color: '#333333' }}>{username}</Typography>
-                <Button onClick={handleLogout} className="navbar__utils__logout__button" sx={{ color: '#04911e', borderColor: '#04911e', '&:hover': { backgroundColor: '#E8F5E9' } }} variant="outlined">Logout</Button>
+              <Box>
+                <Typography className="navbar-drawer-username">
+                  {username}
+                </Typography>
+                <Button 
+                  onClick={() => {
+                    handleLogout();
+                    handleCloseDrawer();
+                  }}
+                  variant="outlined"
+                  className="navbar-drawer-logout-button"
+                >
+                  Logout
+                </Button>
               </Box>
             ) : (
-              <>
+              <Box className="navbar-drawer-auth-container">
                 {currentPage !== 'login' && (
-                  <Link href="/login" passHref>
-                    <Button className="navbar__utils__login__button" variant="contained">Iniciar sesión</Button>
+                  <Link href="/login" passHref onClick={handleCloseDrawer} style={{ width: '100%' }}>
+                    <Button 
+                      variant="contained"
+                      className="navbar-drawer-login-button"
+                    >
+                      Iniciar sesión
+                    </Button>
                   </Link>
                 )}
                 {currentPage !== 'register' && (
-                  <Link href="/register" passHref>
-                    <Button className="navbar__utils__login__button" variant="contained">Registrarse</Button>
+                  <Link href="/register" passHref onClick={handleCloseDrawer} style={{ width: '100%' }}>
+                    <Button 
+                      variant="contained"
+                      className="navbar-drawer-register-button"
+                    >
+                      Registrarse
+                    </Button>
                   </Link>
                 )}
-              </>
+              </Box>
             )}
           </Box>
+        </Drawer>
+
+        {/* Desktop Navigation Menu */}
+        <Box className="navbar-desktop-menu">
+          <Link href="/" passHref>
+            <Typography className="navbar-desktop-link">
+              Inicio
+            </Typography>
+          </Link>
+          <Link href="/ia-assistance" passHref>
+            <Typography className="navbar-desktop-link">
+              Asistente IA
+            </Typography>
+          </Link>
+          <Link href="/blog-search" passHref>
+            <Typography className="navbar-desktop-link">
+              Blogs
+            </Typography>
+          </Link>
+          <Link href="/about" passHref>
+            <Typography className="navbar-desktop-link">
+              Quiénes somos
+            </Typography>
+          </Link>
+          {isAdmin && (
+            <Link href="/manage_perms" passHref>
+              <Typography className="navbar-desktop-link">
+                Gestionar Permisos
+              </Typography>
+            </Link>
+          )}
+          {isEditorOrAdmin && (
+            <Link href="/create-blog" passHref>
+              <Typography className="navbar-desktop-link">
+                Crear Blog
+              </Typography>
+            </Link>
+          )}
+        </Box>
+
+        {/* Desktop User Section */}
+        <Box className="navbar-desktop-user-section">
+          {username ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              <Typography className="navbar-desktop-username">{username}</Typography>
+              <Button 
+                onClick={handleLogout} 
+                variant="outlined"
+                className="navbar-desktop-logout-button"
+              >
+                Logout
+              </Button>
+            </Box>
+          ) : (
+            <>
+              {currentPage !== 'login' && (
+                <Link href="/login" passHref>
+                  <Button variant="contained" className="navbar-desktop-login-button">
+                    Iniciar sesión
+                  </Button>
+                </Link>
+              )}
+              {currentPage !== 'register' && (
+                <Link href="/register" passHref>
+                  <Button variant="contained" className="navbar-desktop-register-button">
+                    Registrarse
+                  </Button>
+                </Link>
+              )}
+            </>
+          )}
         </Box>
       </Toolbar>
     </AppBar>

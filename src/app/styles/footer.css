@@ -1,0 +1,129 @@
+.footer {
+  background-color: #04911e;
+  color: #FFFFFF;
+  padding: 3.5rem 2rem 2rem;
+  margin-top: 4rem;
+  font-size: 0.95rem;
+  font-family: 'Roboto', 'Arial', sans-serif;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+}
+
+.footer-column h4 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-column a {
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-column a:hover {
+  color: #5AFAAE;
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 1.5rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+/* Large Devices (1200px and above) */
+@media (min-width: 1200px) {
+  .footer-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer {
+    padding: 4rem 2rem 2.5rem;
+  }
+}
+
+/* Medium Devices (768px to 1199px) */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .footer {
+    padding: 3rem 1.5rem 2rem;
+  }
+
+  .footer-column h4 {
+    font-size: 1rem;
+  }
+}
+
+/* Small Devices (480px to 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer {
+    padding: 2rem 1rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .footer-column h4 {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-column ul li {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Extra Small Devices (below 480px) */
+@media (max-width: 479px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .footer {
+    padding: 1.5rem 0.75rem 1rem;
+    font-size: 0.85rem;
+    margin-top: 2rem;
+  }
+
+  .footer-column h4 {
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .footer-column ul li {
+    margin-bottom: 0.4rem;
+  }
+
+  .footer-bottom {
+    padding-top: 1rem;
+    font-size: 0.8rem;
+  }
+}

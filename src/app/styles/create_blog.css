@@ -1,3 +1,269 @@
+:root {
+    --color-primary: #04911e;
+    --color-secondary: #5AFAE4;
+    --color-accent1: #5BFB79;
+    --color-accent2: #79FA5A;
+    --color-light-green: #ADFABB;
+    --color-lime-green: #BCFA5A;
+    --color-white: #FFFFFF;
+    --color-dark-text: #333333;
+    --color-grey-bg: #f5f5f5;
+    --color-grey-border: #e0e0e0;
+}
+
+body {
+    background-color: var(--color-grey-bg);
+    padding-top: 80px;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Main container styling */
+main.container {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 1rem 3rem;
+}
+
+main.container > h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-dark-text);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.space-y-6 {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Card styling */
+.card {
+    background-color: var(--color-white) !important;
+    border: 1px solid var(--color-grey-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    padding: 2rem !important;
+    transition: all 0.3s ease;
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-dark-text);
+    margin-bottom: 1.5rem;
+}
+
+/* Form group styling */
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.block {
+    display: block;
+}
+
+label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-dark-text);
+    margin-bottom: 0.5rem;
+}
+
+/* Input and textarea styling */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+input[type="file"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-grey-border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--color-white);
+    color: var(--color-dark-text);
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+input[type="file"]:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(4, 145, 30, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* File input styling */
+input[type="file"]::file-selector-button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #32c34c;
+    box-shadow: 0 2px 8px rgba(4, 145, 30, 0.2);
+}
+
+/* Image preview styling */
+.mt-4 {
+    margin-top: 1rem;
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.space-x-4 > * + * {
+    margin-left: 1rem;
+}
+
+#card-image-preview {
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Delete button styling */
+button.px-3.py-1 {
+    padding: 0.5rem 1rem;
+    background-color: #dc2626;
+    color: var(--color-white);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+button.px-3.py-1:hover {
+    background-color: #991b1b;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+}
+
+/* Content blocks container */
+#content-blocks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.content-block-wrapper {
+    position: relative;
+    padding: 1.5rem !important;
+    border: 1px solid var(--color-grey-border) !important;
+    border-radius: 8px;
+    background-color: var(--color-white);
+    transition: all 0.3s ease;
+}
+
+.content-block-wrapper:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Remove block button */
+.content-block-wrapper > button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.25rem;
+    color: #dc2626;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.content-block-wrapper > button:hover {
+    color: #991b1b;
+    transform: scale(1.2);
+}
+
+/* Button container */
+.mt-6 {
+    margin-top: 1.5rem;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+/* Action buttons */
+button[type="button"],
+button[type="submit"] {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Green action buttons (Add buttons) */
+button.px-4.py-2.bg-green-600 {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    box-shadow: 0 2px 8px rgba(4, 145, 30, 0.2);
+}
+
+button.px-4.py-2.bg-green-600:hover {
+    background-color: #32c34c;
+    box-shadow: 0 4px 12px rgba(4, 145, 30, 0.3);
+    transform: translateY(-2px);
+}
+
+button.px-4.py-2.bg-green-600:active {
+    transform: translateY(0);
+}
+
+/* Primary submit button */
+button[type="submit"].px-6.py-3 {
+    width: 100%;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(4, 145, 30, 0.2);
+}
+
+button[type="submit"].px-6.py-3:hover {
+    background-color: #32c34c;
+    box-shadow: 0 4px 16px rgba(4, 145, 30, 0.3);
+    transform: translateY(-2px);
+}
+
+button[type="submit"].px-6.py-3:active {
+    transform: translateY(0);
+}
+
+/* Content block styling */
 .content-block h4, .reference-item h5 {
     margin-bottom: 0;
     color: #333333;
@@ -94,4 +360,29 @@
     border: 1px solid #e0e0e0;
     padding: 1rem;
     margin-bottom: 1rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    main.container {
+        margin: 1.5rem auto;
+        padding: 0 0.5rem 1.5rem;
+    }
+
+    main.container > h1 {
+        font-size: 1.5rem;
+    }
+
+    .card {
+        padding: 1.5rem !important;
+    }
+
+    .flex-wrap {
+        flex-direction: column;
+    }
+
+    button[type="button"],
+    button[type="submit"] {
+        width: 100%;
+    }
 }

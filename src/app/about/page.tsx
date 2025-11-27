@@ -24,24 +24,24 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
   {
     id: 1,
-    name: "Carlos Mendez",
-    role: "CEO & Fundador",
-    shortDescription: "Experto en tecnología agrícola",
-    fullDescription: "Carlos es un empresario visionario con más de 15 años de experiencia en el sector agrícola y desarrollo de software. Su pasión por combinar IA con agricultura lo llevó a fundar nuestra plataforma. Graduado del Instituto Tecnológico Nacional con especialidad en sistemas computacionales."
+    name: "Donovan Aguilar",
+    role: "Team Leader",
+    shortDescription: "Experto en tecnología",
+    fullDescription: "Dononvan es un experto en tecnologías de desarrollo web, con incansable curiosidad por como funciona el mundo que lo rodea."
   },
   {
     id: 2,
-    name: "María González",
-    role: "Directora de Producto",
+    name: "Ángel Muñoz",
+    role: "Developer",
     shortDescription: "Especialista en diseño UX/UI",
-    fullDescription: "María lidera la estrategia de producto con su profundo conocimiento en experiencia del usuario. Con más de 10 años en diseño de interfaces, ha trabajado con empresas Fortune 500. Su enfoque centrado en el usuario garantiza que nuestras herramientas sean intuitivas y accesibles."
+    fullDescription: "Ángel lidera la integración de la experiencia de usuario en nuestro proyecto, por medio del cual se le permite a nuestros usuarios tener la experiencia de navegación más sencilla posible."
   },
   {
     id: 3,
-    name: "Dr. Jorge Ruiz",
-    role: "Asesor Agrónomo",
-    shortDescription: "Ingeniero agrónomo con especialidad en plagas",
-    fullDescription: "Dr. Ruiz aporta expertise técnico en agronomía con una maestría en fitopatología. Ha trabajado en investigación agrícola durante 20 años y asesora a nuestro equipo de IA para asegurar que los diagnósticos sean precisos y útiles para agricultores reales."
+    name: "Santiago Bonilla",
+    role: "Developer",
+    shortDescription: "Especialista en desarrollo back-end",
+    fullDescription: "Santiago, junto a Donovan en la arquitectura, aporta la parte del desarrollo del back-end de nuestra aplicación, que permite conectar las funcionalidades que los agricultores necesitan para el diagnóstico de sus cultivos."
   }
 ];
 

@@ -27,7 +27,7 @@ const teamMembers: TeamMember[] = [
     name: "Donovan Aguilar",
     role: "Team Leader",
     shortDescription: "Experto en tecnología",
-    fullDescription: "Dononvan es un experto en tecnologías de desarrollo web, con incansable curiosidad por como funciona el mundo que lo rodea."
+    fullDescription: "Donovan es un experto en tecnologías de desarrollo web, con incansable curiosidad por como funciona el mundo que lo rodea. Lidera con la arquitectura del proyecto y la delegación de tareas para todo el equipo."
   },
   {
     id: 2,
@@ -78,8 +78,9 @@ export default function AboutPage() {
             y tecnología accesible.
           </p>
           <p>
-            Nuestro objetivo es empoderar a agricultores de todos los niveles con herramientas de análisis visual,
-            contenido educativo especializado y una comunidad de innovadores agrícolas.
+            Nuestro objetivo con este proyecto es empoderar y ayudar a los agricultores de todos los niveles y experiencias de vida
+            a tener análisis rápidos y confiables de la condición de sus cultivos. Esto, tomando en base los objetivos de desarrollo
+            sustentables de las Naciones Unidas.
           </p>
           <p>
             Creemos que la tecnología debe ser accesible, gratuita y diseñada pensando en los agricultores reales

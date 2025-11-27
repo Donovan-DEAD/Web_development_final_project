@@ -39,6 +39,8 @@ export async function POST(request: NextRequest) {
 
     const savedContent = await newBlogContent.save();
 
+    console.log('Generated blogId:', savedContent._id);
+
     // 4. Create Blog Meta (Card)
     const newBlogMeta = new BlogMeta({
       blog_id: savedContent._id,

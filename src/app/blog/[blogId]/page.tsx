@@ -27,17 +27,28 @@ interface BlogPostPageProps {
   };
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { blogId } = params;
+import { getCurrentUser } from "@/lib/server-auth";
+import { IUser } from "@/lib/models/user";
 
-  // Placeholder for user data.
-  const username = null;
-  const user = null;
+// ... (keep existing imports)
+
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  console.log('BlogPostPage params:', params);
+  const newParams = await params
+  console.log(newParams)
+  const blogId = newParams.blogId;
+  console.log(blogId)
+  
+  // Fetch user data
+  const user: IUser | null = await getCurrentUser();
+  const username = user ? user.name : null;
+  const userPerms = user ? { permsLabel: user.perms } : null;
 
   let blogData: BlogContentData | null = null;
   let error: string | null = null;
 
   try {
+    console.log(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/blog/${blogId}`)
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/blog/${blogId}`, { cache: 'no-store' }); // Adjust base URL as needed
     if (!response.ok) {
       if (response.status === 404) {
@@ -46,6 +57,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       throw new Error(`Failed to fetch blog post: ${response.statusText}`);
     }
     blogData = await response.json();
+    console.log(blogData)
   } catch (err: any) {
     console.error('Error fetching blog data:', err);
     error = err.message || 'Error al cargar el blog.';
@@ -56,7 +68,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     // but useful for generic fetch errors.
     return (
       <>
-        <Navbar username={username} currentPage="blogpost" user={user} />
+        <Navbar username={username} currentPage="blogpost" user={userPerms} />
         <main className="blog-content-wrapper">
           <div className="container">
             <p className="no-content">{error || 'Blog post content not available.'}</p>
@@ -74,7 +86,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <>
-      <Navbar username={username} currentPage="blogpost" user={user} />
+      <Navbar username={username} currentPage="blogpost" user={userPerms} />
+
 
       {/* Blog Header Section */}
       <section className="blog-header">

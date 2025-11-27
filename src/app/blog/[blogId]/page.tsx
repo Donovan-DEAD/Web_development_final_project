@@ -1,6 +1,6 @@
 // This is a Server Component, responsible for fetching data and rendering the page.
 
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/ClientNavbar";
 import HeaderBlock from "@/components/blog/HeaderBlock";
 import ImgAndContentBlock from "@/components/blog/ImgAndContentBlock";
 import PureContentBlock from "@/components/blog/PureContentBlock";

@@ -31,9 +31,13 @@ async function getEncryptionKey(): Promise<CryptoKey> {
   if (encryptionKey) {
     return encryptionKey;
   }
+  
+
+  //@ts-ignore
   const keyBuffer = Buffer.from(secretKeyHex, 'hex');
-  encryptionKey = await (globalThis.crypto || nodeCrypto.webcrypto).subtle.importKey(
+  encryptionKey = await (globalThis.crypto || nodeCrypto?.webcrypto).subtle.importKey(
     'raw',
+    //@ts-ignore
     keyBuffer,
     ALGORITHM_AES_GCM,
     false,
@@ -50,10 +54,10 @@ async function getEncryptionKey(): Promise<CryptoKey> {
  */
 export async function encryptAndSign(payload: string): Promise<string> {
   const key = await getEncryptionKey();
-  const iv = (globalThis.crypto || nodeCrypto.webcrypto).getRandomValues(new Uint8Array(IV_LENGTH_BYTES));
+  const iv = (globalThis.crypto || nodeCrypto?.webcrypto).getRandomValues(new Uint8Array(IV_LENGTH_BYTES));
   const encodedPayload = new TextEncoder().encode(payload);
 
-  const encryptedBuffer = await (globalThis.crypto || nodeCrypto.webcrypto).subtle.encrypt(
+  const encryptedBuffer = await (globalThis.crypto || nodeCrypto?.webcrypto).subtle.encrypt(
     {
       name: ALGORITHM_AES_GCM,
       iv: iv,
@@ -93,7 +97,7 @@ export async function decryptAndVerify(token: string): Promise<string | null> {
     encryptedBuffer.set(ciphertext, 0);
     encryptedBuffer.set(authTag, ciphertext.byteLength);
 
-    const decryptedBuffer = await (globalThis.crypto || nodeCrypto.webcrypto).subtle.decrypt(
+    const decryptedBuffer = await (globalThis.crypto || nodeCrypto?.webcrypto).subtle.decrypt(
       {
         name: ALGORITHM_AES_GCM,
         iv: iv,

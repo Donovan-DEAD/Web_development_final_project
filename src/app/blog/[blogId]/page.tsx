@@ -7,19 +7,16 @@ import PureContentBlock from "@/components/blog/PureContentBlock";
 import PureImageBlock from "@/components/blog/PureImageBlock";
 import ReferencesBlock from "@/components/blog/ReferencesBlock";
 import { notFound } from 'next/navigation';
+import type {
+  BlogBlockType,
+  BlogContentDataType,
+  HeaderBlockType,
+  ImgAndContentBlockType,
+  PureContentBlockType,
+  PureImageBlockType,
+  ReferencesBlockType,
+} from "@/lib/types"
 
-// Define types for blog data based on your Mongoose models
-interface BlogBlock {
-  type: string;
-  _id: string; // Add _id for key prop
-  [key: string]: any; // Allow any other properties
-}
-
-interface BlogContentData {
-  _id: string;
-  author_id: string;
-  blog_blocks: BlogBlock[];
-}
 
 interface BlogPostPageProps {
   params: {
@@ -40,11 +37,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const username = user ? user.name : null;
   const userPerms = user ? { permsLabel: user.perms } : null;
 
-  let blogData: BlogContentData | null = null;
+  let blogData: BlogContentDataType | null = null;
   let error: string | null = null;
 
   try {
-    console.log(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/blog/${blogId}`)
+    // console.log(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/blog/${blogId}`)
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/blog/${blogId}`, { cache: 'no-store' }); // Adjust base URL as needed
     if (!response.ok) {
       if (response.status === 404) {

@@ -48,6 +48,7 @@ Considera en tu respuesta que somos una entidad que busca, con información basa
       });
     }
 
+    //@ts-ignore
     const result = await model!.generateContent({
         contents: [{ parts }],
         generationConfig: {

@@ -23,7 +23,7 @@ import Favicon from '../../public/images/favicon.svg';
 
 interface ClientNavbarProps {
   username: string | null;
-  currentPage: string;
+  currentPage: string | undefined;
   user: { permsLabel: string } | null;
 }
 

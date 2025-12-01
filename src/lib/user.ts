@@ -12,7 +12,7 @@ import mongoose from 'mongoose';
  * @returns {Promise<IUser | null>} A promise that resolves to the Mongoose user document or null if not authenticated.
  */
 export async function getCurrentUser(): Promise<IUser | null> {
-  const headersList = headers();
+  const headersList = await headers();
   const userId = headersList.get('x-user-id');
 
   if (!userId) {

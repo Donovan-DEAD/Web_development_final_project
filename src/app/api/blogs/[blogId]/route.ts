@@ -10,15 +10,13 @@ const ADMIN_PERM = process.env.ADMIN_PERM_STR || 'admin_perm';
 const EDITOR_PERM = process.env.EDITOR_PERM_STR || 'editor_perm';
 
 type RouteParams = {
-  params: {
-    blogId: string;
-  }
+  params: Promise<{ blogId: string }>
 }
 
 // --- PUT Handler: Update a Blog Post ---
 export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
-    const { blogId } = params;
+    const { blogId } = await params;
     if (!mongoose.Types.ObjectId.isValid(blogId)) {
       return NextResponse.json({ message: 'Invalid blog ID format.' }, { status: 400 });
     }
@@ -68,7 +66,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 // --- DELETE Handler: Delete a Blog Post ---
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   try {
-    const { blogId } = params;
+    const { blogId } = await params;
     if (!mongoose.Types.ObjectId.isValid(blogId)) {
       return NextResponse.json({ message: 'Invalid blog ID format.' }, { status: 400 });
     }

@@ -4,14 +4,12 @@ import BlogContent from '@/lib/models/blogContent';
 import mongoose from 'mongoose';
 
 type RouteParams = {
-  params: {
-    blogId: string;
-  }
+  params: Promise<{ blogId: string }>
 }
 
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
-    const { blogId } = (await params);
+    const { blogId } = await params;
     if (!mongoose.Types.ObjectId.isValid(blogId)) {
       return NextResponse.json({ message: 'Invalid blog ID format.' }, { status: 400 });
     }

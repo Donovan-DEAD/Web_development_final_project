@@ -195,9 +195,9 @@ export default function ManagePermsWrapper({ authenticatedUser }: ManagePermsWra
                 </TableRow>
               ) : (
                 users.length > 0 ? (
-                  users.map((u) => (
+                  users.map((u, i) => (
                     <UserPermsRow
-                      key={u._id}
+                      key={i}
                       user={u}
                       onPermissionChange={handlePermissionChange}
                       onDeleteUser={handleDeleteUser}

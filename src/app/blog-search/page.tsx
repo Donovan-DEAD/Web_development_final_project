@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; // Import useRouter
+import React, { useState, useEffect, Suspense } from 'react';
+import { usePathname, useRouter } from 'next/navigation'; // Import useRouter
 import ClientNavbar from '@/components/ClientNavbar';
 import Footer from '@/components/Footer';
 import BlogSearchWrapper from './BlogSearchWrapper';
@@ -11,7 +11,7 @@ export default function BlogSearchPage() {
   const [userPerms, setUserPerms] = useState<{ permsLabel: string } | null>(null);
   const [loadingUser, setLoadingUser] = useState(true);
   const router = useRouter(); // Initialize useRouter
-
+  const pathname = usePathname();
   useEffect(() => {
     const fetchUserSession = async () => {
       try {
@@ -42,7 +42,7 @@ export default function BlogSearchPage() {
   }, []);
 
   // Determine currentPage for Navbar
-  const currentPage = router.pathname ? router.pathname.split('/').pop() : '';
+  const currentPage = pathname ? pathname.split('/').pop() : '';
 
   return (
     <>
@@ -51,7 +51,9 @@ export default function BlogSearchPage() {
         currentPage={currentPage}
         user={userPerms}
       />
-      <BlogSearchWrapper />
+      <Suspense fallback={<div>Loading...</div>}>
+        <BlogSearchWrapper />
+      </Suspense>
       <Footer />
     </>
   );

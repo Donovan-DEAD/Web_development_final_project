@@ -1,13 +1,10 @@
 "use client";
-
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import IAToast from "@/components/IAToast";
 import Image from 'next/image';
-import { Select, MenuItem, Button as MuiButton } from '@mui/material';
-
-// Image imports
-import ApproveIcon from '../../../public/images/approve_icon.svg';
+import { Button as MuiButton, Select, MenuItem } from '@mui/material';
+import IAToast from '@/components/IAToast';
+import ApproveIcon from "../../../public/images/approve_icon.svg"
 import BulbIcon from '../../../public/images/bulb_icon.svg';
 import DangerIcon from '../../../public/images/danger_icon.svg';
 
@@ -39,17 +36,15 @@ export default function IaResponseClient() {
       const data = JSON.parse(storedData);
       setIaResponseData(data);
 
-      // Check for toast messages from the original EJS logic
       if (!data.is_image_agricultural_related && !data.is_context_agricultural_related) {
-        setToastMessage("Favor de utilizar esta herramienta correctamente mandando información que tenga que ver con el tema por favor.");
+        setToastMessage("Please use this tool correctly by sending information related to the topic.");
       } else if (!data.is_image_agricultural_related) {
-        setToastMessage("La imagen proporcionada no parece estar relacionada con la agricultura.");
+        setToastMessage("The provided image does not seem to be related to agriculture.");
       } else if (!data.is_context_agricultural_related) {
-        setToastMessage("El contexto proporcionado no parece estar relacionado con la agricultura.");
+        setToastMessage("The provided context does not seem to be related to agriculture.");
       }
     } else {
-      // If no data, show an error or redirect
-      setToastMessage("No hay datos de análisis disponibles. Realiza un nuevo análisis.");
+      setToastMessage("No analysis data available. Please perform a new analysis.");
     }
   }, []);
 
@@ -71,21 +66,21 @@ export default function IaResponseClient() {
       <main className="ia__response__main">
         {!iaResponseData ? (
           <div className="error-container">
-            <h1>No hay datos para mostrar</h1>
+            <h1>No data to display</h1>
             <MuiButton
               variant="contained"
               className="ia__response__new-analysis__button"
               onClick={() => router.push('/ia-assistance')}
             >
-              Realizar un análisis
+              Perform an analysis
             </MuiButton>
           </div>
         ) : (
           <>
             <div className="ia__response__header">
-              <h1 className="ai__response__header__title">Asesoría IA Agrícola</h1>
+              <h1 className="ai__response__header__title">Agricultural AI Advisory</h1>
               <p className="ai__response__header__description">
-                Sube una imagen de tu cultivo y obtén recomendaciones personalizadas
+                Upload an image of your crop and get personalized recommendations
               </p>
             </div>
 
@@ -98,7 +93,7 @@ export default function IaResponseClient() {
                   width={35}
                   height={35}
                 />
-                Análisis Completado
+                Analysis Completed
               </h1>
 
               <div className={`ai__response__recomendations__img__container ${iaResponseData.nivel_de_peligro}`}>
@@ -110,17 +105,17 @@ export default function IaResponseClient() {
                   height={65}
                 />
                 <p className="ai__response__recomendations__img__description">
-                  {iaResponseData.nivel_de_peligro === 'aprobado' && 'Todo esta en orden con los cultivos'}
-                  {iaResponseData.nivel_de_peligro === 'mejorable' && 'Hay aspectos a mejorar en tu cultivo'}
-                  {iaResponseData.nivel_de_peligro === 'peligro' && 'Tu cultivo podria estar en peligro'}
+                  {iaResponseData.nivel_de_peligro === 'aprobado' && 'Everything is in order with the crops'}
+                  {iaResponseData.nivel_de_peligro === 'mejorable' && 'There are aspects to improve in your crop'}
+                  {iaResponseData.nivel_de_peligro === 'peligro' && 'Your crop could be in danger'}
                 </p>
               </div>
 
-              <h1 className="ai__response__recomendations__diagnose__title">Diagnóstico</h1>
+              <h1 className="ai__response__recomendations__diagnose__title">Diagnosis</h1>
               <p className="ai__response__recomendations__diagnose__description">
                 {iaResponseData.diagnostico}
               </p>
-              <h1 className="ai__response__recomendations__recomendations__title">Recomendaciones principales</h1>
+              <h1 className="ai__response__recomendations__recomendations__title">Main Recommendations</h1>
               <ol className="ai__response__recomendations__recomendations__list">
                 {iaResponseData.recomendations.map((rec, index) => (
                   <li key={index} className="ai__response__recomendations__recomendations__list__item">
@@ -134,7 +129,7 @@ export default function IaResponseClient() {
               <div className="ai__response__techniques__container">
                 <h1 className="ai__response__techniques__title">
                   <Image className="ai__response__techniques__icon" src={ApproveIcon} alt="Techniques Icon" width={24} height={24} />
-                  Técnicas Recomendadas
+                  Recommended Techniques
                 </h1>
 
                 <Select
@@ -145,7 +140,7 @@ export default function IaResponseClient() {
                   sx={{ width: '100%' }}
                 >
                   {iaResponseData.tecnicas_a_usar.map((tech, index) => (
-                    <MenuItem key={index} value={index}>
+                    <MenuItem key={index} value={index.toString()}>
                       {tech.name}
                     </MenuItem>
                   ))}
@@ -167,7 +162,7 @@ export default function IaResponseClient() {
               className="ia__response__new-analysis__button"
               onClick={() => router.push('/ia-assistance')}
             >
-              Realizar nuevo análisis
+              Perform new analysis
             </MuiButton>
           </>
         )}

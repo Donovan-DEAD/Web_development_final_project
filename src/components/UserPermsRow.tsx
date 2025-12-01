@@ -7,14 +7,11 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
+import { ObjectId } from 'mongoose';
+import { IUser } from '@/lib/models/user';
 
 interface UserPermsRowProps {
-  user: {
-    _id: string;
-    email: string;
-    name: string;
-    permsLabel: string; // 'admin', 'editor', or 'user'
-  };
+  user: IUser;
   onPermissionChange: (userId: string, newPerm: string) => void;
   onDeleteUser: (userId: string) => void;
 }
@@ -25,11 +22,11 @@ const UserPermsRow: React.FC<UserPermsRowProps> = ({ user, onPermissionChange, o
   const handlePermChange = (event: SelectChangeEvent<string>) => {
     const newPerm = event.target.value;
     setSelectedPerm(newPerm);
-    onPermissionChange(user._id, newPerm);
+    onPermissionChange(user._id.toString(), newPerm);
   };
 
   const handleDeleteClick = () => {
-    onDeleteUser(user._id);
+    onDeleteUser(user._id.toString());
   };
 
   return (

@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { getCurrentUser } from '@/lib/server-auth';
 import CreateBlogWrapper from './CreateBlogWrapper';
 import Footer from '@/components/Footer';
+import { IUser } from '@/lib/models/user';
 
 export default async function CreateBlogPage() {
   const user = await getCurrentUser();
@@ -20,13 +21,10 @@ export default async function CreateBlogPage() {
     redirect('/');
   }
 
-  const {email, name, permsLabel, username} = user 
-  const authenticatedUser = {email, name, permsLabel, username}
-
   // If the user is authenticated and authorized, render the wrapper
   return (
     <>
-      <CreateBlogWrapper authenticatedUser={authenticatedUser} />
+      <CreateBlogWrapper authenticatedUser={user} />
       <Footer />
     </>
   );

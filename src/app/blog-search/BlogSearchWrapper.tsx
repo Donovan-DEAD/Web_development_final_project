@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export default function BlogSearchWrapper() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [blogPosts, setBlogPosts] = useState<any>([]);
+  const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const searchParams = useSearchParams();

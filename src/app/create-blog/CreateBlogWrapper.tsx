@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Toast from '@/components/Toast';
 
@@ -51,22 +51,22 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
   const [headerBlock, setHeaderBlock] = useState<DynamicContentBlock | null>(null);
   const [bodyBlocks, setBodyBlocks] = useState<DynamicContentBlock[]>([]);
   const [referencesBlock, setReferencesBlock] = useState<DynamicContentBlock | null>(null);
-
+  const pathname = usePathname()
   const username = authenticatedUser.name;
   const userPerms = { permsLabel: authenticatedUser.permsLabel };
-  const currentPage = router.pathname ? router.pathname.split('/').pop() : '';
+  const currentPage = pathname ? pathname.split('/').pop() : '';
 
   // Initialize Header and References blocks
   useEffect(() => {
     setHeaderBlock({
       id: 'header-block-default',
       type: 'Header',
-      ref: React.createRef<EditableHeaderBlockRef>(),
+      ref: React.createRef<EditableHeaderBlockRef>() as React.RefObject<ContentBlockRefType>,
     });
     setReferencesBlock({
       id: 'references-block-default',
       type: 'References',
-      ref: React.createRef<EditableReferencesBlockRef>(),
+      ref: React.createRef<EditableReferencesBlockRef>() as React.RefObject<ContentBlockRefType>,
     });
   }, []);
 
@@ -116,8 +116,9 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
     if (type === 'Header' || type === 'References') return;
 
     const newBlock: DynamicContentBlock = {
+      id: `block-${Date.now()}`,
       type,
-      ref: React.createRef<ContentBlockRefType>(),
+      ref: React.createRef<ContentBlockRefType>() as React.RefObject<ContentBlockRefType> ,
     };
     setBodyBlocks(prev => [...prev, newBlock]);
   };

@@ -26,22 +26,22 @@ const teamMembers: TeamMember[] = [
     id: 1,
     name: "Donovan Aguilar",
     role: "Team Leader",
-    shortDescription: "Experto en tecnología",
-    fullDescription: "Donovan es un experto en tecnologías de desarrollo web, con incansable curiosidad por como funciona el mundo que lo rodea. Lidera con la arquitectura del proyecto y la delegación de tareas para todo el equipo."
+    shortDescription: "Technology expert",
+    fullDescription: "Donovan is an expert in web development technologies, with a tireless curiosity for how the world around him works."
   },
   {
     id: 2,
     name: "Ángel Muñoz",
     role: "Developer",
-    shortDescription: "Especialista en diseño UX/UI",
-    fullDescription: "Ángel lidera la integración de la experiencia de usuario en nuestro proyecto, por medio del cual se le permite a nuestros usuarios tener la experiencia de navegación más sencilla posible."
+    shortDescription: "UX/UI design specialist",
+    fullDescription: "Ángel leads the integration of the user experience in our project, which allows our users to have the simplest possible browsing experience."
   },
   {
     id: 3,
     name: "Santiago Bonilla",
     role: "Developer",
-    shortDescription: "Especialista en desarrollo back-end",
-    fullDescription: "Santiago, junto a Donovan en la arquitectura, aporta la parte del desarrollo del back-end de nuestra aplicación, que permite conectar las funcionalidades que los agricultores necesitan para el diagnóstico de sus cultivos."
+    shortDescription: "Back-end development specialist",
+    fullDescription: "Santiago, together with Donovan on the architecture, contributes to the back-end development of our application, which allows connecting the functionalities that farmers need for the diagnosis of their crops."
   }
 ];
 
@@ -71,20 +71,19 @@ export default function AboutPage() {
       <ClientNavbar username={username} currentPage="about" user={user} />
       
       <section className="about-section">
-        <h1>Quiénes somos</h1>
+        <h1>About Us</h1>
         <div className="about-content">
           <p>
-            Somos una plataforma dedicada a revolucionar la agricultura moderna mediante inteligencia artificial
-            y tecnología accesible.
+            We are a platform dedicated to revolutionizing modern agriculture through artificial intelligence
+            and accessible technology.
           </p>
           <p>
-            Nuestro objetivo con este proyecto es empoderar y ayudar a los agricultores de todos los niveles y experiencias de vida
-            a tener análisis rápidos y confiables de la condición de sus cultivos. Esto, tomando en base los objetivos de desarrollo
-            sustentables de las Naciones Unidas.
+            Our goal is to empower farmers of all levels with visual analysis tools,
+            specialized educational content, and a community of agricultural innovators.
           </p>
           <p>
-            Creemos que la tecnología debe ser accesible, gratuita y diseñada pensando en los agricultores reales
-            y sus necesidades cotidianas.
+            We believe that technology should be accessible, free, and designed with real farmers in mind
+            and their daily needs.
           </p>
         </div>
       </section>
@@ -92,26 +91,26 @@ export default function AboutPage() {
       <section className="mission-vision-section">
         <div className="mission-vision-container">
           <div className="mission-vision-card">
-            <h2>Nuestra Misión</h2>
+            <h2>Our Mission</h2>
             <p>
-              Proporcionan agricultores de todo el mundo con herramientas de inteligencia artificial accesibles y gratuitas
-              que les permitan tomar decisiones informadas sobre sus cultivos, aumentar su productividad y asegurar prácticas
-              agrícolas sostenibles.
+              To provide farmers around the world with accessible and free artificial intelligence tools
+              that allow them to make informed decisions about their crops, increase their productivity, and ensure sustainable
+              agricultural practices.
             </p>
           </div>
           <div className="mission-vision-card">
-            <h2>Nuestra Visión</h2>
+            <h2>Our Vision</h2>
             <p>
-              Ser la plataforma líder global en tecnología agrícola de IA, donde agricultores de todos los niveles
-              socioeconómicos tengan acceso a inteligencia artificial de clase mundial para transformar sus operaciones
-              y contribuir a la seguridad alimentaria mundial.
+              To be the leading global platform in agricultural AI technology, where farmers of all
+              socioeconomic levels have access to world-class artificial intelligence to transform their operations
+              and contribute to global food security.
             </p>
           </div>
         </div>
       </section>
 
       <section className="team-section">
-        <h2>Conoce a Nuestro Equipo</h2>
+        <h2>Meet Our Team</h2>
         <div className="team-grid">
           {teamMembers.map((member) => (
             <Card key={member.id} className="team-card">

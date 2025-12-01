@@ -106,12 +106,12 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user
             {/* Navigation Links */}
             <Link href="/" passHref onClick={handleCloseDrawer}>
               <Typography className="navbar-drawer-link">
-                Inicio
+                Home
               </Typography>
             </Link>
             <Link href="/ia-assistance" passHref onClick={handleCloseDrawer}>
               <Typography className="navbar-drawer-link">
-                Asistente IA
+                AI Assistant
               </Typography>
             </Link>
             <Link href="/blog-search" passHref onClick={handleCloseDrawer}>
@@ -121,20 +121,20 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user
             </Link>
             <Link href="/about" passHref onClick={handleCloseDrawer}>
               <Typography className="navbar-drawer-link">
-                Quiénes somos
+                About Us
               </Typography>
             </Link>
             {isAdmin && (
               <Link href="/manage_perms" passHref onClick={handleCloseDrawer}>
                 <Typography className="navbar-drawer-link">
-                  Gestionar Permisos
+                  Manage Permissions
                 </Typography>
               </Link>
             )}
             {isEditorOrAdmin && (
               <Link href="/create-blog" passHref onClick={handleCloseDrawer}>
                 <Typography className="navbar-drawer-link">
-                  Crear Blog
+                  Create Blog
                 </Typography>
               </Link>
             )}
@@ -168,7 +168,7 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user
                       variant="contained"
                       className="navbar-drawer-login-button"
                     >
-                      Iniciar sesión
+                      Login
                     </Button>
                   </Link>
                 )}
@@ -178,7 +178,7 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user
                       variant="contained"
                       className="navbar-drawer-register-button"
                     >
-                      Registrarse
+                      Sign Up
                     </Button>
                   </Link>
                 )}
@@ -191,12 +191,12 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user
         <Box className="navbar-desktop-menu">
           <Link href="/" passHref>
             <Typography className="navbar-desktop-link">
-              Inicio
+              Home
             </Typography>
           </Link>
           <Link href="/ia-assistance" passHref>
             <Typography className="navbar-desktop-link">
-              Asistente IA
+              AI Assistant
             </Typography>
           </Link>
           <Link href="/blog-search" passHref>
@@ -206,20 +206,20 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user
           </Link>
           <Link href="/about" passHref>
             <Typography className="navbar-desktop-link">
-              Quiénes somos
+              About Us
             </Typography>
           </Link>
           {isAdmin && (
             <Link href="/manage_perms" passHref>
               <Typography className="navbar-desktop-link">
-                Gestionar Permisos
+                Manage Permissions
               </Typography>
             </Link>
           )}
           {isEditorOrAdmin && (
             <Link href="/create-blog" passHref>
               <Typography className="navbar-desktop-link">
-                Crear Blog
+                Create Blog
               </Typography>
             </Link>
           )}
@@ -243,14 +243,14 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ username, currentPage, user
               {currentPage !== 'login' && (
                 <Link href="/login" passHref>
                   <Button variant="contained" className="navbar-desktop-login-button">
-                    Iniciar sesión
+                    Login
                   </Button>
                 </Link>
               )}
               {currentPage !== 'register' && (
                 <Link href="/register" passHref>
                   <Button variant="contained" className="navbar-desktop-register-button">
-                    Registrarse
+                    Sign Up
                   </Button>
                 </Link>
               )}

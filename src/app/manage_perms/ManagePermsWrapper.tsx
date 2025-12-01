@@ -57,7 +57,7 @@ export default function ManagePermsWrapper({ authenticatedUser }: ManagePermsWra
       setCurrentPage(data.currentPage);
     } catch (error: any) {
       console.error('Error fetching users:', error);
-      setToastMessage(error.message || 'Error al cargar usuarios.');
+      setToastMessage(error.message || 'Error loading users.');
     } finally {
       setLoading(false);
     }
@@ -104,24 +104,24 @@ export default function ManagePermsWrapper({ authenticatedUser }: ManagePermsWra
       });
 
       if (response.ok) {
-        setToastMessage('Permiso actualizado con éxito.');
+        setToastMessage('Permission updated successfully.');
         fetchUsers(currentPage, searchField, searchTerm); // Refresh data
       } else {
         const errorData = await response.json();
-        setToastMessage(errorData.message || 'Error al actualizar el permiso.');
+        setToastMessage(errorData.message || 'Error updating permission.');
         if (response.status === 401 || response.status === 403) {
             router.push('/login'); // Redirect if API says unauthorized
         }
       }
     } catch (error) {
       console.error('Error updating permission:', error);
-      setToastMessage('Error de red al actualizar permiso.');
+      setToastMessage('Network error updating permission.');
     }
   };
 
   const handleDeleteUser = async (userId: string) => {
     setToastMessage(null);
-    if (!confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
+    if (!confirm('Are you sure you want to delete this user?')) {
       return;
     }
 
@@ -133,18 +133,18 @@ export default function ManagePermsWrapper({ authenticatedUser }: ManagePermsWra
       });
 
       if (response.ok) {
-        setToastMessage('Usuario eliminado con éxito.');
+        setToastMessage('User deleted successfully.');
         fetchUsers(currentPage, searchField, searchTerm); // Refresh data
       } else {
         const errorData = await response.json();
-        setToastMessage(errorData.message || 'Error al eliminar el usuario.');
+        setToastMessage(errorData.message || 'Error deleting user.');
         if (response.status === 401 || response.status === 403) {
             router.push('/login'); // Redirect if API says unauthorized
         }
       }
     } catch (error) {
       console.error('Error deleting user:', error);
-      setToastMessage('Error de red al eliminar usuario.');
+      setToastMessage('Network error deleting user.');
     }
   };
   
@@ -153,12 +153,12 @@ export default function ManagePermsWrapper({ authenticatedUser }: ManagePermsWra
       {toastMessage && <Toast message={toastMessage} severity="error" />}
 
       <div className="container mt-5">
-        <Typography variant="h4" component="h1" gutterBottom>Gestionar Permisos de Usuario</Typography>
+        <Typography variant="h4" component="h1" gutterBottom>Manage User Permissions</Typography>
         <hr />
 
         <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
           <TextField
-            label="Buscar"
+            label="Search"
             variant="outlined"
             size="small"
             value={searchTerm}
@@ -173,9 +173,9 @@ export default function ManagePermsWrapper({ authenticatedUser }: ManagePermsWra
             size="small"
           >
             <MenuItem value="email">Email</MenuItem>
-            <MenuItem value="name">Nombre</MenuItem>
+            <MenuItem value="name">Name</MenuItem>
           </Select>
-          <MuiButton variant="contained" onClick={handleSearch}>Buscar</MuiButton>
+          <MuiButton variant="contained" onClick={handleSearch}>Search</MuiButton>
         </Box>
 
         <TableContainer component={Paper}>
@@ -183,15 +183,15 @@ export default function ManagePermsWrapper({ authenticatedUser }: ManagePermsWra
             <TableHead className="thead-dark">
               <TableRow>
                 <TableCell>Email</TableCell>
-                <TableCell>Nombre</TableCell>
-                <TableCell>Permiso</TableCell>
-                <TableCell>Acción</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Permission</TableCell>
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody id="user-table-body">
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={4} align="center">Cargando usuarios...</TableCell>
+                  <TableCell colSpan={4} align="center">Loading users...</TableCell>
                 </TableRow>
               ) : (
                 users.length > 0 ? (
@@ -205,7 +205,7 @@ export default function ManagePermsWrapper({ authenticatedUser }: ManagePermsWra
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={4} align="center">No se encontraron usuarios.</TableCell>
+                    <TableCell colSpan={4} align="center">No users found.</TableCell>
                   </TableRow>
                 )
               )}

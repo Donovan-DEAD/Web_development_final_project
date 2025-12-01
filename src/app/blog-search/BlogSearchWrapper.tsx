@@ -52,11 +52,11 @@ export default function BlogSearchWrapper() {
     <>
       <div className="blog-search__container">
         <form id="blog-search-form" onSubmit={handleSearchSubmit}>
-          <h1 className="blog-search__title">Buscar Blogs</h1>
+          <h1 className="blog-search__title">Search Blogs</h1>
           <input
             type="text"
             className="blog-search__search-bar"
-            placeholder="Buscar por título o descripción..."
+            placeholder="Search by title or description..."
             id="searchTerm"
             name="searchTerm"
             value={searchTerm}
@@ -65,16 +65,16 @@ export default function BlogSearchWrapper() {
           <button
             type="submit"
             className="btn btn-search btn-search--md"
-            aria-label="Buscar"
+            aria-label="Search"
           >
-            Buscar
+            Search
           </button>
         </form>
       </div>
 
       <div className="blog-search__grid">
         {loading ? (
-          <p>Cargando blogs...</p>
+          <p>Loading blogs...</p>
         ) : (
           <>
             {blogPosts.length > 0 ? (
@@ -83,7 +83,7 @@ export default function BlogSearchWrapper() {
               ))
             ) : (
               <>
-                <p>No encontramos el blogpost que estaba buscando</p>
+                <p>We couldn't find the blog post you were looking for</p>
                 <Link href="/blog-search" passHref>
                   <button className="navbar__utils__login__button">Blogs</button>
                 </Link>

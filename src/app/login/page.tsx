@@ -60,13 +60,13 @@ export default function LoginPage({}: LoginPageProps) {
 
       <div className="login">
         <div className="login__container">
-          <h1 className="login__title">Iniciar Sesión</h1>
+          <h1 className="login__title">Login</h1>
           <form className="login__form" onSubmit={handleSubmit}>
             <input
               className="login__form__input"
               type="email"
               name="email"
-              placeholder="Correo Electrónico"
+              placeholder="Email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -75,13 +75,13 @@ export default function LoginPage({}: LoginPageProps) {
               className="login__form__input"
               type="password"
               name="password"
-              placeholder="Contraseña"
+              placeholder="Password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <button className="login__form__button" type="submit">
-              Iniciar Sesión
+              Login
             </button>
           </form>
         </div>

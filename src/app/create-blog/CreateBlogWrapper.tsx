@@ -50,7 +50,7 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
   const cardImageInputRef = useRef<HTMLInputElement>(null);
 
   const username = authenticatedUser.name;
-  const userPerms = { permsLabel: authenticatedUser.perms };
+  const userPerms = { permsLabel: authenticatedUser.permsLabel };
   const currentPage = router.pathname ? router.pathname.split('/').pop() : '';
 
   // --- Image Upload Handlers ---
@@ -134,12 +134,8 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
     for (const block of contentBlockRefs) {
       if (block.ref.current) {
         const data = block.ref.current.getData();
-        if (block.type === 'References') {
-          // Special handling for references block
-          collectedReferencesData = (data as ReferencesBlockData).blog_references;
-        } else {
-          collectedBlocksData.push({ type: block.type, ...data });
-        }
+        console.log(data)
+        collectedBlocksData.push({ type: block.type, ...data });
       }
     }
 
@@ -148,8 +144,7 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
       card: { ...cardData, img_url: finalCardImgUrl },
       content: {
         blocks: collectedBlocksData,
-      },
-      references: collectedReferencesData,
+      }
     };
 
     // 4. Submit to API

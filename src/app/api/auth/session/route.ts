@@ -9,12 +9,10 @@ export async function GET(request: NextRequest) {
   if (tokenCookie) {
     const token = tokenCookie.value;
     const decryptedUserId = await decryptAndVerify(token);
-    console.log("This is the decrypted id: ",decryptedUserId)
     if (decryptedUserId) {
       
       await connectToDatabase();
       const user = await User.findById(decryptedUserId);
-      console.log(user)
 
       if (!user) {
         return NextResponse.json({ user: null });

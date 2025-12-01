@@ -31,7 +31,17 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Invalid request body. Missing required fields.' }, { status: 400 });
     }
 
-    // 3. Create Blog Content
+    // 3. Structural validation for blocks
+    const { blocks } = content;
+    if (!Array.isArray(blocks) || blocks.length < 2) {
+      return NextResponse.json({ message: 'A blog must have at least a header and references.' }, { status: 400 });
+    }
+
+    if (blocks[0].type !== 'Header' || blocks[blocks.length - 1].type !== 'References') {
+      return NextResponse.json({ message: 'The blog must start with a Header and end with References.' }, { status: 400 });
+    }
+
+    // 4. Create Blog Content
     const newBlogContent = new BlogContent({
       author_id: user._id,
       blog_blocks: content.blocks,
@@ -39,9 +49,7 @@ export async function POST(request: NextRequest) {
 
     const savedContent = await newBlogContent.save();
 
-    console.log('Generated blogId:', savedContent._id);
-
-    // 4. Create Blog Meta (Card)
+    // 5. Create Blog Meta (Card)
     const newBlogMeta = new BlogMeta({
       blog_id: savedContent._id,
       title: card.title,
@@ -54,7 +62,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       message: 'Blog created successfully',
-      blogId: savedContent._id 
+      blogId: savedContent._id
     }, { status: 201 });
 
   } catch (error) {

@@ -11,9 +11,7 @@ type RouteParams = {
 
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
-    console.log(params, "Estos son los params del back.")
     const { blogId } = (await params);
-    console.log(blogId)
     if (!mongoose.Types.ObjectId.isValid(blogId)) {
       return NextResponse.json({ message: 'Invalid blog ID format.' }, { status: 400 });
     }
@@ -21,7 +19,6 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     await connectToDatabase();
 
     const blogPost = await BlogContent.findById(blogId);
-    console.log(blogPost)
     if (!blogPost) {
       return NextResponse.json({ message: 'Blog post not found.' }, { status: 404 });
     }

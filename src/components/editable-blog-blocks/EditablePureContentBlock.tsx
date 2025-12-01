@@ -18,7 +18,7 @@ const EditablePureContentBlock = forwardRef<EditablePureContentBlockRef>((props,
 
   useImperativeHandle(ref, () => ({
     getData: () => ({
-      blog_paragraphs: blog_paragraphs.filter(p => p.trim() !== ''), // Filter out empty paragraphs
+      blog_paragraphs: blog_paragraphs, // Filter out empty paragraphs
     }),
     addParagraph,
     removeParagraph,

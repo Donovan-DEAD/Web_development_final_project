@@ -51,7 +51,7 @@ export interface IBlogContent extends Document {
 }
 
 // Base schema for all blocks, defining the discriminator key
-const blockBaseSchema = new Schema({}, { discriminatorKey: 'type', _id: false });
+const blockBaseSchema = new Schema({ type: { type: String, required: true } }, { discriminatorKey: 'type', _id: false });
 
 const blogContentSchema: Schema<IBlogContent> = new Schema({
   // blog_id is removed as the document's _id can be used as the unique identifier.
@@ -79,13 +79,13 @@ const pureImageSchema = new Schema<IPureImageBlock>({
 });
 
 const pureContentSchema = new Schema<IPureContentBlock>({
-  blog_paragraphs: [{ type: String }],
+  blog_paragraphs: { type: [String] , default: []},
 });
 
 const imgAndContentSchema = new Schema<IImgAndContentBlock>({
   img_url: { type: String, required: true },
   img_footer: { type: String },
-  blog_paragraphs: [{ type: String }],
+  blog_paragraphs:{ type: [String], default: []},
   orientation: { type: String, enum: ['left', 'right'], required: true },
 });
 

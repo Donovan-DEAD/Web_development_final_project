@@ -34,7 +34,6 @@ export default function IaResponseClient() {
   useEffect(() => {
     // Retrieve data from sessionStorage
     const storedData = sessionStorage.getItem('iaResponseData');
-    console.log('Stored Data:', storedData);
 
     if (storedData) {
       const data = JSON.parse(storedData);

@@ -33,12 +33,8 @@ import { IUser } from "@/lib/models/user";
 // ... (keep existing imports)
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  console.log('BlogPostPage params:', params);
   const newParams = await params
-  console.log(newParams)
   const blogId = newParams.blogId;
-  console.log(blogId)
-  
   // Fetch user data
   const user: IUser | null = await getCurrentUser();
   const username = user ? user.name : null;
@@ -57,7 +53,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       throw new Error(`Failed to fetch blog post: ${response.statusText}`);
     }
     blogData = await response.json();
-    console.log(blogData)
   } catch (err: any) {
     console.error('Error fetching blog data:', err);
     error = err.message || 'Error loading blog.';

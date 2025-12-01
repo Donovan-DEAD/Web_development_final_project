@@ -56,7 +56,6 @@ export default function IaAssistanceWrapper() {
       });
 
       const data = await response.json();
-      console.log('AI Consultation Response:', data);
 
       if (response.ok) {
         sessionStorage.setItem('iaResponseData', JSON.stringify(data));

@@ -34,7 +34,7 @@ const getPermsMap = () => {
 const permsMap = getPermsMap();
 
 // Log the permsMap to verify its content during initialization
-console.log('User model permsMap initialized:', permsMap);
+// console.log('User model permsMap initialized:', permsMap);
 
 userSchema.virtual('permsLabel').get(function (this: IUser) {
   return permsMap[this.perms] || 'desconocido';

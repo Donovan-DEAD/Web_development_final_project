@@ -6,12 +6,13 @@ import Image from 'next/image';
 import Toast from '@/components/Toast';
 
 // Import Editable Block Components and their Ref/Data Interfaces
-import EditableHeaderBlock, { EditableHeaderBlockRef, HeaderBlockData } from '@/components/editable-blog-blocks/EditableHeaderBlock';
-import EditablePureContentBlock, { EditablePureContentBlockRef, PureContentBlockData } from '@/components/editable-blog-blocks/EditablePureContentBlock';
-import EditablePureImageBlock, { EditablePureImageBlockRef, PureImageBlockData } from '@/components/editable-blog-blocks/EditablePureImageBlock';
-import EditableImgAndContentBlock, { EditableImgAndContentBlockRef, ImgAndContentBlockData } from '@/components/editable-blog-blocks/EditableImgAndContentBlock';
-import EditableReferencesBlock, { EditableReferencesBlockRef, ReferencesBlockData } from '@/components/editable-blog-blocks/EditableReferencesBlock';
+import EditableHeaderBlock, { EditableHeaderBlockRef } from '@/components/editable-blog-blocks/EditableHeaderBlock';
+import EditablePureContentBlock, { EditablePureContentBlockRef } from '@/components/editable-blog-blocks/EditablePureContentBlock';
+import EditablePureImageBlock, { EditablePureImageBlockRef } from '@/components/editable-blog-blocks/EditablePureImageBlock';
+import EditableImgAndContentBlock, { EditableImgAndContentBlockRef } from '@/components/editable-blog-blocks/EditableImgAndContentBlock';
+import EditableReferencesBlock, { EditableReferencesBlockRef } from '@/components/editable-blog-blocks/EditableReferencesBlock';
 import { IUser } from '@/lib/models/user';
+import ClientNavbar from '@/components/ClientNavbar';
 
 // Interfaces for data structure
 interface BlogCardData {
@@ -22,20 +23,18 @@ interface BlogCardData {
 
 // Define the union type for all possible block refs
 type ContentBlockRefType =
-  EditableHeaderBlockRef |
-  EditablePureContentBlockRef |
-  EditablePureImageBlockRef |
-  EditableImgAndContentBlockRef |
-  EditableReferencesBlockRef;
+  | EditableHeaderBlockRef
+  | EditablePureContentBlockRef
+  | EditablePureImageBlockRef
+  | EditableImgAndContentBlockRef
+  | EditableReferencesBlockRef;
 
 // Define an interface for tracking blocks and their refs
 interface DynamicContentBlock {
   id: string; // Unique ID for React key and ref management
-  type: 'Header' | 'PureContent' | 'PureImage' | 'ImgAndContent' | 'References';
+  type: 'Header' | 'Pure_content' | 'Pure_image' | 'Img_and_content' | 'References';
   ref: React.RefObject<ContentBlockRefType>;
 }
-
-import ClientNavbar from '@/components/ClientNavbar';
 
 interface CreateBlogWrapperProps {
   authenticatedUser: IUser;
@@ -45,13 +44,31 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
   const router = useRouter();
   const [cardData, setCardData] = useState<BlogCardData>({ title: '', description: '', img_url: '' });
   const [cardImageFile, setCardImageFile] = useState<File | null>(null);
-  const [contentBlockRefs, setContentBlockRefs] = useState<DynamicContentBlock[]>([]); // State to manage dynamic block refs
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const cardImageInputRef = useRef<HTMLInputElement>(null);
+
+  // State for different sections of the blog
+  const [headerBlock, setHeaderBlock] = useState<DynamicContentBlock | null>(null);
+  const [bodyBlocks, setBodyBlocks] = useState<DynamicContentBlock[]>([]);
+  const [referencesBlock, setReferencesBlock] = useState<DynamicContentBlock | null>(null);
 
   const username = authenticatedUser.name;
   const userPerms = { permsLabel: authenticatedUser.permsLabel };
   const currentPage = router.pathname ? router.pathname.split('/').pop() : '';
+
+  // Initialize Header and References blocks
+  useEffect(() => {
+    setHeaderBlock({
+      id: 'header-block-default',
+      type: 'Header',
+      ref: React.createRef<EditableHeaderBlockRef>(),
+    });
+    setReferencesBlock({
+      id: 'references-block-default',
+      type: 'References',
+      ref: React.createRef<EditableReferencesBlockRef>(),
+    });
+  }, []);
 
   // --- Image Upload Handlers ---
   const handleCardImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,18 +112,19 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
 
   // --- Content Block Management ---
   const addContentBlock = (type: DynamicContentBlock['type']) => {
+    // Only allow adding body content blocks
+    if (type === 'Header' || type === 'References') return;
+
     const newBlock: DynamicContentBlock = {
-      id: Date.now().toString(),
       type,
       ref: React.createRef<ContentBlockRefType>(),
     };
-    setContentBlockRefs(prev => [...prev, newBlock]);
+    setBodyBlocks(prev => [...prev, newBlock]);
   };
 
   const removeContentBlock = (id: string) => {
-    setContentBlockRefs(prev => prev.filter(block => block.id !== id));
+    setBodyBlocks(prev => prev.filter(block => block.id !== id));
   };
-
 
   // --- Form Submission ---
   const handleSubmit = async (event: React.FormEvent) => {
@@ -127,24 +145,35 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
       return;
     }
 
-    // 2. Collect data from all dynamic content blocks
+    // 2. Collect data from all blocks
     const collectedBlocksData: any[] = [];
-    let collectedReferencesData: ReferencesBlockData['blog_references'] = [];
 
-    for (const block of contentBlockRefs) {
+    // Header
+    if (headerBlock?.ref.current) {
+      const data = headerBlock.ref.current.getData();
+      collectedBlocksData.push({ type: headerBlock.type, ...data });
+    }
+
+    // Body blocks
+    for (const block of bodyBlocks) {
       if (block.ref.current) {
         const data = block.ref.current.getData();
-        console.log(data)
         collectedBlocksData.push({ type: block.type, ...data });
       }
     }
 
+    // References
+    if (referencesBlock?.ref.current) {
+      const data = referencesBlock.ref.current.getData();
+      collectedBlocksData.push({ type: referencesBlock.type, ...data });
+    }
+    console.log (collectedBlocksData, "Info sended.")
     // 3. Prepare data for API
     const blogData = {
       card: { ...cardData, img_url: finalCardImgUrl },
       content: {
         blocks: collectedBlocksData,
-      }
+      },
     };
 
     // 4. Submit to API
@@ -173,11 +202,7 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
 
   return (
     <>
-      <ClientNavbar
-        username={username}
-        currentPage={currentPage}
-        user={userPerms}
-      />
+      <ClientNavbar username={username} currentPage={currentPage} user={userPerms} />
       {toastMessage && <Toast message={toastMessage} severity="error" />}
 
       <main className="container mt-5">
@@ -238,13 +263,21 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
             </div>
           </div>
 
-          {/* Dynamic Content Blocks */}
+          {/* Content Blocks */}
           <div className="card mb-4 p-4 border rounded-lg shadow-sm bg-white">
             <h2 className="text-2xl font-bold mb-4">Blog Content</h2>
             <div id="content-blocks-container" className="space-y-4">
-              {contentBlockRefs.map((block, index) => (
+              {/* Header Block (Fixed) */}
+              {headerBlock && (
+                <div key={headerBlock.id} className="content-block-wrapper relative p-4 border border-gray-200 rounded-md">
+                   <h3 className="text-lg font-semibold mb-2 text-gray-500">Header</h3>
+                  <EditableHeaderBlock ref={headerBlock.ref as React.RefObject<EditableHeaderBlockRef>} />
+                </div>
+              )}
+
+              {/* Body Blocks (Dynamic) */}
+              {bodyBlocks.map((block) => (
                 <div key={block.id} className="content-block-wrapper relative p-4 border border-gray-200 rounded-md">
-                  {/* Remove Block Button */}
                   <button
                     type="button"
                     onClick={() => removeContentBlock(block.id)}
@@ -253,22 +286,25 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
                   >
                     &times;
                   </button>
-
-                  {block.type === 'Header' && <EditableHeaderBlock ref={block.ref as React.RefObject<EditableHeaderBlockRef>} />}
-                  {block.type === 'PureContent' && <EditablePureContentBlock ref={block.ref as React.RefObject<EditablePureContentBlockRef>} />}
-                  {block.type === 'PureImage' && <EditablePureImageBlock ref={block.ref as React.RefObject<EditablePureImageBlockRef>} uploadImage={uploadImage} setToastMessage={setToastMessage} />}
-                  {block.type === 'ImgAndContent' && <EditableImgAndContentBlock ref={block.ref as React.RefObject<EditableImgAndContentBlockRef>} uploadImage={uploadImage} setToastMessage={setToastMessage} />}
-                  {block.type === 'References' && <EditableReferencesBlock ref={block.ref as React.RefObject<EditableReferencesBlockRef>} />}
+                  {block.type === 'Pure_content' && <EditablePureContentBlock ref={block.ref as React.RefObject<EditablePureContentBlockRef>} />}
+                  {block.type === 'Pure_image' && <EditablePureImageBlock ref={block.ref as React.RefObject<EditablePureImageBlockRef>} uploadImage={uploadImage} setToastMessage={setToastMessage} />}
+                  {block.type === 'Img_and_content' && <EditableImgAndContentBlock ref={block.ref as React.RefObject<EditableImgAndContentBlockRef>} uploadImage={uploadImage} setToastMessage={setToastMessage} />}
                 </div>
               ))}
+
+              {/* References Block (Fixed) */}
+              {referencesBlock && (
+                <div key={referencesBlock.id} className="content-block-wrapper relative p-4 border border-gray-200 rounded-md">
+                   <h3 className="text-lg font-semibold mb-2 text-gray-500">References</h3>
+                  <EditableReferencesBlock ref={referencesBlock.ref as React.RefObject<EditableReferencesBlockRef>} />
+                </div>
+              )}
             </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('Header')}>Add Header</button>
-              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('PureContent')}>Add Paragraph</button>
-              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('PureImage')}>Add Image</button>
-              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('ImgAndContent')}>Add Image and Content</button>
-              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('References')}>Add References</button>
+              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('Pure_content')}>Add Paragraph</button>
+              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('Pure_image')}>Add Image</button>
+              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('Img_and_content')}>Add Image and Content</button>
             </div>
           </div>
 

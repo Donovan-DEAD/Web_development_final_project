@@ -60,13 +60,13 @@ export default function RegisterPage({}: RegisterPageProps) {
 
       <div className="register">
         <div className="register__container">
-          <h1 className="register__title">Registrarse</h1>
+          <h1 className="register__title">Sign Up</h1>
           <form className="register__form" onSubmit={handleSubmit}>
             <input
               className="register__form__input"
               type="text"
               name="name"
-              placeholder="Nombre"
+              placeholder="Name"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -75,7 +75,7 @@ export default function RegisterPage({}: RegisterPageProps) {
               className="register__form__input"
               type="email"
               name="username"
-              placeholder="Correo Electrónico"
+              placeholder="Email"
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -84,13 +84,13 @@ export default function RegisterPage({}: RegisterPageProps) {
               className="register__form__input"
               type="password"
               name="password"
-              placeholder="Contraseña"
+              placeholder="Password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <button className="register__form__button" type="submit">
-              Registrarse
+              Sign Up
             </button>
           </form>
         </div>

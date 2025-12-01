@@ -60,7 +60,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     console.log(blogData)
   } catch (err: any) {
     console.error('Error fetching blog data:', err);
-    error = err.message || 'Error al cargar el blog.';
+    error = err.message || 'Error loading blog.';
   }
 
   if (!blogData || error) {

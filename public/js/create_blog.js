@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fileInputElement.style.display = 'none'; // Hide file input
         } catch (error) {
             console.error('Error uploading image:', error);
-            alert('Error al subir la imagen.');
+            alert('Error uploading the image.');
             fileInputElement.value = ''; // Clear file input
         }
     }
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fileInputElement.value = ''; // Clear file input
         } catch (error) {
             console.error('Error deleting image:', error);
-            alert('Error al eliminar la imagen.');
+            alert('Error deleting the image.');
         }
     }
 
@@ -97,50 +97,50 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'Pure_content':
                 innerHTML += `
                     <div class="mb-3">
-                        <label class="form-label">Párrafo</label>
+                        <label class="form-label">Paragraph</label>
                         <textarea class="form-control" name="blog_paragraphs"></textarea>
                     </div>`;
                 break;
             case 'Pure_image':
                 innerHTML += `
                     <div class="mb-3">
-                        <label class="form-label">Subir Imagen</label>
+                        <label class="form-label">Upload Image</label>
                         <input type="file" class="form-control block-image-upload" accept="image/*" data-block-index="${currentBlockIndex}">
                         <input type="hidden" class="block-img-url-hidden" name="img_url" data-block-index="${currentBlockIndex}">
                         <div class="mt-2 block-image-preview-container" style="display: none;" data-block-index="${currentBlockIndex}">
-                            <img src="" alt="Previsualización de Imagen" class="img-thumbnail block-image-preview" style="max-width: 200px; max-height: 200px;" data-block-index="${currentBlockIndex}">
-                            <button type="button" class="btn btn-danger btn-sm mt-1 block-image-delete" data-block-index="${currentBlockIndex}">Eliminar Imagen</button>
+                            <img src="" alt="Image Preview" class="img-thumbnail block-image-preview" style="max-width: 200px; max-height: 200px;" data-block-index="${currentBlockIndex}">
+                            <button type="button" class="btn btn-danger btn-sm mt-1 block-image-delete" data-block-index="${currentBlockIndex}">Delete Image</button>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Pie de foto</label>
+                        <label class="form-label">Image caption</label>
                         <input type="text" class="form-control" name="img_footer">
                     </div>`;
                 break;
             case 'Img_and_content':
                 innerHTML += `
                     <div class="mb-3">
-                        <label class="form-label">Subir Imagen</label>
+                        <label class="form-label">Upload Image</label>
                         <input type="file" class="form-control block-image-upload" accept="image/*" data-block-index="${currentBlockIndex}">
                         <input type="hidden" class="block-img-url-hidden" name="img_url" data-block-index="${currentBlockIndex}">
                         <div class="mt-2 block-image-preview-container" style="display: none;" data-block-index="${currentBlockIndex}">
-                            <img src="" alt="Previsualización de Imagen" class="img-thumbnail block-image-preview" style="max-width: 200px; max-height: 200px;" data-block-index="${currentBlockIndex}">
-                            <button type="button" class="btn btn-danger btn-sm mt-1 block-image-delete" data-block-index="${currentBlockIndex}">Eliminar Imagen</button>
+                            <img src="" alt="Image Preview" class="img-thumbnail block-image-preview" style="max-width: 200px; max-height: 200px;" data-block-index="${currentBlockIndex}">
+                            <button type="button" class="btn btn-danger btn-sm mt-1 block-image-delete" data-block-index="${currentBlockIndex}">Delete Image</button>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Pie de foto</label>
+                        <label class="form-label">Image caption</label>
                         <input type="text" class="form-control" name="img_footer">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Párrafo</label>
+                        <label class="form-label">Paragraph</label>
                         <textarea class="form-control" name="blog_paragraphs"></textarea>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Orientación de la imagen</label>
+                        <label class="form-label">Image orientation</label>
                         <select class="form-select" name="orientation">
-                            <option value="left">Izquierda</option>
-                            <option value="right">Derecha</option>
+                            <option value="left">Left</option>
+                            <option value="right">Right</option>
                         </select>
                     </div>`;
                 break;
@@ -182,15 +182,15 @@ document.addEventListener('DOMContentLoaded', () => {
         refDiv.id = referenceId;
         refDiv.innerHTML = `
             <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5>Referencia ${currentReferenceIndex + 1}</h5>
+                <h5>Reference ${currentReferenceIndex + 1}</h5>
                 <button type="button" class="btn-close" aria-label="Close" onclick="document.getElementById('${referenceId}').remove();"></button>
             </div>
             <div class="mb-3">
-                <label class="form-label">Referencia en formato APA</label>
+                <label class="form-label">Reference in APA format</label>
                 <input type="text" class="form-control" name="blog_reference_apa">
             </div>
             <div class="mb-3">
-                <label class="form-label">URL de la referencia</label>
+                <label class="form-label">Reference URL</label>
                 <input type="url" class="form-control" name="blog_reference_url">
             </div>
         `;
@@ -260,8 +260,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = '/blog-search';
             }
         } catch (error) {
-            console.error('Error al crear el blog:', error);
-            alert('Hubo un error al crear el blog. Revisa la consola para más detalles.');
+            console.error('Error creating the blog:', error);
+            alert('There was an error creating the blog. Check the console for more details.');
         }
     });
 });

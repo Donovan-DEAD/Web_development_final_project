@@ -37,7 +37,7 @@ export const makeConsultToGemini = async (prompt: string, imageBase64?: string, 
 
     const parts: any[] = [{ text: prompt + `
 
-Considera en tu respuesta que somos una entidad que busca, con información basada en estudios científicos, hacer recomendaciones sobre la situación que se muestra según lo descrito en la imagen y el prompt. Limítate a solo responder lo que tiene que ver con el tema y siempre con profesionalismo sobre la situación que se presenta en agricultura, dando consejos acordes a lo presentado.` + ` En caso de que la imagen o el prompt no tenga que ver con el tema de agricultura, indícalo en el response schema que te indique con booleanos y responde con la información que se te proporcione que sea correcta. En caso de no ser ninguna, responde con elementos vacíos.` }];
+Considera en tu respuesta que somos una entidad que busca, con información basada en estudios científicos, hacer recomendaciones sobre la situación que se muestra según lo descrito en la imagen y el prompt. Limítate a solo responder lo que tiene que ver con el tema y siempre con profesionalismo sobre la situación que se presenta en agricultura, dando consejos acordes a lo presentado.` + ` En caso de que la imagen o el prompt no tenga que ver con el tema de agricultura, indícalo en el response schema que te indique con booleanos y responde con la información que se te proporcione que sea correcta. En caso de no ser ninguna, responde con elementos vacíos. Dame tu respuesta en ingles.` }];
 
     if (imageBase64 && mimeType) {
       parts.unshift({

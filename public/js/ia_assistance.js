@@ -43,6 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const submitButton = aiForm.querySelector('button[type="submit"]');
         submitButton.disabled = true;
         submitButton.classList.add('disabled');
-        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Esperando por respuesta...';
+        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Waiting for response...';
     });
 });

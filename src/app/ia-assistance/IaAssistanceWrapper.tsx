@@ -22,7 +22,7 @@ export default function IaAssistanceWrapper() {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       if (file.size > 10 * 1024 * 1024) { // 10MB limit
-        setToastMessage('La imagen excede el límite de 10MB.');
+        setToastMessage('The image exceeds the 10MB limit.');
         setImageFile(null);
         if (fileInputRef.current) fileInputRef.current.value = ''; // Clear file input
         return;
@@ -37,7 +37,7 @@ export default function IaAssistanceWrapper() {
     setToastMessage(null); // Clear previous messages
 
     if (!context && !imageFile) {
-      setToastMessage('Favor de proporcionar un contexto o una imagen.');
+      setToastMessage('Please provide a context or an image.');
       return;
     }
 
@@ -62,11 +62,11 @@ export default function IaAssistanceWrapper() {
         sessionStorage.setItem('iaResponseData', JSON.stringify(data));
         router.push('/ia-response');
       } else {
-        setToastMessage(data.message || 'Hubo un error al procesar la solicitud.');
+        setToastMessage(data.message || 'There was an error processing the request.');
       }
     } catch (error) {
       console.error('Error submitting AI consultation:', error);
-      setToastMessage('Error de red o del servidor. Por favor, inténtalo de nuevo.');
+      setToastMessage('Network or server error. Please try again.');
     }
   };
 
@@ -76,29 +76,29 @@ export default function IaAssistanceWrapper() {
 
       <main className="ai__assistance__main">
         <div className="ai_assistance__header__container">
-          <h1 className="ai_assistance__header__title">Asesoría IA Agrícola</h1>
+          <h1 className="ai_assistance__header__title">Agricultural AI Advisory</h1>
           <p className="ai_assistance__header__description">
-            Sube una imagen de tu cultivo y obtén recomendaciones personalizadas
+            Upload an image of your crop and get personalized recommendations
           </p>
         </div>
         <form id="ai-form" className="ai__assistance__form__container" onSubmit={handleSubmit}>
           <div className="ai__assistance__form__container__left">
             <p className="ai__assistance__form__container__left__title">
               <Image src={CameraIcon} alt="Camera Icon" width={30} height={30} />
-              Imagen del cultivo
+              Crop Image
             </p>
 
             {!imageFile ? (
               <div id="upload-initial-state" className="ai__assistance__form__container__left__container">
                 <Image className="ai__assistance__form__container__left__container__img" src={UploadIcon} alt="Upload Icon" width={40} height={40} />
                 <h1 className="ai__assistance__form__container__left__container__title">
-                  Sube una imagen de tu cultivo
+                  Upload an image of your crop
                 </h1>
                 <p className="ai__assistance__form__container__left__container__description">
-                  PNG, JPG hasta 10MB
+                  PNG, JPG up to 10MB
                 </p>
                 <label htmlFor="image-upload" className="ai__assistance__form__container__left__container__button">
-                  Seleccionar imagen
+                  Select Image
                 </label>
                 <input
                   id="image-upload"
@@ -117,10 +117,10 @@ export default function IaAssistanceWrapper() {
                   {imageFile.name}
                 </h1>
                 <p className="ai__assistance__form__container__left__container__description">
-                  PNG, JPG hasta 10MB
+                  PNG, JPG up to 10MB
                 </p>
                 <label htmlFor="image-upload" className="ai__assistance__form__container__left__container__button">
-                  Cambiar imagen
+                  Change Image
                 </label>
                 <input
                   id="image-upload"
@@ -136,20 +136,20 @@ export default function IaAssistanceWrapper() {
           </div>
 
           <div className="ai__assistance__form__container__right">
-            <p className="ai__assistance__form__container__right__title">Contexto de la situacion</p>
+            <p className="ai__assistance__form__container__right__title">Context of the situation</p>
             <textarea
               id="context"
               className="ai__assistance__form__container__right__input"
               rows={4}
               cols={50}
               name="context"
-              placeholder="Describe la situacion de tu cultivo: síntomas observados, condiciones climaticas, tipo de suelo, tratamientos previos..."
+              placeholder="Describe the situation of your crop: observed symptoms, weather conditions, soil type, previous treatments..."
               value={context}
               onChange={(e) => setContext(e.target.value)}
             ></textarea>
             <button type="submit" className="ai__assistance__form__container__right__button">
               <Image className="ai__assistance__form__container__right__button__img" src={BulbIcon} alt="Bulb Icon" width={20} height={20} />
-              Obtener Asesoría
+              Get Advice
             </button>
           </div>
         </form>

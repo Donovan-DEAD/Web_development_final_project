@@ -83,12 +83,12 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
         return data.imageUrl;
       } else {
         const errorData = await response.json();
-        setToastMessage(errorData.message || 'Error al subir imagen.');
+        setToastMessage(errorData.message || 'Error uploading image.');
         return null;
       }
     } catch (error) {
       console.error('Error uploading image:', error);
-      setToastMessage('Error de red al subir imagen.');
+      setToastMessage('Network error uploading image.');
       return null;
     }
   };
@@ -123,7 +123,7 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
         return; // Stop submission if image upload failed
       }
     } else if (!cardData.img_url) {
-      setToastMessage('La imagen principal de la tarjeta es requerida.');
+      setToastMessage('The main card image is required.');
       return;
     }
 
@@ -164,15 +164,15 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
 
       if (response.ok) {
         const result = await response.json();
-        setToastMessage('Blog creado exitosamente!');
+        setToastMessage('Blog created successfully!');
         router.push(`/blog/${result.blogId}`); // Redirect to new blog post
       } else {
         const errorData = await response.json();
-        setToastMessage(errorData.message || 'Error al crear el blog.');
+        setToastMessage(errorData.message || 'Error creating blog.');
       }
     } catch (error) {
       console.error('Error submitting blog:', error);
-      setToastMessage('Error de red al crear el blog.');
+      setToastMessage('Network error creating blog.');
     }
   };
 
@@ -186,14 +186,14 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
       {toastMessage && <Toast message={toastMessage} severity="error" />}
 
       <main className="container mt-5">
-        <h1 className="mb-4">Crear Nuevo Blog</h1>
+        <h1 className="mb-4">Create New Blog</h1>
 
         <form id="create-blog-form" onSubmit={handleSubmit} className="space-y-6">
           {/* Blog Card Information */}
           <div className="card mb-4 p-4 border rounded-lg shadow-sm bg-white">
-            <h2 className="text-2xl font-bold mb-4">Información de la Tarjeta del Blog</h2>
+            <h2 className="text-2xl font-bold mb-4">Blog Card Information</h2>
             <div className="mb-4">
-              <label htmlFor="card-title" className="block text-sm font-medium text-gray-700">Título</label>
+              <label htmlFor="card-title" className="block text-sm font-medium text-gray-700">Title</label>
               <input
                 type="text"
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -205,7 +205,7 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="card-description" className="block text-sm font-medium text-gray-700">Descripción</label>
+              <label htmlFor="card-description" className="block text-sm font-medium text-gray-700">Description</label>
               <textarea
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm resize-y"
                 id="card-description"
@@ -216,7 +216,7 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
               ></textarea>
             </div>
             <div className="mb-4">
-              <label htmlFor="card-image-upload" className="block text-sm font-medium text-gray-700">Subir Imagen Principal</label>
+              <label htmlFor="card-image-upload" className="block text-sm font-medium text-gray-700">Upload Main Image</label>
               <input
                 type="file"
                 className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
@@ -230,13 +230,13 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
                   <Image
                     id="card-image-preview"
                     src={cardData.img_url}
-                    alt="Previsualización de Imagen"
+                    alt="Image Preview"
                     className="rounded-md object-cover"
                     width={100}
                     height={100}
                   />
                   <button type="button" className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onClick={handleCardImageDelete}>
-                    Eliminar Imagen
+                    Delete Image
                   </button>
                 </div>
               )}
@@ -245,7 +245,7 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
 
           {/* Dynamic Content Blocks */}
           <div className="card mb-4 p-4 border rounded-lg shadow-sm bg-white">
-            <h2 className="text-2xl font-bold mb-4">Contenido del Blog</h2>
+            <h2 className="text-2xl font-bold mb-4">Blog Content</h2>
             <div id="content-blocks-container" className="space-y-4">
               {contentBlockRefs.map((block, index) => (
                 <div key={block.id} className="content-block-wrapper relative p-4 border border-gray-200 rounded-md">
@@ -269,15 +269,15 @@ export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapp
             </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('Header')}>Añadir Encabezado</button>
-              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('PureContent')}>Añadir Párrafo</button>
-              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('PureImage')}>Añadir Imagen</button>
-              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('ImgAndContent')}>Añadir Imagen y Contenido</button>
-              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('References')}>Añadir Referencias</button>
+              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('Header')}>Add Header</button>
+              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('PureContent')}>Add Paragraph</button>
+              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('PureImage')}>Add Image</button>
+              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('ImgAndContent')}>Add Image and Content</button>
+              <button type="button" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onClick={() => addContentBlock('References')}>Add References</button>
             </div>
           </div>
 
-          <button type="submit" className="px-6 py-3 bg-blue-600 text-white rounded-md text-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full">Crear Blog</button>
+          <button type="submit" className="px-6 py-3 bg-blue-600 text-white rounded-md text-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full">Create Blog</button>
         </form>
       </main>
     </>

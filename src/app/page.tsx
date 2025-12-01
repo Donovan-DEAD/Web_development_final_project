@@ -34,48 +34,47 @@ export default function HomePage() {
       }}>
         <div className="main-content-box">
           <h1>
-            Tu cultivo, <span className="highlight">
-              <br />nuestra IA
+            Your crop, <span className="highlight">
+              <br />our AI
             </span>
           </h1>
           <p>
-            Transforma tu experiencia agrícola con análisis inteligente de cultivos, contenido
-            especializado y una comunidad de agricultores innovadores.
+            Transform your agricultural experience with intelligent crop analysis, specialized content, and a community of innovative farmers.
           </p>
         </div>
       </section>
 
       <section className="analysis-box">
-        <h2>Prueba el Análisis IA</h2>
-        <p>Sube una foto y obtén un diagnóstico</p>
+        <h2>Try AI Analysis</h2>
+        <p>Upload a photo and get a diagnosis</p>
         <div className="upload-area">
           <p>
-            📤 Arrastra tu imagen aquí <br /> o haz clic para seleccionar archivo
+            📤 Drag your image here <br /> or click to select a file
           </p>
         </div>
         <a href="/ia-assistance">
-          <button className="btn-primary">Comenzar Análisis</button>
+          <button className="btn-primary">Start Analysis</button>
         </a>
       </section>
 
       <div className="style">
         <section className="features">
-          <h2>Todo lo que necesitas en un solo lugar</h2>
+          <h2>Everything you need in one place</h2>
           <p>
-            Herramientas gratuitas diseñadas para ayudar a agricultores de todos los niveles
+            Free tools designed to help farmers of all levels
           </p>
           <div className="cards">
             <div className="card">
-              <h3>Análisis Visual</h3>
+              <h3>Visual Analysis</h3>
               <p>
-                Sube fotos de tus cultivos y recibe análisis detallados sobre salud, plagas y
-                recomendaciones
+                Upload photos of your crops and receive detailed analysis on health, pests, and
+                recommendations
               </p>
             </div>
             <div className="card">
-              <h3>Blog Educativo</h3>
+              <h3>Educational Blog</h3>
               <p>
-                Artículos actualizados sobre técnicas agrícolas, tendencias y mejores prácticas
+                Updated articles on agricultural techniques, trends, and best practices
               </p>
             </div>
             {/* <div className="card">
@@ -87,13 +86,13 @@ export default function HomePage() {
       </div>
 
       <section className="cta">
-        <h2>Comienza a usar tu el asistente de IA hoy</h2>
+        <h2>Start using your AI assistant today</h2>
         <p>
-          Completamente gratis. Sin registros complicados. Solo sube tu foto y explica tu
-          situación.
+          Completely free. No complicated registrations. Just upload your photo and explain your
+          situation.
         </p>
         <a href="/ia-assistance">
-          <button className="btn-primary">Comenzar Análisis</button>
+          <button className="btn-primary">Start Analysis</button>
         </a>
       </section>
       <div className="style">

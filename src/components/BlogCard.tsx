@@ -39,7 +39,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
         </Typography>
         <Link href={`/blog/${post.blog_id}`} passHref>
           <Button size="small" className="card__button">
-            Leer más
+            Read more
           </Button>
         </Link>
       </CardContent>

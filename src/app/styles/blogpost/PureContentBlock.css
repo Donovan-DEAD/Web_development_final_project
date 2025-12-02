@@ -1,0 +1,58 @@
+/* ============================================
+   PURE CONTENT BLOCK STYLES
+   ============================================ */
+
+:root {
+  --primary-green: #04911e;
+  --white: #ffffff;
+  --dark-text: #333333;
+  --border-color: #e0e0e0;
+}
+
+.pure-content {
+  background-color: var(--white);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  line-height: 1.8;
+}
+
+.pure-content-paragraph {
+  color: var(--dark-text);
+  font-size: 1.05rem !important;
+  line-height: 1.9 !important;
+  margin-bottom: 1.5rem !important;
+  text-align: justify;
+  letter-spacing: 0.3px;
+}
+
+.pure-content-paragraph:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pure-content {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .pure-content-paragraph {
+    font-size: 1rem !important;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .pure-content {
+    padding: 1rem;
+    border-radius: 4px;
+  }
+
+  .pure-content-paragraph {
+    font-size: 0.95rem !important;
+    margin-bottom: 1rem !important;
+  }
+}

@@ -1,7 +1,53 @@
+/**
+ * @fileoverview AI Agricultural Consultation API Route
+ * @description Handles agricultural consultations using Google Gemini AI.
+ * Accepts image and/or context text for crop analysis and recommendations.
+ * 
+ * @module api/ai/consult
+ */
+
 import { NextRequest, NextResponse } from 'next/server';
 import { makeConsultToGemini } from '@/lib/gemini';
 import { getCurrentUser } from '@/lib/server-auth';
 
+/**
+ * POST /api/ai/consult
+ * 
+ * @async
+ * @function POST
+ * @param {NextRequest} request - The incoming request with form data
+ * @returns {Promise<NextResponse>} JSON response with AI analysis or error
+ * 
+ * @description Processes an agricultural consultation request with optional image
+ * and context text. Returns structured analysis including danger level, diagnosis,
+ * recommendations, and suggested techniques.
+ * 
+ * Requires authentication. User must be logged in to access this endpoint.
+ * 
+ * @request {FormData} request.body
+ * @request {string} [request.body.context] - Agricultural context/description (optional)
+ * @request {File} [request.body.image] - Crop image file (optional)
+ * 
+ * @response {200} Analysis successful
+ *   @response {Object} Gemini response data including:
+ *   - nivel_de_peligro: 'aprobado' | 'mejorable' | 'peligro'
+ *   - diagnostico: string (diagnosis description)
+ *   - recomendations: string[] (array of recommendations)
+ *   - tecnicas_a_usar: Technique[] (recommended techniques)
+ *   - is_image_agricultural_related: boolean
+ *   - is_context_agricultural_related: boolean
+ * 
+ * @response {400} Missing context and image
+ *   @response {string} message - "Context or an image is required."
+ * 
+ * @response {401} Unauthorized
+ *   @response {string} message - "Unauthorized"
+ * 
+ * @response {500} AI model or server error
+ *   @response {string} message - "An internal server error occurred."
+ * 
+ * @throws {Error} Gemini API failures
+ */
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser();
   if (!user) {

@@ -1,0 +1,126 @@
+/* ============================================
+   REFERENCES BLOCK STYLES
+   ============================================ */
+
+:root {
+  --primary-green: #04911e;
+  --hover-green: #32c34c;
+  --white: #ffffff;
+  --dark-text: #333333;
+  --border-color: #e0e0e0;
+  --transition: 0.3s ease;
+}
+
+.references {
+  background-color: var(--white);
+  border-left: 5px solid var(--primary-green);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.references-title {
+  color: var(--primary-green);
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 1.5rem !important;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.references-list {
+  list-style: none;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.references-list-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.75rem 0 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  margin: 0 !important;
+  transition: background-color var(--transition);
+}
+
+.references-list-item:last-child {
+  border-bottom: none;
+}
+
+.references-list-item:hover {
+  background-color: var(--border-color);
+  padding: 0.75rem !important;
+  margin: 0 -0.75rem !important;
+  border-radius: 4px;
+}
+
+.references-list-icon {
+  color: var(--primary-green);
+  font-size: 1.2rem !important;
+  margin-right: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+  transition: color var(--transition);
+}
+
+.references-list-item:hover .references-list-icon {
+  color: var(--hover-green);
+}
+
+.references-list-link {
+  color: var(--dark-text);
+  text-decoration: none;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  word-break: break-word;
+  transition: all var(--transition);
+  flex: 1;
+  
+  &:hover {
+    color: var(--primary-green);
+    text-decoration: underline;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .references {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .references-title {
+    font-size: 1.2rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .references-list-item {
+    padding: 0.5rem 0 !important;
+  }
+
+  .references-list-link {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .references {
+    padding: 1rem;
+    border-left-width: 3px;
+  }
+
+  .references-title {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .references-list-icon {
+    font-size: 1rem !important;
+    margin-right: 0.75rem;
+  }
+
+  .references-list-link {
+    font-size: 0.85rem;
+  }
+}

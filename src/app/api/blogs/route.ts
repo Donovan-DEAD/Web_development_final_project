@@ -1,13 +1,62 @@
+/**
+ * @fileoverview Blog Creation API Route
+ * @description Handles creation of new blog posts with validation of content structure.
+ * Only admins and editors can create blogs. Creates both BlogContent and BlogMeta documents.
+ * 
+ * @module api/blogs
+ */
+
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
 import { getCurrentUser } from '@/lib/server-auth';
 import BlogContent from '@/lib/models/blogContent';
 import BlogMeta from '@/lib/models/blogMeta';
 
-// Permission strings from environment variables
+/** @constant {string} ADMIN_PERM - Admin permission level string */
 const ADMIN_PERM = process.env.ADMIN_PERM_STR || 'admin_perm';
+/** @constant {string} EDITOR_PERM - Editor permission level string */
 const EDITOR_PERM = process.env.EDITOR_PERM_STR || 'editor_perm';
 
+/**
+ * POST /api/blogs
+ * 
+ * @async
+ * @function POST
+ * @param {NextRequest} request - The incoming request with blog data
+ * @returns {Promise<NextResponse>} JSON response with creation status
+ * 
+ * @description Creates a new blog post with content blocks and metadata card.
+ * Validates user permissions (admin/editor), content structure, and required fields.
+ * Automatically sets blog author to current user and creation date.
+ * 
+ * Requires authentication. User must have admin or editor permissions.
+ * 
+ * @request {Object} request.body
+ * @request {Object} request.body.content - Blog content object
+ * @request {Array} request.body.content.blocks - Array of IBlogBlock objects
+ * @request {Object} request.body.card - Blog metadata card
+ * @request {string} request.body.card.title - Blog title
+ * @request {string} request.body.card.description - Blog description
+ * @request {string} request.body.card.img_url - Blog cover image URL
+ * 
+ * @response {201} Blog created successfully
+ *   @response {string} message - "Blog created successfully"
+ *   @response {string} blogId - ID of created blog content
+ * 
+ * @response {400} Invalid request body or structure
+ *   @response {string} message - Detailed error message about missing/invalid fields
+ * 
+ * @response {401} Not authenticated
+ *   @response {string} message - "Authentication required."
+ * 
+ * @response {403} Insufficient permissions
+ *   @response {string} message - "You do not have permission to create a blog."
+ * 
+ * @response {500} Server error
+ *   @response {string} message - "An internal server error occurred."
+ * 
+ * @throws {Error} Database connection failures
+ */
 export async function POST(request: NextRequest) {
   try {
     await connectToDatabase();

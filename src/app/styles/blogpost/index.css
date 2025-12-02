@@ -1,0 +1,109 @@
+/* ============================================
+   BLOG POST PAGE MAIN STYLES
+   ============================================ */
+
+:root {
+  --primary-green: #04911e;
+  --hover-green: #32c34c;
+  --white: #ffffff;
+  --dark-text: #333333;
+  --light-bg: #E8F5E9;
+  --border-color: #e0e0e0;
+  --transition: 0.3s ease;
+  --max-width: 900px;
+}
+
+/* Main blog post container */
+.blog-post-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fafafa;
+  min-height: 100vh;
+}
+
+.blog-post-wrapper {
+  background-color: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+}
+
+/* Blog blocks spacing */
+.blog-block {
+  margin-bottom: 2rem;
+}
+
+.blog-block:last-child {
+  margin-bottom: 0;
+}
+
+/* Material UI Paper override */
+.MuiPaper-root {
+  border-radius: 8px !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .blog-post-container {
+    padding: 1.5rem;
+  }
+
+  .blog-post-wrapper {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-post-container {
+    padding: 1rem;
+    margin: 0;
+  }
+
+  .blog-post-wrapper {
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  }
+
+  .blog-block {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-post-container {
+    padding: 0.75rem;
+  }
+
+  .blog-post-wrapper {
+    padding: 0.75rem;
+    border-radius: 4px;
+  }
+
+  .blog-block {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Typography adjustments for better blog reading */
+body {
+  background-color: #f5f5f5;
+}
+
+/* Link styles within blog */
+.blog-post-wrapper a {
+  color: var(--primary-green);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.blog-post-wrapper a:hover {
+  color: var(--hover-green);
+  text-decoration: underline;
+}

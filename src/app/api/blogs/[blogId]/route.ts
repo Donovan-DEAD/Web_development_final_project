@@ -1,3 +1,11 @@
+/**
+ * @fileoverview Blog Update and Delete API Route
+ * @description Handles updating and deleting blog posts. Only authors and admins can modify.
+ * Provides authorization checks and cascading deletion of associated metadata.
+ * 
+ * @module api/blogs/[blogId]
+ */
+
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
 import { getCurrentUser } from '@/lib/server-auth';
@@ -5,15 +13,56 @@ import BlogContent from '@/lib/models/blogContent';
 import BlogMeta from '@/lib/models/blogMeta';
 import mongoose from 'mongoose';
 
-// Permission strings
+/** @constant {string} ADMIN_PERM - Admin permission level string */
 const ADMIN_PERM = process.env.ADMIN_PERM_STR || 'admin_perm';
+/** @constant {string} EDITOR_PERM - Editor permission level string */
 const EDITOR_PERM = process.env.EDITOR_PERM_STR || 'editor_perm';
 
+/**
+ * Route parameters type definition
+ * @typedef {Object} RouteParams
+ * @property {Promise<{blogId: string}>} params - Route parameters promise
+ */
 type RouteParams = {
   params: Promise<{ blogId: string }>
 }
 
-// --- PUT Handler: Update a Blog Post ---
+/**
+ * PUT /api/blogs/[blogId]
+ * 
+ * @async
+ * @function PUT
+ * @param {NextRequest} request - The incoming request with updated blog data
+ * @param {RouteParams} options - Route parameters containing blogId
+ * @returns {Promise<NextResponse>} JSON response with update status
+ * 
+ * @description Updates an existing blog post's content blocks.
+ * Only the blog author or admins can update. Validates blog existence and permissions.
+ * 
+ * @request {Object} request.body
+ * @request {Object} request.body.content - Updated blog content
+ * @request {Array} request.body.content.blocks - Updated array of blog blocks
+ * 
+ * @response {200} Blog updated successfully
+ *   @response {string} message - "Blog post updated successfully."
+ * 
+ * @response {400} Invalid blog ID format or missing content
+ *   @response {string} message - Detailed error message
+ * 
+ * @response {401} Not authenticated
+ *   @response {string} message - "Authentication required."
+ * 
+ * @response {403} Insufficient permissions or not author
+ *   @response {string} message - Permission or authorship error
+ * 
+ * @response {404} Blog not found
+ *   @response {string} message - "Blog post not found."
+ * 
+ * @response {500} Server error
+ *   @response {string} message - "An internal server error occurred."
+ * 
+ * @throws {Error} Database connection failures
+ */
 export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
     const { blogId } = await params;
@@ -63,7 +112,38 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 }
 
 
-// --- DELETE Handler: Delete a Blog Post ---
+/**
+ * DELETE /api/blogs/[blogId]
+ * 
+ * @async
+ * @function DELETE
+ * @param {NextRequest} request - The incoming request
+ * @param {RouteParams} options - Route parameters containing blogId
+ * @returns {Promise<NextResponse>} JSON response with deletion status
+ * 
+ * @description Deletes a blog post and its associated metadata.
+ * Only the blog author or admins can delete. Cascades deletion to BlogMeta.
+ * 
+ * @response {200} Blog deleted successfully
+ *   @response {string} message - "Blog post deleted successfully."
+ * 
+ * @response {400} Invalid blog ID format
+ *   @response {string} message - "Invalid blog ID format."
+ * 
+ * @response {401} Not authenticated
+ *   @response {string} message - "Authentication required."
+ * 
+ * @response {403} Insufficient permissions or not author
+ *   @response {string} message - Permission or authorship error
+ * 
+ * @response {404} Blog not found
+ *   @response {string} message - "Blog post not found."
+ * 
+ * @response {500} Server error
+ *   @response {string} message - "An internal server error occurred."
+ * 
+ * @throws {Error} Database connection failures
+ */
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   try {
     const { blogId } = await params;

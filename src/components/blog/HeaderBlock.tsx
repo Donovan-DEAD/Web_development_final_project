@@ -1,6 +1,8 @@
 "use client";
 
 import React from 'react';
+import { Paper, Typography, Box } from '@mui/material';
+import '../../app/styles/blogpost/HeaderBlock.css';
 
 interface HeaderBlockProps {
   block: {
@@ -13,11 +15,19 @@ interface HeaderBlockProps {
 
 const HeaderBlock: React.FC<HeaderBlockProps> = ({ block }) => {
   return (
-    <div className="blog-header">
-      <h1>{block.blog_title}</h1>
-      <h2>{block.blog_subtitle}</h2>
-      <p>By {block.blog_author} | {block.blog_date}</p>
-    </div>
+    <Paper className="blog-header" elevation={0}>
+      <Typography variant="h1" className="blog-header-title">
+        {block.blog_title}
+      </Typography>
+      <Typography variant="h2" className="blog-header-subtitle">
+        {block.blog_subtitle}
+      </Typography>
+      <Box className="blog-header-meta">
+        <Typography variant="body2" className="blog-header-author-date">
+          By {block.blog_author} | {block.blog_date}
+        </Typography>
+      </Box>
+    </Paper>
   );
 };
 

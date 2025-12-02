@@ -1,3 +1,12 @@
+/**
+ * @fileoverview User Login API Route
+ * @description Handles user authentication using email and password.
+ * Verifies credentials against stored hashes using PBKDF2 and creates
+ * a secure encrypted token stored in an HTTP-only cookie.
+ * 
+ * @module api/auth/login
+ */
+
 import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
 import User from '@/lib/models/user';
@@ -20,6 +29,20 @@ if (typeof process !== 'undefined' && process.versions && process.versions.node)
 // Promisify the crypto.pbkdf2 function
 const pbkdf2Async = promisify(nodeCrypto.pbkdf2);
 
+/**
+ * Verifies a password against a stored PBKDF2 hash using timing-safe comparison.
+ * 
+ * @async
+ * @function verifyPassword
+ * @param {string} password - The plaintext password to verify
+ * @param {string} salt - The hex-encoded salt used in the hash
+ * @param {string} hashHex - The hex-encoded PBKDF2 hash to compare against
+ * @returns {Promise<boolean>} True if password matches, false otherwise
+ * @throws {Error} If crypto operations fail
+ * 
+ * @description Uses timing-safe comparison to prevent timing attacks.
+ * Automatically returns false if derived key and hash have different lengths.
+ */
 async function verifyPassword(password: string, salt: string, hashHex: string): Promise<boolean> {
   const derivedKey = await pbkdf2Async(
     password,
@@ -37,6 +60,35 @@ async function verifyPassword(password: string, salt: string, hashHex: string): 
   return nodeCrypto.timingSafeEqual(derivedKey, hashBuffer);
 }
 
+/**
+ * POST /api/auth/login
+ * 
+ * @async
+ * @function POST
+ * @param {NextRequest} request - The incoming request containing email and password
+ * @returns {Promise<NextResponse>} JSON response with login status
+ * 
+ * @description Authenticates a user with email and password credentials.
+ * On success, creates an HTTP-only secure cookie with encrypted user token.
+ * 
+ * @request {Object} request.body
+ * @request {string} request.body.email - User's email address
+ * @request {string} request.body.password - User's plaintext password
+ * 
+ * @response {200} Successful login
+ *   @response {string} message - "Login successful"
+ * 
+ * @response {400} Missing credentials
+ *   @response {string} message - "Email and password are required."
+ * 
+ * @response {401} Invalid credentials
+ *   @response {string} message - "Invalid credentials."
+ * 
+ * @response {500} Server error
+ *   @response {string} message - "An internal server error occurred."
+ * 
+ * @throws {Error} Database connection or crypto operation failures
+ */
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();

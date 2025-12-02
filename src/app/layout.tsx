@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Root layout component for the entire application.
+ * Configures global styles, fonts, metadata, and providers for all pages.
+ * This is the entry point for the Next.js app directory.
+ */
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "./providers";
@@ -29,6 +35,14 @@ export const metadata: Metadata = {
   description: "Agritech - Smart solutions for modern agriculture",
 };
 
+/**
+ * RootLayout component - Main layout wrapper for the entire application.
+ * Configures fonts, imports global styles, and wraps content with providers.
+ * @function RootLayout
+ * @param {Object} props - The component props
+ * @param {React.ReactNode} props.children - Child pages and components
+ * @returns {React.ReactNode} The HTML structure with providers and global styles
+ */
 export default function RootLayout({
   children,
 }: Readonly<{

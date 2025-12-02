@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Blog Post page - Server component.
+ * Fetches blog data by ID and renders the blog post with all content blocks.
+ * This is a server component responsible for data fetching and rendering.
+ */
+
 // This is a Server Component, responsible for fetching data and rendering the page.
 
 import Navbar from "@/components/ClientNavbar";
@@ -17,7 +23,12 @@ import type {
   ReferencesBlockType,
 } from "@/lib/types"
 
-
+/**
+ * Interface for blog post page parameters.
+ * @interface BlogPostPageProps
+ * @property {Object} params - Route parameters
+ * @property {string} params.blogId - The ID of the blog post to display
+ */
 interface BlogPostPageProps {
   params: {
     blogId: string;
@@ -27,8 +38,17 @@ interface BlogPostPageProps {
 import { getCurrentUser } from "@/lib/server-auth";
 import { IUser } from "@/lib/models/user";
 
-// ... (keep existing imports)
-
+/**
+ * BlogPostPage - Server component for displaying a blog post.
+ * Fetches blog data by ID from the API and renders all content blocks.
+ * Handles 404 errors and displays error messages for failed fetches.
+ * @async
+ * @function BlogPostPage
+ * @param {BlogPostPageProps} props - Component props
+ * @param {Object} props.params - Route parameters
+ * @param {string} props.params.blogId - The blog post ID from the URL
+ * @returns {Promise<React.ReactNode>} The rendered blog post or 404 page
+ */
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const newParams = await params
   const blogId = newParams.blogId;

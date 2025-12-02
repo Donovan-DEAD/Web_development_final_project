@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Manage Permissions Wrapper - Client component for admin user management.
+ * Provides a table interface to view, search, modify permissions, and delete users.
+ */
+
 "use client"
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -15,15 +20,33 @@ import { Typography, TextField, Button as MuiButton, Select, MenuItem } from '@m
 import Toast from '@/components/Toast'; // Assuming Toast component is generic enough
 import { IUser } from '@/lib/models/user'; // Import IUser interface
 
+/**
+ * Interface for displaying users in the management table.
+ * @interface UserDisplay
+ * @extends {IUser}
+ */
 interface UserDisplay extends IUser {
   // Add any client-side specific fields if necessary,
   // but mostly just reusing IUser
 }
 
+/**
+ * Props for ManagePermsWrapper component.
+ * @interface ManagePermsWrapperProps
+ * @property {IUser} authenticatedUser - The currently authenticated admin user
+ */
 interface ManagePermsWrapperProps {
   authenticatedUser: IUser;
 }
 
+/**
+ * ManagePermsWrapper - Client component for managing user permissions.
+ * Displays a paginated table of users with search functionality and ability to modify permissions and delete users.
+ * @function ManagePermsWrapper
+ * @param {ManagePermsWrapperProps} props - Component props
+ * @param {IUser} props.authenticatedUser - The authenticated admin user
+ * @returns {React.ReactNode} The permissions management interface
+ */
 export default function ManagePermsWrapper({ authenticatedUser }: ManagePermsWrapperProps) {
   const [users, setUsers] = useState<UserDisplay[]>([]);
   const [totalPages, setTotalPages] = useState(1);

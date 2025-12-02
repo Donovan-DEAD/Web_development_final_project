@@ -1,3 +1,8 @@
+/**
+ * @fileoverview AI Response Client - Client component for displaying AI analysis results.
+ * Shows crop diagnosis, recommendations, and applicable techniques based on AI analysis.
+ */
+
 "use client";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -8,11 +13,27 @@ import ApproveIcon from "../../../public/images/approve_icon.svg"
 import BulbIcon from '../../../public/images/bulb_icon.svg';
 import DangerIcon from '../../../public/images/danger_icon.svg';
 
+/**
+ * Interface representing an agricultural technique.
+ * @interface Technique
+ * @property {string} name - Name of the technique
+ * @property {string} description - Detailed description of the technique
+ */
 interface Technique {
   name: string;
   description: string;
 }
 
+/**
+ * Interface for AI analysis response data from Gemini API.
+ * @interface GeminiResponseData
+ * @property {string} nivel_de_peligro - Danger level: 'aprobado' (approved), 'mejorable' (improvable), or 'peligro' (danger)
+ * @property {string} diagnostico - AI-generated diagnosis of the crop condition
+ * @property {string[]} recomendations - List of recommendations for the user
+ * @property {Technique[]} tecnicas_a_usar - Array of applicable agricultural techniques
+ * @property {boolean} is_image_agricultural_related - Whether the image is agriculture-related
+ * @property {boolean} is_context_agricultural_related - Whether the context description is agriculture-related
+ */
 interface GeminiResponseData {
   nivel_de_peligro: 'aprobado' | 'mejorable' | 'peligro';
   diagnostico: string;
@@ -22,6 +43,13 @@ interface GeminiResponseData {
   is_context_agricultural_related: boolean;
 }
 
+/**
+ * IaResponseClient - Client component for displaying AI crop analysis results.
+ * Retrieves analysis data from sessionStorage and displays diagnosis, recommendations, and techniques.
+ * Shows appropriate warnings if image or context is not agriculture-related.
+ * @function IaResponseClient
+ * @returns {React.ReactNode} The AI response display component
+ */
 export default function IaResponseClient() {
   const [iaResponseData, setIaResponseData] = useState<GeminiResponseData | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);

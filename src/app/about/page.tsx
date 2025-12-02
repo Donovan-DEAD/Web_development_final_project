@@ -1,3 +1,8 @@
+/**
+ * @fileoverview About page of the Agritech application.
+ * Displays company mission, vision, and team member information with expandable details.
+ */
+
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -13,6 +18,15 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import '../styles/about.css';
 
+/**
+ * Interface representing a team member.
+ * @interface TeamMember
+ * @property {number} id - Unique identifier for the team member
+ * @property {string} name - Team member's full name
+ * @property {string} role - Team member's role/position
+ * @property {string} shortDescription - Brief description of the member
+ * @property {string} fullDescription - Detailed biography of the member
+ */
 interface TeamMember {
   id: number;
   name: string;
@@ -21,6 +35,10 @@ interface TeamMember {
   fullDescription: string;
 }
 
+/**
+ * Array of team members with their information.
+ * @type {TeamMember[]}
+ */
 const teamMembers: TeamMember[] = [
   {
     id: 1,
@@ -45,6 +63,12 @@ const teamMembers: TeamMember[] = [
   }
 ];
 
+/**
+ * AboutPage component - Displays company information, mission, vision, and team.
+ * Fetches current user session data and manages expandable team member cards.
+ * @function AboutPage
+ * @returns {React.ReactNode} The about page component
+ */
 export default function AboutPage() {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState(null);

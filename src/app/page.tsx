@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Home page of the Agritech application.
+ * Displays the main landing page with features overview, AI analysis CTA, and team information.
+ * This is a client component that fetches user session data on mount.
+ */
+
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -7,6 +13,13 @@ import Image from "next/image";
 import favicon from "../../public/images/favicon.svg";
 import fieldImage from "../../public/images/plantation_background.jpeg";
 
+/**
+ * HomePage component - Main landing page of the application.
+ * Displays company branding, feature highlights, and calls-to-action for AI analysis.
+ * Fetches and displays current user information in the navbar.
+ * @function HomePage
+ * @returns {React.ReactNode} The home page component
+ */
 export default function HomePage() {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState(null);

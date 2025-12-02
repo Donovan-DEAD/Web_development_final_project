@@ -1,3 +1,8 @@
+/**
+ * @fileoverview AI Assistance Wrapper - Client component for crop image analysis form.
+ * Provides interface for users to upload crop images and provide context for AI analysis.
+ */
+
 "use client";
 
 import React, { useState, useRef } from 'react';
@@ -11,6 +16,13 @@ import UploadIcon from '../../../public/images/upload_icon.svg';
 import ImageUploadAlreadyIcon from '../../../public/images/image_upload_already.svg';
 import BulbIcon from '../../../public/images/bulb_icon.svg';
 
+/**
+ * IaAssistanceWrapper - Client component for crop AI analysis form.
+ * Allows users to upload crop images and provide context about their crop situation.
+ * Validates file size (max 10MB) and submits data to AI analysis API.
+ * @function IaAssistanceWrapper
+ * @returns {React.ReactNode} The AI assistance form component
+ */
 export default function IaAssistanceWrapper() {
   const [context, setContext] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);

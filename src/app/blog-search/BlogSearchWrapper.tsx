@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Blog Search Wrapper - Client component for searching and browsing blog posts.
+ * Provides a search interface and displays blog posts based on search queries.
+ */
+
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -5,6 +10,13 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import BlogCard from "@/components/BlogCard";
 import Link from 'next/link';
 
+/**
+ * BlogSearchWrapper - Client component for searching blog posts.
+ * Manages search query state and fetches blog posts from the search API.
+ * Displays results in a grid layout or prompts users to search if no results found.
+ * @function BlogSearchWrapper
+ * @returns {React.ReactNode} The blog search interface component
+ */
 export default function BlogSearchWrapper() {
   const [searchTerm, setSearchTerm] = useState('');
   const [blogPosts, setBlogPosts] = useState<any[]>([]);

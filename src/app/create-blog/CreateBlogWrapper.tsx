@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Create Blog Wrapper - Client component for creating and editing blog posts.
+ * Provides a comprehensive interface for creating blog posts with multiple content blocks.
+ */
+
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -14,14 +19,23 @@ import EditableReferencesBlock, { EditableReferencesBlockRef } from '@/component
 import { IUser } from '@/lib/models/user';
 import ClientNavbar from '@/components/ClientNavbar';
 
-// Interfaces for data structure
+/**
+ * Interface for blog card metadata.
+ * @interface BlogCardData
+ * @property {string} title - Blog post title
+ * @property {string} description - Short description displayed on blog card
+ * @property {string} img_url - Public URL of the blog card image
+ */
 interface BlogCardData {
   title: string;
   description: string;
   img_url: string; // Public URL of the uploaded image
 }
 
-// Define the union type for all possible block refs
+/**
+ * Union type for all possible content block reference types.
+ * @typedef {EditableHeaderBlockRef|EditablePureContentBlockRef|EditablePureImageBlockRef|EditableImgAndContentBlockRef|EditableReferencesBlockRef} ContentBlockRefType
+ */
 type ContentBlockRefType =
   | EditableHeaderBlockRef
   | EditablePureContentBlockRef
@@ -29,17 +43,37 @@ type ContentBlockRefType =
   | EditableImgAndContentBlockRef
   | EditableReferencesBlockRef;
 
-// Define an interface for tracking blocks and their refs
+/**
+ * Interface for tracking content blocks and their references.
+ * @interface DynamicContentBlock
+ * @property {string} id - Unique identifier for React key and ref management
+ * @property {string} type - Type of content block
+ * @property {React.RefObject<ContentBlockRefType>} ref - Reference to the block component
+ */
 interface DynamicContentBlock {
   id: string; // Unique ID for React key and ref management
   type: 'Header' | 'Pure_content' | 'Pure_image' | 'Img_and_content' | 'References';
   ref: React.RefObject<ContentBlockRefType>;
 }
 
+/**
+ * Props for CreateBlogWrapper component.
+ * @interface CreateBlogWrapperProps
+ * @property {IUser} authenticatedUser - The authenticated user creating the blog
+ */
 interface CreateBlogWrapperProps {
   authenticatedUser: IUser;
 }
 
+/**
+ * CreateBlogWrapper - Client component for creating blog posts.
+ * Manages blog card information, content blocks, image uploads, and form submission.
+ * Supports multiple content block types: header, pure content, pure image, image+content, and references.
+ * @function CreateBlogWrapper
+ * @param {CreateBlogWrapperProps} props - Component props
+ * @param {IUser} props.authenticatedUser - The authenticated user creating the blog
+ * @returns {React.ReactNode} The blog creation form component
+ */
 export default function CreateBlogWrapper({ authenticatedUser }: CreateBlogWrapperProps) {
   const router = useRouter();
   const [cardData, setCardData] = useState<BlogCardData>({ title: '', description: '', img_url: '' });

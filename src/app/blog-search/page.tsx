@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Blog Search page - Client component.
+ * Fetches user session and renders the blog search interface with navbar and footer.
+ */
+
 "use client";
 
 import React, { useState, useEffect, Suspense } from 'react';
@@ -6,6 +11,13 @@ import ClientNavbar from '@/components/ClientNavbar';
 import Footer from '@/components/Footer';
 import BlogSearchWrapper from './BlogSearchWrapper';
 
+/**
+ * BlogSearchPage - Client component for blog search page.
+ * Fetches current user session data and displays the blog search interface.
+ * Manages user state and displays navbar with user information if authenticated.
+ * @function BlogSearchPage
+ * @returns {React.ReactNode} The blog search page component
+ */
 export default function BlogSearchPage() {
   const [username, setUsername] = useState<string | null>(null);
   const [userPerms, setUserPerms] = useState<{ permsLabel: string } | null>(null);

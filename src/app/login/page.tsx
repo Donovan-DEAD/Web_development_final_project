@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Login page for user authentication.
+ * Allows existing users to authenticate with their email and password.
+ */
+
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -5,11 +10,23 @@ import { useRouter } from 'next/navigation';
 import ClientNavbar from "@/components/ClientNavbar";
 import Toast from "@/components/Toast";
 
+/**
+ * Interface for LoginPage component props.
+ * @interface LoginPageProps
+ */
 interface LoginPageProps {
   // message: string | null; // This will likely come from URL params or client-side state after redirect
   // For initial migration, we'll simulate this with local state
 }
 
+/**
+ * LoginPage component - User login form page.
+ * Allows existing users to authenticate with email and password.
+ * Displays error messages via Toast component and redirects on successful login.
+ * @function LoginPage
+ * @param {LoginPageProps} props - Component props (currently empty)
+ * @returns {React.ReactNode} The login page component
+ */
 export default function LoginPage({}: LoginPageProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Registration page for new users.
+ * Allows users to create a new account by providing name, email, and password.
+ */
+
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -5,10 +10,22 @@ import { useRouter } from 'next/navigation';
 import ClientNavbar from "@/components/ClientNavbar";
 import Toast from "@/components/Toast";
 
+/**
+ * Interface for RegisterPage component props.
+ * @interface RegisterPageProps
+ */
 interface RegisterPageProps {
   // message: string | null; // This will likely come from URL params or client-side state after redirect
 }
 
+/**
+ * RegisterPage component - User registration form page.
+ * Allows new users to create accounts by submitting name, email, and password.
+ * Displays error messages via Toast component and redirects on successful registration.
+ * @function RegisterPage
+ * @param {RegisterPageProps} props - Component props (currently empty)
+ * @returns {React.ReactNode} The registration page component
+ */
 export default function RegisterPage({}: RegisterPageProps) {
   const [name, setName] = useState('');
   const [username, setUsername] = useState(''); // This is email in the backend
